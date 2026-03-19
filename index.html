@@ -221,14 +221,15 @@
     /* ── ITEMS ── */
     .item {
       display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 20px;
+      align-items: stretch;
+      gap: 0;
+      padding: 0;
       border-bottom: 1px solid var(--border);
       background: var(--surface);
       transition: background .15s;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+      overflow: hidden;
     }
     .item:last-child { border-bottom: none; }
 
@@ -238,7 +239,7 @@
       gap: 12px;
       flex: 1;
       min-width: 0;
-      padding: 3px 0;
+      padding: 12px 10px 12px 20px;
     }
 
     .item-marker {
@@ -266,25 +267,29 @@
     .item.in-cart {
       background: var(--primary-soft);
       border-left: 3px solid var(--primary);
-      padding-left: 17px; /* compensate border */
     }
+    .item.in-cart .item-left { padding-left: 17px; }
 
     .item-dots {
       flex: 1;
       border-bottom: 1px dotted var(--border);
-      min-width: 12px;
+      min-width: 8px;
       position: relative;
       top: -1px;
     }
 
-    .item-qty {
+    /* qty badge shown left of price */
+    .item-qty-badge {
       font-size: .7rem;
       color: var(--primary);
-      min-width: 22px;
-      text-align: right;
       font-variant-numeric: tabular-nums;
-      font-weight: 600;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity .15s;
+      flex-shrink: 0;
     }
+    .item.in-cart .item-qty-badge { opacity: 1; }
 
     .item-price {
       font-family: 'Playfair Display', serif;
@@ -292,66 +297,199 @@
       font-weight: 700;
       color: var(--text-light);
       white-space: nowrap;
+      flex-shrink: 0;
     }
     .item.premium .item-price { color: var(--primary); }
 
+    /* ── STEPPER (full-height touch targets) ── */
     .item-controls {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       flex-shrink: 0;
+      gap: 0;
     }
 
     .ctrl-btn {
-      width: 28px;
-      height: 28px;
+      /* no fixed size — stretches full row height */
+      width: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: none;
-      border: 1.5px solid var(--border);
-      border-radius: 2px;
+      border: none;
+      border-left: 1px solid var(--border);
       cursor: pointer;
-      color: var(--text-light);
-      font-size: 1rem;
+      color: var(--border);
+      font-size: 1.1rem;
       font-family: 'Outfit', sans-serif;
-      font-weight: 500;
+      font-weight: 400;
       line-height: 1;
       flex-shrink: 0;
-      transition: border-color .15s, color .15s, background .15s;
+      transition: color .15s, background .12s;
+      padding: 0;
     }
-    .ctrl-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-    .ctrl-btn:active { background: var(--primary-soft); }
-    .ctrl-btn.ctrl-dec {
-      border-right: none;
-      border-radius: 2px 0 0 2px;
-    }
-    .ctrl-btn.ctrl-inc {
-      border-left: none;
-      border-radius: 0 2px 2px 0;
-    }
+    .ctrl-btn:hover  { color: var(--primary); background: var(--primary-soft); }
+    .ctrl-btn:active { background: rgba(230,26,37,.15); }
+
     .ctrl-count {
-      min-width: 24px;
-      height: 28px;
+      width: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-top: 1.5px solid var(--border);
-      border-bottom: 1.5px solid var(--border);
-      font-size: .8rem;
+      border-left: 1px solid var(--border);
+      font-size: .78rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
       color: var(--primary);
-      background: var(--primary-soft);
-      padding: 0 4px;
-      transition: color .15s;
-    }
-    .ctrl-count.zero {
-      color: transparent;
       background: none;
+      transition: color .15s;
+      padding: 0;
     }
+    .ctrl-count.zero { color: var(--border); }
+
+    /* ── ORDER SUMMARY SHEET ── */
+    .summary-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      width: 100%;
+      max-width: 580px;
+      background: var(--surface);
+      border-top: 2px solid var(--primary);
+      z-index: 150;
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+      max-height: 70vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .summary-sheet.open {
+      transform: translateX(-50%) translateY(0);
+    }
+    .summary-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+      z-index: 149;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .28s;
+    }
+    .summary-overlay.open { opacity: 1; pointer-events: all; }
+
+    .summary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .summary-title {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .summary-close {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: color .15s, border-color .15s;
+    }
+    .summary-close:hover { color: var(--primary); border-color: var(--primary); }
+
+    .summary-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 8px 0;
+    }
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 20px;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row-name {
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+    }
+    .summary-row-qty {
+      font-size: .72rem;
+      color: var(--primary);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .summary-row-price {
+      font-family: 'Playfair Display', serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+    .summary-total {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .summary-total-label {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+    .summary-total-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* review btn in cart-info row */
+    .cart-info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .review-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      color: var(--text-light);
+      font-family: 'Outfit', sans-serif;
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color .15s, border-color .15s;
+      flex-shrink: 0;
+    }
+    .review-btn:hover { color: var(--primary); border-color: var(--primary); }
+    .review-btn svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; }
 
     /* ── CART BAR ── */
     .cart-bar {
@@ -569,7 +707,13 @@
   </div>
 
   <div class="cart-bar hidden" id="cart-bar">
-    <div class="cart-info" id="cart-info"></div>
+    <div class="cart-info-row">
+      <div class="cart-info" id="cart-info"></div>
+      <button class="review-btn" onclick="openSummary()" id="review-btn">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        Resumo
+      </button>
+    </div>
     <div class="addr-wrap" id="addr-wrap">
       <input class="addr-input" id="addr-input" type="text"
         placeholder="Endereço completo para entrega" autocomplete="street-address">
@@ -668,15 +812,18 @@
           const safeName = item.name.replace(/'/g, "\'");
           html += `
             <div class="item${qty>0?' in-cart':''}${item.premium?' premium':''} fade-in" id="row-${id}">
+              <div class="item-controls">
+                <button class="ctrl-btn ctrl-dec" onclick="dec('${id}','${safeName}',${item.price})" style="border-left:none;border-right:1px solid var(--border)">&#8722;</button>
+                <span class="ctrl-count${qty===0?' zero':''}" id="qty-${id}">${qty}</span>
+              </div>
               <div class="item-left">
                 <span class="item-marker"></span>
                 <span class="item-name">${item.name}</span>
                 <span class="item-dots"></span>
+                <span class="item-qty-badge" id="badge-${id}">${qty>0?qty+'×':''}</span>
                 <span class="item-price">${fmt(item.price)}</span>
               </div>
               <div class="item-controls">
-                <button class="ctrl-btn ctrl-dec" onclick="dec('${id}','${safeName}',${item.price})">&#8722;</button>
-                <span class="ctrl-count${qty===0?' zero':''}" id="qty-${id}">${qty}</span>
                 <button class="ctrl-btn ctrl-inc" onclick="tap('${id}','${safeName}',${item.price})">+</button>
               </div>
             </div>`;
@@ -699,11 +846,10 @@
     function sync(id) {
       const qty   = cart.has(id) ? cart.get(id).qty : 0;
       const row   = document.getElementById('row-' + id);
-      const badge = document.getElementById('qty-' + id);
-      if (badge) {
-        badge.textContent = qty;
-        badge.classList.toggle('zero', qty === 0);
-      }
+      const ctr   = document.getElementById('qty-' + id);
+      const badge = document.getElementById('badge-' + id);
+      if (ctr)   { ctr.textContent = qty; ctr.classList.toggle('zero', qty === 0); }
+      if (badge) badge.textContent = qty > 0 ? qty + '×' : '';
       if (row)   row.classList.toggle('in-cart', qty > 0);
       refreshBar();
     }
@@ -758,6 +904,45 @@
     }
 
     renderMenu('pasteis');
+
+    function openSummary() {
+      const list = document.getElementById('summary-list');
+      let rows = '', total = 0;
+      cart.forEach(e => {
+        const sub = e.price * e.qty;
+        total += sub;
+        rows += `<div class="summary-row">
+          <span class="summary-row-name">${e.name}</span>
+          <span class="summary-row-qty">${e.qty}×</span>
+          <span class="summary-row-price">${fmt(sub)}</span>
+        </div>`;
+      });
+      list.innerHTML = rows;
+      document.getElementById('summary-total-value').textContent = fmt(total);
+      document.getElementById('summary-sheet').classList.add('open');
+      document.getElementById('summary-overlay').classList.add('open');
+    }
+
+    function closeSummary() {
+      document.getElementById('summary-sheet').classList.remove('open');
+      document.getElementById('summary-overlay').classList.remove('open');
+    }
   </script>
+  <!-- Summary overlay -->
+  <div class="summary-overlay" id="summary-overlay" onclick="closeSummary()"></div>
+
+  <!-- Summary sheet -->
+  <div class="summary-sheet" id="summary-sheet">
+    <div class="summary-header">
+      <span class="summary-title">Resumo do pedido</span>
+      <button class="summary-close" onclick="closeSummary()">&#x2715;</button>
+    </div>
+    <div class="summary-list" id="summary-list"></div>
+    <div class="summary-total">
+      <span class="summary-total-label">Total</span>
+      <span class="summary-total-value" id="summary-total-value"></span>
+    </div>
+  </div>
+
 </body>
 </html>
