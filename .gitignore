@@ -1,0 +1,9 @@
+# VS Code
+.vscode/
+
+# Se quiser permitir configurações compartilhadas, use isso no lugar:
+#.vscode/*
+#!.vscode/settings.json
+#!.vscode/tasks.json
+#!.vscode/launch.json
+#!.vscode/extensions.json
