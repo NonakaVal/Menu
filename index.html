@@ -7,159 +7,198 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #fffdf9;
-    --surface:   #f5f0e8;
+    --bg:        #ffffff;
+    --surface:   #f7f3ee;
     --red:       #d42b14;
     --red-dim:   #aa2210;
-    --red-faint: rgba(212,43,20,0.08);
-    --yellow:    #e8a800;
-    --text:      #1e1608;
-    --muted:     #6b5c45;
-    --border:    #e0d8cc;
+    --red-faint: rgba(212,43,20,0.09);
+    --text:      #1a1208;
+    --muted:     #7a6a55;
+    --border:    #e8dfd4;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html {
-    scroll-behavior:smooth;
-    width:100%;
-    overflow-x:hidden;
-  }
+  html { scroll-behavior:smooth; width:100%; overflow-x:hidden; }
 
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
-    width:100%;
-    overflow-x:hidden;
+    width:100%; overflow-x:hidden;
   }
 
-  .page { width:100%; max-width: 600px; margin: 0 auto; padding-bottom: 140px; }
+  .page { width:100%; max-width:600px; margin:0 auto; padding-bottom:150px; }
 
-  /* ── HEADER ── */
-  .header {
-    text-align: center;
-    padding: 44px 32px 32px;
-    border-bottom: 1px solid var(--border);
+  /* ─────────────────────────────────────────
+     HERO — vermelho vivo que dissolve em branco
+     A última parada é #ffffff para fundir
+     perfeitamente com o fundo da página
+  ───────────────────────────────────────── */
+  .hero {
     position: relative;
+    background: linear-gradient(
+      180deg,
+      #9b0f00  0%,
+      #c42310 18%,
+      #d42b14 32%,
+      #a81a06 50%,
+      #6a0d00 65%,
+      #2e0500 78%,
+      #ffffff 100%
+    );
+    padding: 0;
   }
-  .header::after {
-    content:''; position:absolute; top:0; left:50%;
-    transform:translateX(-50%);
-    width:1px; height:20px; background:var(--yellow);
+
+  /* brilho central para destacar logo */
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 50% at 50% 36%,
+      rgba(255,80,40,0.2) 0%, transparent 65%);
+    pointer-events:none;
   }
+
+  .hero-content {
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; align-items:center;
+    /* padding-bottom generoso para o fade ir bem além do logo */
+    padding: 44px 32px 90px;
+  }
+
   .brand-logo {
     display:block;
-    width:clamp(160px, 42vw, 280px);
+    width: clamp(240px, 72vw, 420px);
     height:auto;
-    margin:0 auto 6px;
-    background: #c8271200;
-    border-radius: 10px;
-    padding: 10px 18px;
-    background: linear-gradient(135deg, #c42310 0%, #e8350f 100%);
+    filter: drop-shadow(0 6px 28px rgba(0,0,0,0.65))
+            drop-shadow(0 2px 6px rgba(0,0,0,0.85));
+    animation: logoIn .9s .05s cubic-bezier(.22,1,.36,1) both;
   }
-  .brand-name em { font-style:normal; color:var(--red); }
+
   .brand-sub {
+    margin-top:16px;
+    font-size:0.58rem; letter-spacing:0.34em; text-transform:uppercase;
+    color:rgba(255,255,255,0.5);
+  }
+  .brand-addr {
     margin-top:4px;
-    font-size:0.55rem; letter-spacing:0.36em; text-transform:uppercase;
-    color:var(--muted);
+    font-size:0.63rem; letter-spacing:0.06em;
+    color:rgba(255,255,255,0.28); text-align:center;
   }
-  .brand-contact {
-    margin-top:14px;
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:0.86rem; color:var(--red); letter-spacing:0.03em;
-  }
-  .wa-icon { width:14px; height:14px; fill:var(--red); flex-shrink:0; }
-  .brand-addr { margin-top:6px; font-size:0.68rem; color:var(--muted); letter-spacing:0.07em; }
 
   /* ── CATEGORY NAV ── */
   .cat-nav {
     position:sticky; top:0; z-index:40;
-    background:rgba(255,253,249,0.97);
-    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.97);
+    backdrop-filter:blur(12px);
     border-bottom:1px solid var(--border);
     display:flex; padding:0 20px;
   }
   .cat-btn {
     flex:1; background:none; border:none; cursor:pointer;
     font-family:'DM Sans',sans-serif; font-weight:500;
-    font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase;
-    color:var(--muted); padding:14px 8px 13px;
-    border-bottom:1.5px solid transparent;
+    font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--muted); padding:15px 8px 14px;
+    border-bottom:2px solid transparent;
     transition:color .18s, border-color .18s;
   }
   .cat-btn.active { color:var(--text); border-bottom-color:var(--red); }
   .cat-btn:hover:not(.active) { color:var(--text); }
 
-  /* ── SECTIONS ── */
+  /* ── SECTION LABEL ── */
   .section-label {
     display:flex; align-items:center; gap:14px;
-    padding:28px 28px 14px;
+    padding:26px 24px 12px;
   }
   .section-label h2 {
-    font-size:0.62rem; letter-spacing:0.32em; text-transform:uppercase;
-    color:var(--yellow); font-weight:600; white-space:nowrap;
+    font-size:0.63rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--red); font-weight:600; white-space:nowrap;
   }
   .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
 
   /* ── ITEM ROW ── */
   .item {
-    display:flex; align-items:baseline; gap:10px;
-    padding:14px 28px;
+    display:flex; align-items:center;
+    padding:14px 24px;
     border-bottom:1px solid var(--border);
-    cursor:pointer;
-    transition:background .12s;
     -webkit-tap-highlight-color:transparent;
     user-select:none;
-    position:relative;
+    transition:background .12s;
   }
   .item:last-child { border-bottom:none; }
   .item:hover { background:var(--surface); }
 
-  .item-name {
-    font-size:1.02rem; font-weight:500;
-    color:var(--text); letter-spacing:.01em;
+  .item-info {
     flex:1; min-width:0;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .item-name {
+    font-size:1rem; font-weight:500;
+    color:var(--text); line-height:1.25;
     transition:color .15s;
   }
   .item.in-cart .item-name { color:var(--red); }
+  .item-desc {
+    font-size:0.76rem; color:var(--muted); font-weight:400;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
 
-  .item-dots { flex:1; border-bottom:1px dotted var(--border); min-width:16px; position:relative; top:-3px; }
-
+  .item-right {
+    display:flex; align-items:center; gap:10px;
+    flex-shrink:0; margin-left:14px;
+  }
   .item-price {
     font-family:'Playfair Display',serif;
-    font-size:1rem; color:var(--text); white-space:nowrap;
+    font-size:0.95rem; color:var(--muted);
+    white-space:nowrap; transition:color .15s;
   }
   .item.premium .item-price { color:var(--red); }
+  .item.in-cart  .item-price { color:var(--red); }
 
-  /* Qty badge */
-  .item-qty {
-    font-size:0.78rem; color:var(--muted);
-    min-width:16px; text-align:right;
-    font-variant-numeric:tabular-nums;
-    font-weight:500;
-    transition:color .15s;
-  }
-  .item.in-cart .item-qty { color:var(--red); }
-
-  /* Per-item clear "×" — only visible when in-cart */
-  .item-clear {
+  /* Stepper: hidden until in-cart */
+  .item-stepper {
     display:none;
-    align-items:center; justify-content:center;
-    width:18px; height:18px;
-    background:none; border:none; cursor:pointer;
-    color:var(--muted);
-    font-size:0.82rem; line-height:1;
-    border-radius:50%;
-    margin-left:2px;
-    transition:color .15s, background .15s;
+    align-items:center; gap:2px;
+  }
+  .item.in-cart .item-stepper { display:flex; }
+  .item.in-cart .btn-add-initial { display:none; }
+
+  .item-qty {
+    font-size:0.85rem; font-weight:600; color:var(--text);
+    min-width:22px; text-align:center;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* + button (always visible when not in cart) */
+  .btn-add-initial {
+    width:30px; height:30px; border-radius:50%;
+    background:var(--red); color:#fff;
+    border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem; font-weight:300; line-height:1;
     flex-shrink:0;
-    position:relative; top:-1px;
+    transition:background .15s, transform .1s;
     -webkit-tap-highlight-color:transparent;
   }
-  .item.in-cart .item-clear { display:flex; }
-  .item-clear:hover { color:var(--red); background:var(--red-faint); }
+  .btn-add-initial:hover  { background:var(--red-dim); transform:scale(1.08); }
+  .btn-add-initial:active { transform:scale(0.95); }
+
+  /* stepper buttons */
+  .btn-stepper {
+    width:28px; height:28px; border-radius:50%;
+    border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; font-weight:400; line-height:1;
+    flex-shrink:0;
+    transition:background .15s, color .15s, transform .1s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .btn-stepper.plus  { background:var(--red); color:#fff; font-size:1.3rem; }
+  .btn-stepper.minus { background:var(--surface); color:var(--muted); border:1px solid var(--border); }
+  .btn-stepper.plus:hover   { background:var(--red-dim); transform:scale(1.08); }
+  .btn-stepper.minus:hover  { color:var(--red); border-color:var(--red); background:#fff; }
+  .btn-stepper:active { transform:scale(0.95); }
 
   /* ── CART BAR ── */
   .cart-bar {
@@ -167,101 +206,91 @@
     width:100%; max-width:600px;
     background:var(--bg);
     border-top:1px solid var(--border);
-    padding:14px 24px 20px;
+    padding:14px 24px 22px;
     z-index:100;
-    box-shadow:0 -4px 24px rgba(0,0,0,0.09);
+    box-shadow:0 -4px 28px rgba(0,0,0,0.10);
     transition:transform .28s ease, opacity .28s ease;
   }
   .cart-bar.hidden {
     transform:translateX(-50%) translateY(110%);
     opacity:0; pointer-events:none;
   }
+  .cart-top { display:flex; align-items:center; margin-bottom:12px; }
+  .cart-info { font-size:0.85rem; color:var(--muted); }
+  .cart-info strong { color:var(--text); font-weight:600; }
 
-  /* Summary line */
-  .cart-top {
-    display:flex; align-items:center; justify-content:space-between;
-    margin-bottom:12px;
-  }
-  .cart-info { font-size:0.82rem; color:var(--muted); }
-  .cart-info strong { color:var(--text); font-weight:500; }
-
-  /* Delivery question */
   .delivery-question {
     overflow:hidden; max-height:0; opacity:0;
     transition:max-height .28s ease, opacity .25s ease, margin .25s ease;
-    margin-bottom:0;
   }
-  .delivery-question.open { max-height:100px; opacity:1; margin-bottom:12px; }
+  .delivery-question.open { max-height:110px; opacity:1; margin-bottom:12px; }
 
   .dq-label {
     font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase;
     color:var(--muted); margin-bottom:8px; display:block;
   }
-  .dq-options {
-    display:flex; gap:8px;
-  }
+  .dq-options { display:flex; gap:8px; }
   .dq-btn {
     flex:1; background:none; border:1px solid var(--border);
-    color:var(--muted); border-radius:2px;
+    color:var(--muted); border-radius:3px;
     font-family:'DM Sans',sans-serif; font-size:0.75rem;
     letter-spacing:0.1em; text-transform:uppercase;
-    padding:8px 0; cursor:pointer;
+    padding:9px 0; cursor:pointer;
     transition:border-color .15s, color .15s, background .15s;
   }
   .dq-btn.chosen { border-color:var(--red); color:var(--text); background:var(--red-faint); }
   .dq-btn:hover:not(.chosen) { border-color:var(--muted); color:var(--text); }
 
-  /* Address input */
   .addr-wrap {
     overflow:hidden; max-height:0; opacity:0;
     transition:max-height .24s ease, opacity .22s ease, margin .22s ease;
-    margin-top:0;
   }
   .addr-wrap.open { max-height:52px; opacity:1; margin-top:8px; }
   .addr-input {
     width:100%; background:var(--surface);
-    border:1px solid var(--border); border-radius:2px;
+    border:1px solid var(--border); border-radius:3px;
     color:var(--text); font-family:'DM Sans',sans-serif;
-    font-size:0.82rem; font-weight:300;
+    font-size:0.85rem; font-weight:400;
     padding:9px 12px; outline:none;
     transition:border-color .18s;
   }
   .addr-input::placeholder { color:var(--muted); }
   .addr-input:focus { border-color:var(--red); }
 
-  /* Send button */
-  .send-row { display:flex; gap:8px; }
+  .send-row { display:flex; }
   .send-btn {
-    flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
+    flex:1; display:flex; align-items:center; justify-content:center; gap:9px;
     background:var(--red); color:#fff;
-    border:none; border-radius:2px; cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-size:0.73rem;
-    font-weight:400; letter-spacing:0.14em; text-transform:uppercase;
-    padding:11px 0;
+    border:none; border-radius:3px; cursor:pointer;
+    font-family:'DM Sans',sans-serif; font-size:0.75rem;
+    font-weight:500; letter-spacing:0.14em; text-transform:uppercase;
+    padding:13px 0;
     transition:background .18s;
-    text-decoration:none;
   }
   .send-btn:hover { background:var(--red-dim); }
-  .send-btn svg { width:13px; height:13px; fill:#fff; }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(10px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .header   { animation:fadeUp .6s ease both; }
-  .cat-nav  { animation:fadeUp .6s .08s ease both; }
-  .fade-in  { animation:fadeUp .2s ease both; }
+  .send-btn svg { width:14px; height:14px; fill:#fff; }
 
   /* ── FOOTER ── */
-  .footer { text-align:center; padding:44px 28px 28px; border-top:1px solid var(--border); }
-  .footer-line { width:1px; height:24px; background:var(--yellow); margin:0 auto 18px; }
+  .footer { text-align:center; padding:40px 28px 28px; border-top:1px solid var(--border); }
   .footer p { font-size:0.62rem; color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; }
 
+  /* ── ANIMATIONS ── */
+  @keyframes logoIn {
+    from { opacity:0; transform:translateY(14px) scale(0.97); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .hero    { animation:fadeUp .6s ease both; }
+  .cat-nav { animation:fadeUp .5s .06s ease both; }
+  .fade-in { animation:fadeUp .2s ease both; }
+
   @media(max-width:480px){
-    .item { padding:10px 18px; }
-    .section-label { padding:22px 18px 12px; }
-    .header { padding:40px 18px 28px; }
+    .item { padding:12px 16px; }
+    .section-label { padding:22px 16px 10px; }
+    .hero-content { padding:36px 18px 80px; }
     .cart-bar { padding:12px 16px 18px; }
     .cat-nav { padding:0 6px; }
   }
@@ -270,14 +299,13 @@
 <body>
 <div class="page">
 
-  <!-- HEADER -->
-  <header class="header">
-    <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
-    <div class="brand-contact">
-      <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-content">
+      <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
       <div class="brand-sub">Pastéis Artesanais · Guapiara-SP</div>
+      <div class="brand-addr">Shigueru Yagui 23, Centro — Guapiara-SP</div>
     </div>
-    <div class="brand-addr">Shigueru Yagui 23, Centro — Guapiara-SP</div>
   </header>
 
   <!-- CATEGORY NAV -->
@@ -290,22 +318,16 @@
   <!-- MENU -->
   <main id="menu-wrap"></main>
 
-  <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-line"></div>
-    <p>Toque nos itens para adicionar ao pedido</p>
+    <p>Toque em + para adicionar ao pedido</p>
   </footer>
 </div>
 
 <!-- CART BAR -->
 <div class="cart-bar hidden" id="cart-bar">
-
-  <!-- Summary -->
   <div class="cart-top">
     <div class="cart-info" id="cart-info"></div>
   </div>
-
-  <!-- Delivery question -->
   <div class="delivery-question" id="dq">
     <span class="dq-label">Vai querer entrega?</span>
     <div class="dq-options">
@@ -317,15 +339,12 @@
              placeholder="Rua, número, bairro…" autocomplete="street-address">
     </div>
   </div>
-
-  <!-- Send -->
   <div class="send-row">
     <button class="send-btn" onclick="handleSend()">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
       Enviar pedido
     </button>
   </div>
-
 </div>
 
 <script>
@@ -347,23 +366,23 @@ const menu = {
       {name:"Portuguesa",          desc:"Presunto, queijo, ovo e tomate", price:10},
     ],
     "Especiais":[
-      {name:"Costela",              desc:"Costela desfiada",                       price:15,premium:true},
-      {name:"Costela c/ Queijo",    desc:"Costela com queijo",                     price:15,premium:true},
-      {name:"Bacon",                desc:"Bacon crocante",                         price:15,premium:true},
-      {name:"X-Tudo",               desc:"Carne, queijo, frango, calabresa e mais",price:15,premium:true},
-      {name:"Strogonoff de Frango", desc:"Strogonoff cremoso",                    price:15,premium:true},
-      {name:"Carne Seca",           desc:"Carne seca desfiada",                   price:15,premium:true},
-      {name:"Pernil",               desc:"Pernil desfiado",                        price:15,premium:true},
-      {name:"Palmito",              desc:"Palmito pupunha",                        price:15,premium:true},
+      {name:"Costela",              desc:"Costela desfiada",                        price:15,premium:true},
+      {name:"Costela c/ Queijo",    desc:"Costela com queijo",                      price:15,premium:true},
+      {name:"Bacon",                desc:"Bacon crocante",                          price:15,premium:true},
+      {name:"X-Tudo",               desc:"Carne, queijo, frango, calabresa e mais", price:15,premium:true},
+      {name:"Strogonoff de Frango", desc:"Strogonoff cremoso",                      price:15,premium:true},
+      {name:"Carne Seca",           desc:"Carne seca desfiada",                     price:15,premium:true},
+      {name:"Pernil",               desc:"Pernil desfiado",                          price:15,premium:true},
+      {name:"Palmito",              desc:"Palmito pupunha",                          price:15,premium:true},
     ],
     "Doces":[
-      {name:"Brigadeiro",            desc:"Chocolate meio amargo", price:12},
-      {name:"Prestígio",             desc:"Coco com chocolate",    price:12},
-      {name:"Doce de Leite",         desc:"Doce de leite cremoso", price:12},
-      {name:"Brigadeiro c/ Morango", desc:"Brigadeiro com morango",price:12},
-      {name:"Banana c/ Canela",      desc:"Banana caramelizada",   price:12},
-      {name:"Nutella",               desc:"Creme de avelã",        price:15,premium:true},
-      {name:"Romeu e Julieta",       desc:"Goiabada com queijo",   price:12},
+      {name:"Brigadeiro",            desc:"Chocolate meio amargo",  price:12},
+      {name:"Prestígio",             desc:"Coco com chocolate",     price:12},
+      {name:"Doce de Leite",         desc:"Doce de leite cremoso",  price:12},
+      {name:"Brigadeiro c/ Morango", desc:"Brigadeiro com morango", price:12},
+      {name:"Banana c/ Canela",      desc:"Banana caramelizada",    price:12},
+      {name:"Nutella",               desc:"Creme de avelã",         price:15,premium:true},
+      {name:"Romeu e Julieta",       desc:"Goiabada com queijo",    price:12},
     ]
   },
   salgados:{
@@ -374,10 +393,10 @@ const menu = {
       {name:"Risoles de Carne",           desc:"Carne moída temperada",      price:7},
       {name:"Bolinha de Queijo",          desc:"Queijo coalho empanado",     price:8},
       {name:"Kibe",                       desc:"Trigo com carne e hortelã",  price:7},
-      {name:"Kibe c/ Requeijão",          desc:"Kibe recheado",             price:8},
+      {name:"Kibe c/ Requeijão",          desc:"Kibe recheado",              price:8},
       {name:"Esfiha de Carne",            desc:"Aberta com carne e tomate",  price:6},
       {name:"Esfiha de Frango",           desc:"Aberta com frango",          price:6},
-      {name:"Enroladinho de Salsicha",    desc:"Massa folhada",             price:6},
+      {name:"Enroladinho de Salsicha",    desc:"Massa folhada",              price:6},
       {name:"Folhado de Calabresa",       desc:"Calabresa e queijo",         price:8},
       {name:"Pão de Queijo",              desc:"Tradicional mineiro",        price:4},
       {name:"Croquete de Carne",          desc:"Tempero caseiro",            price:6},
@@ -402,104 +421,94 @@ const menu = {
   }
 };
 
-// State
-const cart     = new Map();
-let dqShown    = false;
-let deliveryChoice = null;
+const cart = new Map();
+let dqShown = false, deliveryChoice = null;
+const fmt  = n => 'R$ ' + n.toFixed(2).replace('.',',');
+const toId = s => s.replace(/[^a-z0-9]/gi,'_');
 
-const fmt  = n  => 'R$ ' + n.toFixed(2).replace('.',',');
-const toId = s  => s.replace(/[^a-z0-9]/gi,'_');
-
-// ── RENDER MENU ──────────────────────────────────────────────────────
 function renderMenu(cat) {
   const wrap = document.getElementById('menu-wrap');
   let html = '';
   Object.entries(menu[cat]).forEach(([sec, items]) => {
     html += `<div class="section-label"><h2>${sec}</h2></div>`;
     items.forEach(item => {
-      const id  = toId(item.name);
-      const qty = cart.has(id) ? cart.get(id).qty : 0;
+      const id      = toId(item.name);
+      const qty     = cart.has(id) ? cart.get(id).qty : 0;
       const inCart  = qty > 0 ? ' in-cart' : '';
       const premium = item.premium ? ' premium' : '';
+      const desc    = item.desc ? `<span class="item-desc">${item.desc}</span>` : '';
+      const safeName = item.name.replace(/'/g,"\\'");
       html += `
-        <div class="item${inCart}${premium} fade-in" id="row-${id}"
-             onclick="tap('${id}','${item.name.replace(/'/g,"\\'")}',${item.price})">
-          <span class="item-name">${item.name}</span>
-          <span class="item-qty" id="qty-${id}">${qty > 0 ? '×'+qty : ''}</span>
-          <button class="item-clear" title="Remover" onclick="removeItem(event,'${id}')">×</button>
-          <span class="item-dots"></span>
-          <span class="item-price">${fmt(item.price)}</span>
+        <div class="item${inCart}${premium} fade-in" id="row-${id}">
+          <div class="item-info">
+            <span class="item-name">${item.name}</span>${desc}
+          </div>
+          <div class="item-right">
+            <span class="item-price">${fmt(item.price)}</span>
+            <div class="item-stepper">
+              <button class="btn-stepper minus" onclick="decrement(event,'${id}')" title="Remover">×</button>
+              <span   class="item-qty" id="qty-${id}">${qty}</span>
+              <button class="btn-stepper plus"  onclick="increment(event,'${id}','${safeName}',${item.price})" title="Mais">+</button>
+            </div>
+            <button class="btn-add-initial" onclick="addFirst(event,'${id}','${safeName}',${item.price})" title="Adicionar">+</button>
+          </div>
         </div>`;
     });
   });
   wrap.innerHTML = html;
 }
 
-// ── TAP — add / increment ────────────────────────────────────────────
-function tap(id, name, price) {
-  if (cart.has(id)) {
-    cart.get(id).qty++;
-  } else {
-    cart.set(id, {name, price, qty:1});
-  }
-  const qty   = cart.get(id).qty;
+function addFirst(e, id, name, price) {
+  e.stopPropagation();
+  cart.set(id, {name, price, qty:1});
+  updateRow(id); refreshBar();
+}
+function increment(e, id, name, price) {
+  e.stopPropagation();
+  if (cart.has(id)) cart.get(id).qty++;
+  else cart.set(id, {name, price, qty:1});
+  updateRow(id); refreshBar();
+}
+function decrement(e, id) {
+  e.stopPropagation();
+  if (!cart.has(id)) return;
+  cart.get(id).qty--;
+  if (cart.get(id).qty <= 0) cart.delete(id);
+  updateRow(id); refreshBar();
+}
+function updateRow(id) {
   const row   = document.getElementById('row-'+id);
   const badge = document.getElementById('qty-'+id);
-  if (badge) badge.textContent = '×'+qty;
-  if (row)   row.classList.add('in-cart');
-  refreshBar();
+  const qty   = cart.has(id) ? cart.get(id).qty : 0;
+  if (badge) badge.textContent = qty;
+  if (row) { qty > 0 ? row.classList.add('in-cart') : row.classList.remove('in-cart'); }
 }
-
-// ── REMOVE ONE ITEM ──────────────────────────────────────────────────
-function removeItem(event, id) {
-  event.stopPropagation(); // don't trigger tap
-  cart.delete(id);
-  const row   = document.getElementById('row-'+id);
-  const badge = document.getElementById('qty-'+id);
-  if (badge) badge.textContent = '';
-  if (row)   row.classList.remove('in-cart');
-  refreshBar();
-}
-
-// ── CART BAR ─────────────────────────────────────────────────────────
 function refreshBar() {
   const bar  = document.getElementById('cart-bar');
   const info = document.getElementById('cart-info');
-  if (!cart.size) {
-    bar.classList.add('hidden');
-    closeDQ();
-    return;
-  }
+  if (!cart.size) { bar.classList.add('hidden'); closeDQ(); return; }
   bar.classList.remove('hidden');
   let total=0, count=0;
   cart.forEach(e => { total += e.price*e.qty; count += e.qty; });
   info.innerHTML = `<strong>${count} ${count===1?'item':'itens'}</strong> &middot; ${fmt(total)}`;
 }
-
-// ── DELIVERY QUESTION ────────────────────────────────────────────────
 function openDQ() {
   dqShown = true;
   document.getElementById('dq').classList.add('open');
 }
 function closeDQ() {
-  dqShown = false;
-  deliveryChoice = null;
-  document.getElementById('dq').classList.remove('open');
-  document.getElementById('addr-wrap').classList.remove('open');
-  document.getElementById('dq-yes').classList.remove('chosen');
-  document.getElementById('dq-no').classList.remove('chosen');
+  dqShown = false; deliveryChoice = null;
+  ['dq','addr-wrap'].forEach(id => document.getElementById(id).classList.remove('open'));
+  ['dq-yes','dq-no'].forEach(id => document.getElementById(id).classList.remove('chosen'));
   document.getElementById('addr-input').value = '';
 }
-
 function chooseDelivery(yes) {
   deliveryChoice = yes;
-  document.getElementById('dq-yes').classList.toggle('chosen',  yes);
-  document.getElementById('dq-no').classList.toggle('chosen',  !yes);
-  document.getElementById('addr-wrap').classList.toggle('open',  yes);
+  document.getElementById('dq-yes').classList.toggle('chosen', yes);
+  document.getElementById('dq-no').classList.toggle('chosen', !yes);
+  document.getElementById('addr-wrap').classList.toggle('open', yes);
   if (yes) setTimeout(() => document.getElementById('addr-input').focus(), 260);
 }
-
-// ── HANDLE SEND ──────────────────────────────────────────────────────
 function handleSend() {
   if (!cart.size) return;
   if (!dqShown) { openDQ(); return; }
@@ -508,26 +517,17 @@ function handleSend() {
     const addr = document.getElementById('addr-input').value.trim();
     if (!addr) { document.getElementById('addr-input').focus(); return; }
   }
-
-  let lines = ['*Pedido — Mary Pastelaria*', ''];
-  let total = 0;
+  let lines = ['*Pedido — Mary Pastelaria*',''], total = 0;
   cart.forEach(e => {
-    const sub = e.price * e.qty;
-    total += sub;
+    const sub = e.price*e.qty; total += sub;
     lines.push(`• ${e.qty}x ${e.name} — ${fmt(sub)}`);
   });
-  lines.push('', `*Total: ${fmt(total)}*`, '');
-  if (deliveryChoice) {
-    const addr = document.getElementById('addr-input').value.trim();
-    lines.push(`- *Entrega:* ${addr}`);
-  } else {
-    lines.push('- *Retirada no local*');
-  }
-
+  lines.push('',`*Total: ${fmt(total)}*`,'');
+  lines.push(deliveryChoice
+    ? `- *Entrega:* ${document.getElementById('addr-input').value.trim()}`
+    : '- *Retirada no local*');
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
 }
-
-// ── CATEGORY ─────────────────────────────────────────────────────────
 function selectCat(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
