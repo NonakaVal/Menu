@@ -7,14 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #faf8f5;
-    --surface:   #f2ede6;
-    --red:       #c0311c;
-    --red-dim:   #9a2716;
-    --red-faint: rgba(192,49,28,0.07);
-    --text:      #1a1613;
-    --muted:     #7a6e62;
-    --border:    #ddd6cc;
+    --bg:        #fffdf9;
+    --surface:   #f5f0e8;
+    --red:       #d42b14;
+    --red-dim:   #aa2210;
+    --red-faint: rgba(212,43,20,0.08);
+    --yellow:    #e8a800;
+    --text:      #1e1608;
+    --muted:     #6b5c45;
+    --border:    #e0d8cc;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -46,7 +47,7 @@
   .header::after {
     content:''; position:absolute; top:0; left:50%;
     transform:translateX(-50%);
-    width:1px; height:20px; background:var(--red);
+    width:1px; height:20px; background:var(--yellow);
   }
   .brand-logo {
     display:block;
@@ -71,15 +72,15 @@
   /* ── CATEGORY NAV ── */
   .cat-nav {
     position:sticky; top:0; z-index:40;
-    background:rgba(250,248,245,0.97);
+    background:rgba(255,253,249,0.97);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
     display:flex; padding:0 20px;
   }
   .cat-btn {
     flex:1; background:none; border:none; cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-weight:400;
-    font-size:0.65rem; letter-spacing:0.26em; text-transform:uppercase;
+    font-family:'DM Sans',sans-serif; font-weight:500;
+    font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase;
     color:var(--muted); padding:14px 8px 13px;
     border-bottom:1.5px solid transparent;
     transition:color .18s, border-color .18s;
@@ -93,15 +94,15 @@
     padding:28px 28px 14px;
   }
   .section-label h2 {
-    font-size:0.56rem; letter-spacing:0.36em; text-transform:uppercase;
-    color:var(--red); font-weight:500; white-space:nowrap;
+    font-size:0.62rem; letter-spacing:0.32em; text-transform:uppercase;
+    color:var(--yellow); font-weight:600; white-space:nowrap;
   }
   .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
 
   /* ── ITEM ROW ── */
   .item {
     display:flex; align-items:baseline; gap:10px;
-    padding:11px 28px;
+    padding:14px 28px;
     border-bottom:1px solid var(--border);
     cursor:pointer;
     transition:background .12s;
@@ -113,7 +114,7 @@
   .item:hover { background:var(--surface); }
 
   .item-name {
-    font-size:0.95rem; font-weight:400;
+    font-size:1.02rem; font-weight:500;
     color:var(--text); letter-spacing:.01em;
     flex:1; min-width:0;
     transition:color .15s;
@@ -124,15 +125,16 @@
 
   .item-price {
     font-family:'Playfair Display',serif;
-    font-size:0.9rem; color:var(--muted); white-space:nowrap;
+    font-size:1rem; color:var(--text); white-space:nowrap;
   }
   .item.premium .item-price { color:var(--red); }
 
   /* Qty badge */
   .item-qty {
-    font-size:0.68rem; color:var(--muted);
-    min-width:14px; text-align:right;
+    font-size:0.78rem; color:var(--muted);
+    min-width:16px; text-align:right;
     font-variant-numeric:tabular-nums;
+    font-weight:500;
     transition:color .15s;
   }
   .item.in-cart .item-qty { color:var(--red); }
@@ -163,7 +165,7 @@
     border-top:1px solid var(--border);
     padding:14px 24px 20px;
     z-index:100;
-    box-shadow:0 -4px 24px rgba(0,0,0,0.07);
+    box-shadow:0 -4px 24px rgba(0,0,0,0.09);
     transition:transform .28s ease, opacity .28s ease;
   }
   .cart-bar.hidden {
@@ -249,7 +251,7 @@
 
   /* ── FOOTER ── */
   .footer { text-align:center; padding:44px 28px 28px; border-top:1px solid var(--border); }
-  .footer-line { width:1px; height:24px; background:var(--red); margin:0 auto 18px; }
+  .footer-line { width:1px; height:24px; background:var(--yellow); margin:0 auto 18px; }
   .footer p { font-size:0.62rem; color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; }
 
   @media(max-width:480px){
