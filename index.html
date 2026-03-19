@@ -7,13 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #0f0d0b;
-    --surface:   #161310;
-    --red:       #e02d1b;
-    --red-dim:   #a82010;
-    --text:      #ede8e0;
-    --muted:     #7a7068;
-    --border:    #272320;
+    --bg:        #faf8f5;
+    --surface:   #f2ede6;
+    --red:       #c0311c;
+    --red-dim:   #9a2716;
+    --red-faint: rgba(192,49,28,0.07);
+    --text:      #1a1613;
+    --muted:     #7a6e62;
+    --border:    #ddd6cc;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -38,55 +39,46 @@
   /* ── HEADER ── */
   .header {
     text-align: center;
-    padding: 56px 32px 40px;
+    padding: 44px 32px 32px;
     border-bottom: 1px solid var(--border);
     position: relative;
   }
   .header::after {
     content:''; position:absolute; top:0; left:50%;
     transform:translateX(-50%);
-    width:1px; height:24px; background:var(--red);
+    width:1px; height:20px; background:var(--red);
   }
-  .logo-ring {
-    width:80px; height:80px; border-radius:50%;
-    border:1px solid var(--border);
-    background:var(--surface);
-    display:flex; align-items:center; justify-content:center;
-    margin:0 auto 20px;
-  }
-  .chef-icon { width:48px; height:48px; }
   .brand-logo {
     display:block;
-    width:clamp(180px, 45vw, 320px);
+    width:clamp(160px, 42vw, 280px);
     height:auto;
-    margin:0 auto;
+    margin:0 auto 6px;
   }
-  /* If you keep the markup from the original design, this can style the highlighted word. */
   .brand-name em { font-style:normal; color:var(--red); }
   .brand-sub {
-    margin-top:8px;
-    font-size:0.62rem; letter-spacing:0.36em; text-transform:uppercase;
+    margin-top:4px;
+    font-size:0.55rem; letter-spacing:0.36em; text-transform:uppercase;
     color:var(--muted);
   }
   .brand-contact {
-    margin-top:16px;
+    margin-top:14px;
     display:inline-flex; align-items:center; gap:8px;
-    font-size:0.88rem; color:var(--red); letter-spacing:0.03em;
+    font-size:0.86rem; color:var(--red); letter-spacing:0.03em;
   }
   .wa-icon { width:14px; height:14px; fill:var(--red); flex-shrink:0; }
-  .brand-addr { margin-top:7px; font-size:0.68rem; color:var(--muted); letter-spacing:0.07em; }
+  .brand-addr { margin-top:6px; font-size:0.68rem; color:var(--muted); letter-spacing:0.07em; }
 
   /* ── CATEGORY NAV ── */
   .cat-nav {
     position:sticky; top:0; z-index:40;
-    background:rgba(15,13,11,0.96);
+    background:rgba(250,248,245,0.97);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
     display:flex; padding:0 20px;
   }
   .cat-btn {
     flex:1; background:none; border:none; cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-weight:300;
+    font-family:'DM Sans',sans-serif; font-weight:400;
     font-size:0.65rem; letter-spacing:0.26em; text-transform:uppercase;
     color:var(--muted); padding:14px 8px 13px;
     border-bottom:1.5px solid transparent;
@@ -98,11 +90,11 @@
   /* ── SECTIONS ── */
   .section-label {
     display:flex; align-items:center; gap:14px;
-    padding:32px 28px 16px;
+    padding:28px 28px 14px;
   }
   .section-label h2 {
     font-size:0.56rem; letter-spacing:0.36em; text-transform:uppercase;
-    color:var(--red); font-weight:400; white-space:nowrap;
+    color:var(--red); font-weight:500; white-space:nowrap;
   }
   .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
 
@@ -115,12 +107,13 @@
     transition:background .12s;
     -webkit-tap-highlight-color:transparent;
     user-select:none;
+    position:relative;
   }
   .item:last-child { border-bottom:none; }
   .item:hover { background:var(--surface); }
 
   .item-name {
-    font-size:0.93rem; font-weight:300;
+    font-size:0.95rem; font-weight:400;
     color:var(--text); letter-spacing:.01em;
     flex:1; min-width:0;
     transition:color .15s;
@@ -135,7 +128,7 @@
   }
   .item.premium .item-price { color:var(--red); }
 
-  /* Qty pill — tiny, inline after name */
+  /* Qty badge */
   .item-qty {
     font-size:0.68rem; color:var(--muted);
     min-width:14px; text-align:right;
@@ -144,14 +137,33 @@
   }
   .item.in-cart .item-qty { color:var(--red); }
 
+  /* Per-item clear "×" — only visible when in-cart */
+  .item-clear {
+    display:none;
+    align-items:center; justify-content:center;
+    width:18px; height:18px;
+    background:none; border:none; cursor:pointer;
+    color:var(--muted);
+    font-size:0.82rem; line-height:1;
+    border-radius:50%;
+    margin-left:2px;
+    transition:color .15s, background .15s;
+    flex-shrink:0;
+    position:relative; top:-1px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .item.in-cart .item-clear { display:flex; }
+  .item-clear:hover { color:var(--red); background:var(--red-faint); }
+
   /* ── CART BAR ── */
   .cart-bar {
     position:fixed; bottom:0; left:50%; transform:translateX(-50%);
     width:100%; max-width:600px;
-    background:var(--surface);
+    background:var(--bg);
     border-top:1px solid var(--border);
     padding:14px 24px 20px;
     z-index:100;
+    box-shadow:0 -4px 24px rgba(0,0,0,0.07);
     transition:transform .28s ease, opacity .28s ease;
   }
   .cart-bar.hidden {
@@ -164,19 +176,10 @@
     display:flex; align-items:center; justify-content:space-between;
     margin-bottom:12px;
   }
-  .cart-info { font-size:0.8rem; color:var(--muted); }
-  .cart-info strong { color:var(--text); font-weight:400; }
+  .cart-info { font-size:0.82rem; color:var(--muted); }
+  .cart-info strong { color:var(--text); font-weight:500; }
 
-  /* Clear link */
-  .cart-clear {
-    font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--muted); background:none; border:none; cursor:pointer;
-    font-family:'DM Sans',sans-serif; padding:0;
-    transition:color .15s;
-  }
-  .cart-clear:hover { color:var(--text); }
-
-  /* Delivery question — inline, revealed on send click */
+  /* Delivery question */
   .delivery-question {
     overflow:hidden; max-height:0; opacity:0;
     transition:max-height .28s ease, opacity .25s ease, margin .25s ease;
@@ -199,7 +202,7 @@
     padding:8px 0; cursor:pointer;
     transition:border-color .15s, color .15s, background .15s;
   }
-  .dq-btn.chosen { border-color:var(--red); color:var(--text); background:rgba(224,45,27,0.06); }
+  .dq-btn.chosen { border-color:var(--red); color:var(--text); background:var(--red-faint); }
   .dq-btn:hover:not(.chosen) { border-color:var(--muted); color:var(--text); }
 
   /* Address input */
@@ -210,7 +213,7 @@
   }
   .addr-wrap.open { max-height:52px; opacity:1; margin-top:8px; }
   .addr-input {
-    width:100%; background:var(--bg);
+    width:100%; background:var(--surface);
     border:1px solid var(--border); border-radius:2px;
     color:var(--text); font-family:'DM Sans',sans-serif;
     font-size:0.82rem; font-weight:300;
@@ -226,14 +229,14 @@
     flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
     background:var(--red); color:#fff;
     border:none; border-radius:2px; cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-size:0.75rem;
+    font-family:'DM Sans',sans-serif; font-size:0.73rem;
     font-weight:400; letter-spacing:0.14em; text-transform:uppercase;
-    padding:12px 0;
+    padding:11px 0;
     transition:background .18s;
     text-decoration:none;
   }
   .send-btn:hover { background:var(--red-dim); }
-  .send-btn svg { width:14px; height:14px; fill:#fff; }
+  .send-btn svg { width:13px; height:13px; fill:#fff; }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
@@ -251,8 +254,8 @@
 
   @media(max-width:480px){
     .item { padding:10px 18px; }
-    .section-label { padding:26px 18px 14px; }
-    .header { padding:48px 18px 34px; }
+    .section-label { padding:22px 18px 12px; }
+    .header { padding:40px 18px 28px; }
     .cart-bar { padding:12px 16px 18px; }
     .cat-nav { padding:0 6px; }
   }
@@ -263,9 +266,7 @@
 
   <!-- HEADER -->
   <header class="header">
-
     <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
-    
     <div class="brand-contact">
       <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
       <div class="brand-sub">Pastéis Artesanais · Guapiara-SP</div>
@@ -293,13 +294,12 @@
 <!-- CART BAR -->
 <div class="cart-bar hidden" id="cart-bar">
 
-  <!-- Summary + clear -->
+  <!-- Summary -->
   <div class="cart-top">
     <div class="cart-info" id="cart-info"></div>
-    <button class="cart-clear" onclick="clearCart()">Limpar</button>
   </div>
 
-  <!-- Delivery question (revealed on first "Enviar" attempt) -->
+  <!-- Delivery question -->
   <div class="delivery-question" id="dq">
     <span class="dq-label">Vai querer entrega?</span>
     <div class="dq-options">
@@ -397,9 +397,9 @@ const menu = {
 };
 
 // State
-const cart     = new Map(); // id → {name, price, qty}
-let dqShown    = false;     // delivery question revealed
-let deliveryChoice = null;  // null | true | false
+const cart     = new Map();
+let dqShown    = false;
+let deliveryChoice = null;
 
 const fmt  = n  => 'R$ ' + n.toFixed(2).replace('.',',');
 const toId = s  => s.replace(/[^a-z0-9]/gi,'_');
@@ -420,6 +420,7 @@ function renderMenu(cat) {
              onclick="tap('${id}','${item.name.replace(/'/g,"\\'")}',${item.price})">
           <span class="item-name">${item.name}</span>
           <span class="item-qty" id="qty-${id}">${qty > 0 ? '×'+qty : ''}</span>
+          <button class="item-clear" title="Remover" onclick="removeItem(event,'${id}')">×</button>
           <span class="item-dots"></span>
           <span class="item-price">${fmt(item.price)}</span>
         </div>`;
@@ -428,43 +429,31 @@ function renderMenu(cat) {
   wrap.innerHTML = html;
 }
 
-// ── TAP — add / increment / remove at 9 ──────────────────────────────
+// ── TAP — add / increment ────────────────────────────────────────────
 function tap(id, name, price) {
   if (cart.has(id)) {
-    const e = cart.get(id);
-    if (e.qty >= 9) cart.delete(id);
-    else            e.qty++;
+    cart.get(id).qty++;
   } else {
     cart.set(id, {name, price, qty:1});
   }
-  const qty   = cart.has(id) ? cart.get(id).qty : 0;
+  const qty   = cart.get(id).qty;
   const row   = document.getElementById('row-'+id);
   const badge = document.getElementById('qty-'+id);
-  if (badge) badge.textContent = qty > 0 ? '×'+qty : '';
-  if (row)   row.classList.toggle('in-cart', qty > 0);
+  if (badge) badge.textContent = '×'+qty;
+  if (row)   row.classList.add('in-cart');
   refreshBar();
 }
 
-// Long-press to remove immediately
-(function longPress(){
-  let timer;
-  document.addEventListener('pointerdown', e => {
-    const row = e.target.closest('.item');
-    if (!row) return;
-    timer = setTimeout(() => {
-      const id = row.id.replace('row-','');
-      if (cart.has(id)) {
-        cart.delete(id);
-        const badge = document.getElementById('qty-'+id);
-        if (badge) badge.textContent = '';
-        row.classList.remove('in-cart');
-        refreshBar();
-      }
-    }, 600);
-  });
-  document.addEventListener('pointerup',    () => clearTimeout(timer));
-  document.addEventListener('pointermove',  () => clearTimeout(timer));
-})();
+// ── REMOVE ONE ITEM ──────────────────────────────────────────────────
+function removeItem(event, id) {
+  event.stopPropagation(); // don't trigger tap
+  cart.delete(id);
+  const row   = document.getElementById('row-'+id);
+  const badge = document.getElementById('qty-'+id);
+  if (badge) badge.textContent = '';
+  if (row)   row.classList.remove('in-cart');
+  refreshBar();
+}
 
 // ── CART BAR ─────────────────────────────────────────────────────────
 function refreshBar() {
@@ -479,19 +468,6 @@ function refreshBar() {
   let total=0, count=0;
   cart.forEach(e => { total += e.price*e.qty; count += e.qty; });
   info.innerHTML = `<strong>${count} ${count===1?'item':'itens'}</strong> &middot; ${fmt(total)}`;
-}
-
-function clearCart() {
-  cart.clear();
-  closeDQ();
-  // reset all visible badges & states
-  document.querySelectorAll('.item.in-cart').forEach(r => {
-    r.classList.remove('in-cart');
-    const id = r.id.replace('row-','');
-    const b  = document.getElementById('qty-'+id);
-    if (b) b.textContent = '';
-  });
-  document.getElementById('cart-bar').classList.add('hidden');
 }
 
 // ── DELIVERY QUESTION ────────────────────────────────────────────────
@@ -520,20 +496,13 @@ function chooseDelivery(yes) {
 // ── HANDLE SEND ──────────────────────────────────────────────────────
 function handleSend() {
   if (!cart.size) return;
-
-  // Step 1: show delivery question if not yet shown
   if (!dqShown) { openDQ(); return; }
-
-  // Step 2: need a choice
   if (deliveryChoice === null) return;
-
-  // Step 3: if delivery chosen, need address
   if (deliveryChoice) {
     const addr = document.getElementById('addr-input').value.trim();
     if (!addr) { document.getElementById('addr-input').focus(); return; }
   }
 
-  // Build + send
   let lines = ['*Pedido — Mary Pastelaria*', ''];
   let total = 0;
   cart.forEach(e => {
