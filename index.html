@@ -6,284 +6,267 @@
 <title>Mary Pastelaria — Cardápio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Forum&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:        #ffffff;
-    --surface:   #f7f3ee;
+    --surface:   #f6f2ed;
     --red:       #a0171c;
-    --red-dim:   #a01015;
-    --red-faint: rgba(192,21,26,0.08);
-    --text:      #000000;
-    --muted:     #6e6457;
-    --border:    #e8dfd4;
+    --red-faint: rgba(160,23,28,0.07);
+    --text:      #0f0e0c;
+    --muted:     #7a6e62;
+    --border:    #ebe3da;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; width:100%; overflow-x:hidden; }
-
+  html { scroll-behavior:smooth; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Forum', serif;
-    font-weight: 400;
+    font-family: 'Sora', sans-serif;
     -webkit-font-smoothing: antialiased;
-    width:100%; overflow-x:hidden;
+    overflow-x: hidden;
   }
 
-  .page { width:100%; max-width:600px; margin:0 auto; padding-bottom:150px; }
+  .page { width:100%; max-width:600px; margin:0 auto; padding-bottom:160px; }
 
   /* ── HERO ── */
   .hero {
-    position: relative;
-    background: radial-gradient(circle at top, rgb(238,14,29), transparent 40%),
-                linear-gradient(to bottom, #ff1121 0%, #e71e32 50%, #ffffff 100%);
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 65% 45% at 50% 32%, rgba(255,255,255,0.08) 0%, transparent 70%);
-    pointer-events: none;
+    background: linear-gradient(to bottom, #bb1118 0%, #dd1f28 42%, #f0ddd6 80%, #fff 100%);
   }
   .hero-content {
-    position: relative; z-index: 2;
     display: flex; flex-direction: column; align-items: center;
-    padding: 48px 32px 96px;
+    padding: 44px 28px 80px;
   }
   .brand-logo {
     display: block;
-    width: clamp(350px, 80vw, 500px);
+    width: clamp(280px, 72vw, 440px);
     height: auto;
-    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.55)) drop-shadow(0 1px 4px rgba(0,0,0,0.7));
-    animation: logoIn .85s .05s cubic-bezier(.22,1,.36,1) both;
+    filter: drop-shadow(0 3px 14px rgba(0,0,0,0.42));
   }
 
-  /* ── CATEGORY NAV ── */
+  /* ── NAV WRAPPER — sticky ── */
   .cat-nav {
-    position: sticky; top: 0; z-index: 40;
-    background: rgba(255,255,255,0.97);
-    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #fff;
     border-bottom: 1px solid var(--border);
-    display: flex; padding: 0 20px;
   }
-  .cat-btn {
+
+
+
+  /* icon cards — collapse when sticky */
+  .cat-cards {
+    display: flex;
+    padding: 8px 12px 0;
+    gap: 6px;
+    max-height: 72px;
+    overflow: hidden;
+    opacity: 1;
+    transition: max-height .2s ease, opacity .18s ease, padding .2s ease;
+  }
+  .cat-nav.scrolled .cat-cards {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .cat-card {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 7px 4px 8px;
+    border-radius: 10px;
+    background: none; border: none; cursor: pointer;
+    transition: background .15s;
+  }
+  .cat-card:hover  { background: var(--surface); }
+  .cat-card.active { background: var(--surface); }
+
+  .cat-icon {
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 9px;
+    background: var(--surface);
+  }
+  .cat-card.active .cat-icon { background: var(--border); }
+  .cat-icon svg { width: 16px; height: 16px; stroke: var(--muted); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .cat-card.active .cat-icon svg { stroke: var(--red); }
+
+  /* tab bar (always visible, thinner) */
+  .cat-tabs {
+    display: flex;
+    padding: 0 12px;
+  }
+  .cat-tab {
     flex: 1; background: none; border: none; cursor: pointer;
-    font-family: 'Roboto', sans-serif; font-weight: 600;
-    font-size: 1rem; letter-spacing: 0.18em;
-    color: var(--muted); padding: 15px 8px 14px;
+    font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); padding: 11px 4px 10px;
     border-bottom: 2px solid transparent;
-    transition: color .18s, border-color .18s;
+    transition: color .15s, border-color .15s;
   }
-  .cat-btn.active { color: var(--text); border-bottom-color: var(--red); }
-  .cat-btn:hover:not(.active) { color: var(--text); }
+  .cat-tab.active { color: var(--text); border-bottom-color: var(--red); }
+  .cat-tab:hover:not(.active) { color: var(--text); }
 
   /* ── SECTION LABEL ── */
   .section-label {
-    display: flex; align-items: center; gap: 12px;
-    padding: 22px 24px 8px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 20px 20px 7px;
   }
   .section-label h2 {
-    font-family: 'Forum', serif;
-    font-size: 1rem; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--red); font-weight: 900; white-space: nowrap;
+    font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--red); white-space: nowrap;
   }
   .section-label::after { content:''; flex:1; height:1px; background: var(--border); }
 
   /* ── ITEM ROW ── */
   .item {
     display: flex; align-items: center;
-    padding: 11px 24px;
+    padding: 12px 20px;
     border-bottom: 1px solid var(--border);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
-    transition: background .12s;
-    min-height: 46px;
+    min-height: 48px;
   }
   .item:last-child { border-bottom: none; }
   .item:hover { background: var(--surface); }
 
   .item-name {
     flex: 1; min-width: 0;
-    font-family: 'Forum', serif;
-    font-size: 1rem; font-weight: 900;
+    font-size: 0.88rem; font-weight: 600;
     color: var(--text); line-height: 1.2;
-    transition: color .15s;
   }
   .item.in-cart .item-name { color: var(--red); }
 
   .item-right {
     display: flex; align-items: center; gap: 8px;
-    flex-shrink: 0; margin-left: 12px;
+    flex-shrink: 0; margin-left: 10px;
   }
 
   .item-price {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.88rem; font-weight: 500;
+    font-size: 0.78rem; font-weight: 500;
     color: var(--muted); white-space: nowrap;
-    transition: color .15s;
-    min-width: 52px; text-align: right;
-    letter-spacing: 0.03em;
+    min-width: 50px; text-align: right;
   }
-  .item.premium .item-price { color: var(--red); }
+  .item.premium  .item-price { color: var(--red); }
   .item.in-cart  .item-price { color: var(--red); }
 
-  /* ── ADD BUTTON (initial) — sutil, outline ── */
+  /* add button */
   .btn-add-initial {
-    width: 20px; height: 20px; border-radius: 50%;
+    width: 22px; height: 22px; border-radius: 50%;
     background: transparent; color: var(--muted);
     border: 1px solid var(--border); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; font-weight: 300; line-height: 1;
+    font-size: 1.05rem; font-weight: 300; line-height: 1;
     flex-shrink: 0;
-    transition: border-color .15s, color .15s, transform .1s;
-    -webkit-tap-highlight-color: transparent;
   }
-  .btn-add-initial:hover  { border-color: var(--red); color: var(--red); transform: scale(1.1); }
-  .btn-add-initial:active { transform: scale(0.88); }
+  .btn-add-initial:hover { border-color: var(--red); color: var(--red); }
   .item.in-cart .btn-add-initial { display: none; }
 
-  /* ── STEPPER ── */
+  /* stepper */
   .item-stepper { display: none; align-items: center; gap: 5px; }
   .item.in-cart .item-stepper { display: flex; }
 
   .item-qty {
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.8rem; font-weight: 400; color: var(--red);
+    font-size: 0.75rem; font-weight: 600; color: var(--red);
     min-width: 14px; text-align: center;
-    font-variant-numeric: tabular-nums;
   }
 
   .btn-stepper {
-    width: 20px; height: 20px; border-radius: 50%;
-    cursor: pointer;
+    width: 22px; height: 22px; border-radius: 50%;
+    cursor: pointer; background: transparent;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.95rem; line-height: 1;
-    flex-shrink: 0;
-    transition: border-color .15s, color .15s, transform .1s;
-    -webkit-tap-highlight-color: transparent;
+    font-size: 1rem; line-height: 1; flex-shrink: 0;
   }
-  .btn-stepper.plus {
-    background: transparent; color: var(--red);
-    border: 1px solid rgba(192,21,26,0.35);
-  }
-  .btn-stepper.plus:hover { border-color: var(--red); transform: scale(1.1); }
-  .btn-stepper.minus {
-    background: transparent; color: var(--muted);
-    border: 1px solid var(--border);
-  }
+  .btn-stepper.plus  { color: var(--red);   border: 1px solid rgba(160,23,28,0.3); }
+  .btn-stepper.plus:hover  { border-color: var(--red); }
+  .btn-stepper.minus { color: var(--muted); border: 1px solid var(--border); }
   .btn-stepper.minus:hover { color: var(--red); border-color: var(--red); }
-  .btn-stepper:active { transform: scale(0.88); }
 
   /* ── CART BAR ── */
   .cart-bar {
     position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
     width: 100%; max-width: 600px;
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 14px 24px 22px;
-    z-index: 100;
-    box-shadow: 0 -4px 24px rgba(0,0,0,0.09);
-    transition: transform .28s ease, opacity .28s ease;
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 14px 20px 24px; z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    transition: transform .24s ease, opacity .24s ease;
   }
-  .cart-bar.hidden {
-    transform: translateX(-50%) translateY(110%);
-    opacity: 0; pointer-events: none;
-  }
-  .cart-top { display: flex; align-items: center; margin-bottom: 12px; }
-  .cart-info { font-size: 0.85rem; color: var(--muted); font-family: 'Forum', serif; }
-  .cart-info strong { color: var(--text); }
+  .cart-bar.hidden { transform: translateX(-50%) translateY(110%); opacity:0; pointer-events:none; }
 
-  .delivery-question {
-    overflow: hidden; max-height: 0; opacity: 0;
-    transition: max-height .28s ease, opacity .25s ease, margin .25s ease;
-  }
-  .delivery-question.open { max-height: 110px; opacity: 1; margin-bottom: 12px; }
+  .cart-top { margin-bottom: 12px; }
+  .cart-info { font-size: 0.82rem; font-weight: 500; color: var(--muted); }
+  .cart-info strong { color: var(--text); font-weight: 700; }
+
+  .delivery-question { overflow:hidden; max-height:0; opacity:0; transition: max-height .25s ease, opacity .22s ease, margin .22s ease; }
+  .delivery-question.open { max-height:120px; opacity:1; margin-bottom:12px; }
 
   .dq-label {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.65rem; letter-spacing: 0.22em; 
-    color: var(--muted); margin-bottom: 8px; display: block; font-weight: 400;
+    display: block; font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
   }
   .dq-options { display: flex; gap: 8px; }
   .dq-btn {
-    flex: 1; background: none; border: 1px solid var(--border);
-    color: var(--muted); border-radius: 3px;
-    font-family: 'Roboto', sans-serif; font-size: 0.75rem;
-    font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 9px 0; cursor: pointer;
+    flex:1; background:none; border:1px solid var(--border);
+    color:var(--muted); border-radius:4px;
+    font-family:'Sora',sans-serif; font-size:0.63rem;
+    font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    padding:9px 0; cursor:pointer;
     transition: border-color .15s, color .15s, background .15s;
   }
-  .dq-btn.chosen { border-color: var(--red); color: var(--text); background: var(--red-faint); }
-  .dq-btn:hover:not(.chosen) { border-color: var(--muted); color: var(--text); }
+  .dq-btn.chosen { border-color:var(--red); color:var(--text); background:var(--red-faint); }
+  .dq-btn:hover:not(.chosen) { border-color:var(--muted); color:var(--text); }
 
-  .addr-wrap {
-    overflow: hidden; max-height: 0; opacity: 0;
-    transition: max-height .24s ease, opacity .22s ease, margin .22s ease;
-  }
-  .addr-wrap.open { max-height: 52px; opacity: 1; margin-top: 8px; }
+  .addr-wrap { overflow:hidden; max-height:0; opacity:0; transition: max-height .2s ease, opacity .2s ease, margin .2s ease; }
+  .addr-wrap.open { max-height:52px; opacity:1; margin-top:8px; }
   .addr-input {
-    width: 100%; background: var(--surface);
-    border: 1px solid var(--border); border-radius: 3px;
-    color: var(--text); font-family: 'Oswald', sans-serif;
-    font-size: 0.85rem; font-weight: 400;
-    padding: 9px 12px; outline: none;
-    transition: border-color .18s;
+    width:100%; background:var(--surface);
+    border:1px solid var(--border); border-radius:4px;
+    color:var(--text); font-family:'Sora',sans-serif;
+    font-size:0.78rem; font-weight:400;
+    padding:9px 12px; outline:none;
   }
-  .addr-input::placeholder { color: var(--muted); }
-  .addr-input:focus { border-color: var(--red); }
+  .addr-input::placeholder { color:var(--muted); }
+  .addr-input:focus { border-color:var(--red); }
 
-  .send-row { display: flex; }
   .send-btn {
-    flex: 1; display: flex; align-items: center; justify-content: center; gap: 9px;
-    background: var(--red); color: #fff;
-    border: none; border-radius: 3px; cursor: pointer;
-    font-family: 'Roboto', sans-serif; font-size: 0.78rem;
-    font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
-    padding: 13px 0;
-    transition: background .18s;
+    width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--red); color:#fff; border:none; border-radius:4px; cursor:pointer;
+    font-family:'Sora',sans-serif; font-size:0.67rem;
+    font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
+    padding:13px 0; transition:background .15s;
   }
-  .send-btn:hover { background: var(--red-dim); }
-  .send-btn svg { width: 14px; height: 14px; fill: #fff; }
+  .send-btn:hover { background:#861216; }
+  .send-btn svg { width:14px; height:14px; fill:#fff; }
 
-  /* ── TOAST ── */
+  /* toast */
   .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(0);
-    background: #1a1a1a; color: #fff;
-    font-family: 'Oswald', sans-serif; font-size: 0.72rem; font-weight: 400;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    padding: 10px 22px; border-radius: 100px;
-    z-index: 200; opacity: 0; pointer-events: none;
-    transition: opacity .25s ease, transform .25s ease;
-    white-space: nowrap;
+    position:fixed; bottom:86px; left:50%; transform:translateX(-50%);
+    background:#111; color:#fff;
+    font-family:'Sora',sans-serif; font-size:0.68rem;
+    font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
+    padding:9px 20px; border-radius:100px;
+    z-index:200; opacity:0; pointer-events:none;
+    transition: opacity .2s ease, transform .2s ease;
+    white-space:nowrap;
   }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(-6px); }
 
-  /* ── FOOTER ── */
-  .footer { text-align: center; padding: 36px 28px 28px; border-top: 1px solid var(--border); }
-  .footer p {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.6rem; color: var(--muted); letter-spacing: 0.22em;
-    text-transform: uppercase; font-weight: 300;
-  }
-
-  @keyframes logoIn {
-    from { opacity:0; transform:translateY(12px) scale(0.97); }
-    to   { opacity:1; transform:translateY(0) scale(1); }
-  }
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(7px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .hero    { animation: fadeUp .6s ease both; }
-  .cat-nav { animation: fadeUp .5s .05s ease both; }
-  .fade-in { animation: fadeUp .18s ease both; }
+  /* footer */
+  .footer { text-align:center; padding:30px 24px 22px; border-top:1px solid var(--border); }
+  .footer p { font-size:0.58rem; font-weight:500; color:var(--muted); letter-spacing:0.2em; text-transform:uppercase; }
 
   @media(max-width:480px){
-    .item          { padding: 10px 16px; }
-    .section-label { padding: 20px 16px 8px; }
-    .hero-content  { padding: 36px 18px 84px; }
-    .cart-bar      { padding: 12px 16px 18px; }
-    .cat-nav       { padding: 0 6px; }
+    .item          { padding: 11px 14px; }
+    .section-label { padding: 18px 14px 6px; }
+    .hero-content  { padding: 32px 14px 72px; }
+    .cart-bar      { padding: 12px 14px 20px; }
+    .cat-cards     { padding: 8px 8px 0; }
+    .cat-tabs      { padding: 0 8px; }
   }
 </style>
 </head>
@@ -296,20 +279,35 @@
     </div>
   </header>
 
-  <nav class="cat-nav">
-    <button class="cat-btn active" onclick="selectCat('pasteis',this)">Pastéis</button>
-    <button class="cat-btn"       onclick="selectCat('salgados',this)">Salgados</button>
-    <button class="cat-btn"       onclick="selectCat('bebidas',this)">Bebidas</button>
+  <!-- NAV: sticky, colapsa os cards ao rolar -->
+  <nav class="cat-nav" id="cat-nav">
+
+    <div class="cat-cards" id="cat-cards">
+      <button class="cat-card active" id="card-pasteis" onclick="selectCat('pasteis')">
+        <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 3C7 3 3 7 3 12h18c0-5-4-9-9-9z"/><path d="M3 12l3 7h12l3-7"/></svg></div>
+      </button>
+      <button class="cat-card" id="card-salgados" onclick="selectCat('salgados')">
+        <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 8h12M6 12h12M6 16h8"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg></div>
+      </button>
+      <button class="cat-card" id="card-bebidas" onclick="selectCat('bebidas')">
+        <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M8 3h8l1 5H7L8 3z"/><path d="M7 8l1 13h8l1-13"/><path d="M9 13h6"/></svg></div>
+      </button>
+    </div>
+
+    <div class="cat-tabs">
+      <button class="cat-tab active" id="tab-pasteis"  onclick="selectCat('pasteis')">Pastéis</button>
+      <button class="cat-tab"        id="tab-salgados" onclick="selectCat('salgados')">Salgados</button>
+      <button class="cat-tab"        id="tab-bebidas"  onclick="selectCat('bebidas')">Bebidas</button>
+    </div>
+
   </nav>
 
   <main id="menu-wrap"></main>
 
-  <footer class="footer">
-    <p>Toque em + para adicionar ao pedido</p>
-  </footer>
+  <footer class="footer"><p>Toque em + para adicionar ao pedido</p></footer>
 </div>
 
-<div class="toast" id="toast">Pedido enviado</div>
+<div class="toast" id="toast"></div>
 
 <div class="cart-bar hidden" id="cart-bar">
   <div class="cart-top">
@@ -318,20 +316,17 @@
   <div class="delivery-question" id="dq">
     <span class="dq-label">Vai querer entrega?</span>
     <div class="dq-options">
-      <button class="dq-btn" id="dq-no"  onclick="chooseDelivery(false)">Não, vou retirar</button>
-      <button class="dq-btn" id="dq-yes" onclick="chooseDelivery(true)">Sim, com entrega</button>
+      <button class="dq-btn" id="dq-no"  onclick="chooseDelivery(false)">Retirar no local</button>
+      <button class="dq-btn" id="dq-yes" onclick="chooseDelivery(true)">Entrega</button>
     </div>
     <div class="addr-wrap" id="addr-wrap">
-      <input class="addr-input" id="addr-input" type="text"
-             placeholder="Rua, número, bairro…" autocomplete="street-address">
+      <input class="addr-input" id="addr-input" type="text" placeholder="Rua, número, bairro…" autocomplete="street-address">
     </div>
   </div>
-  <div class="send-row">
-    <button class="send-btn" onclick="handleSend()">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
-      Enviar pedido
-    </button>
-  </div>
+  <button class="send-btn" onclick="handleSend()">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
+    Enviar pedido
+  </button>
 </div>
 
 <script>
@@ -413,22 +408,37 @@ let dqShown = false, deliveryChoice = null, currentCat = 'pasteis';
 const fmt  = n => 'R$ ' + n.toFixed(2).replace('.',',');
 const toId = s => s.replace(/[^a-z0-9]/gi,'_');
 
+/* ── STICKY COLLAPSE ── */
+const navEl   = document.getElementById('cat-nav');
+const navTop  = () => navEl.getBoundingClientRect().top;
+
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+/* ── CATEGORY ── */
+function selectCat(cat) {
+  currentCat = cat;
+  ['pasteis','salgados','bebidas'].forEach(c => {
+    document.getElementById('card-' + c).classList.toggle('active', c === cat);
+    document.getElementById('tab-'  + c).classList.toggle('active', c === cat);
+  });
+  renderMenu(cat);
+}
+
+/* ── RESET ── */
 function resetCart() {
-  cart.clear();
-  deliveryChoice = null;
-  dqShown = false;
-  closeDQ();
-  refreshBar();
-  renderMenu(currentCat);
+  cart.clear(); dqShown = false; deliveryChoice = null;
+  closeDQ(); refreshBar(); renderMenu(currentCat);
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2600);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
 }
 
+/* ── RENDER ── */
 function renderMenu(cat) {
   const wrap = document.getElementById('menu-wrap');
   let html = '';
@@ -441,16 +451,16 @@ function renderMenu(cat) {
       const premium  = item.premium ? ' premium' : '';
       const safeName = item.name.replace(/'/g,"\\'");
       html += `
-        <div class="item${inCart}${premium} fade-in" id="row-${id}">
+        <div class="item${inCart}${premium}" id="row-${id}">
           <span class="item-name">${item.name}</span>
           <div class="item-right">
             <span class="item-price">${fmt(item.price)}</span>
             <div class="item-stepper">
-              <button class="btn-stepper minus" onclick="decrement(event,'${id}')" title="Remover">−</button>
-              <span   class="item-qty" id="qty-${id}">${qty}</span>
-              <button class="btn-stepper plus"  onclick="increment(event,'${id}','${safeName}',${item.price})" title="Mais">+</button>
+              <button class="btn-stepper minus" onclick="decrement(event,'${id}')">−</button>
+              <span class="item-qty" id="qty-${id}">${qty}</span>
+              <button class="btn-stepper plus" onclick="increment(event,'${id}','${safeName}',${item.price})">+</button>
             </div>
-            <button class="btn-add-initial" onclick="addFirst(event,'${id}','${safeName}',${item.price})" title="Adicionar">+</button>
+            <button class="btn-add-initial" onclick="addFirst(event,'${id}','${safeName}',${item.price})">+</button>
           </div>
         </div>`;
     });
@@ -459,32 +469,28 @@ function renderMenu(cat) {
 }
 
 function addFirst(e, id, name, price) {
-  e.stopPropagation();
-  cart.set(id, {name, price, qty:1});
-  updateRow(id); refreshBar();
+  e.stopPropagation(); cart.set(id, {name, price, qty:1}); updateRow(id); refreshBar();
 }
 function increment(e, id, name, price) {
   e.stopPropagation();
-  if (cart.has(id)) cart.get(id).qty++;
-  else cart.set(id, {name, price, qty:1});
+  if (cart.has(id)) cart.get(id).qty++; else cart.set(id, {name, price, qty:1});
   updateRow(id); refreshBar();
 }
 function decrement(e, id) {
-  e.stopPropagation();
-  if (!cart.has(id)) return;
+  e.stopPropagation(); if (!cart.has(id)) return;
   cart.get(id).qty--;
   if (cart.get(id).qty <= 0) cart.delete(id);
   updateRow(id); refreshBar();
 }
 function updateRow(id) {
-  const row   = document.getElementById('row-'+id);
+  const row = document.getElementById('row-'+id);
   const badge = document.getElementById('qty-'+id);
-  const qty   = cart.has(id) ? cart.get(id).qty : 0;
+  const qty = cart.has(id) ? cart.get(id).qty : 0;
   if (badge) badge.textContent = qty;
   if (row) qty > 0 ? row.classList.add('in-cart') : row.classList.remove('in-cart');
 }
 function refreshBar() {
-  const bar  = document.getElementById('cart-bar');
+  const bar = document.getElementById('cart-bar');
   const info = document.getElementById('cart-info');
   if (!cart.size) { bar.classList.add('hidden'); closeDQ(); return; }
   bar.classList.remove('hidden');
@@ -492,7 +498,7 @@ function refreshBar() {
   cart.forEach(e => { total += e.price*e.qty; count += e.qty; });
   info.innerHTML = `<strong>${count} ${count===1?'item':'itens'}</strong> &middot; ${fmt(total)}`;
 }
-function openDQ() { dqShown=true; document.getElementById('dq').classList.add('open'); }
+function openDQ()  { dqShown=true; document.getElementById('dq').classList.add('open'); }
 function closeDQ() {
   dqShown=false; deliveryChoice=null;
   ['dq','addr-wrap'].forEach(id => document.getElementById(id).classList.remove('open'));
@@ -504,7 +510,7 @@ function chooseDelivery(yes) {
   document.getElementById('dq-yes').classList.toggle('chosen', yes);
   document.getElementById('dq-no').classList.toggle('chosen', !yes);
   document.getElementById('addr-wrap').classList.toggle('open', yes);
-  if (yes) setTimeout(() => document.getElementById('addr-input').focus(), 260);
+  if (yes) setTimeout(() => document.getElementById('addr-input').focus(), 240);
 }
 function handleSend() {
   if (!cart.size) return;
@@ -526,12 +532,6 @@ function handleSend() {
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
   showToast('Pedido enviado!');
   setTimeout(() => resetCart(), 600);
-}
-function selectCat(cat, btn) {
-  currentCat = cat;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderMenu(cat);
 }
 
 renderMenu('pasteis');
