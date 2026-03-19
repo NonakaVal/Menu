@@ -31,14 +31,15 @@
 
   .page { width:100%; max-width:600px; margin:0 auto; padding-bottom:160px; }
 
-  /* ── HERO ── */
+  /* ── HERO — só visual, sem nav dentro ── */
   .hero {
     background: linear-gradient(
       to bottom,
       #b81017 0%,
-      #d41e27 36%,
-      #e2c4bc 70%,
-      #f3ecea 86%,
+      #cc1a23 30%,
+      #d9352c 48%,
+      #e8c0b8 72%,
+      #f4edea 88%,
       #ffffff 100%
     );
     position: relative;
@@ -54,33 +55,30 @@
   .hero-content {
     position: relative; z-index: 1;
     display: flex; flex-direction: column; align-items: center;
-    padding: 48px 28px 0;
+    padding: 52px 28px 120px;
   }
   .brand-logo {
     display: block;
-    width: clamp(260px, 68vw, 420px);
+    width: clamp(240px, 64vw, 400px);
     height: auto;
     filter: drop-shadow(0 4px 16px rgba(0,0,0,0.38));
   }
 
-  /* ── NAV — dentro do hero, fundo transparente no topo ── */
+  /* ── NAV — fora do hero, sticky correto ── */
   .cat-nav {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: transparent;
-    transition: background .18s ease, box-shadow .18s ease;
-  }
-  .cat-nav.scrolled {
     background: #fff;
+    border-bottom: 1px solid var(--border);
     box-shadow: 0 1px 0 var(--border);
   }
 
-  /* ícones — colapsam ao rolar */
+  /* ícones */
   .cat-cards {
     display: flex;
-    padding: 18px 16px 2px;
-    max-height: 72px;
+    padding: 10px 16px 0;
+    max-height: 56px;
     overflow: hidden;
     opacity: 1;
     transition: max-height .2s ease, opacity .16s ease, padding .2s ease;
@@ -98,8 +96,8 @@
     background: none; border: none; cursor: pointer;
   }
   .cat-icon svg {
-    width: 16px; height: 16px;
-    fill: rgba(0,0,0,0.25); stroke: none;
+    width: 15px; height: 15px;
+    fill: var(--border); stroke: none;
     transition: fill .15s;
   }
   .cat-card.active .cat-icon svg { fill: var(--red); }
@@ -112,22 +110,14 @@
   .cat-tab {
     flex: 1; background: none; border: none; cursor: pointer;
     font-family: 'Sora', sans-serif; font-weight: 700;
-    font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase;
-    color: rgba(0,0,0,0.35);
-    padding: 10px 4px 13px;
+    font-size: 0.63rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted);
+    padding: 9px 4px 11px;
     border-bottom: 2px solid transparent;
     transition: color .15s, border-color .15s;
   }
-  .cat-tab.active {
-    color: var(--text);
-    border-bottom-color: var(--red);
-  }
+  .cat-tab.active { color: var(--text); border-bottom-color: var(--red); }
   .cat-tab:hover:not(.active) { color: var(--text); }
-
-  /* tabs quando sticky — viram escuras */
-  .cat-nav.scrolled .cat-tab { color: var(--muted); }
-  .cat-nav.scrolled .cat-tab.active { color: var(--text); border-bottom-color: var(--red); }
-  .cat-nav.scrolled .cat-tab:hover:not(.active) { color: var(--text); }
 
   /* ── SECTION LABEL ── */
   .section-label {
@@ -281,7 +271,7 @@
     .item          { padding: 12px 16px; }
     .section-label { padding: 20px 16px 7px; }
     .cart-bar      { padding: 12px 16px 22px; }
-    .hero-content  { padding: 40px 16px 0; }
+    .hero-content  { padding: 40px 16px 32px; }
     .cat-cards     { padding: 14px 10px 2px; }
     .cat-tabs      { padding: 0 10px; }
   }
@@ -294,27 +284,26 @@
     <div class="hero-content">
       <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
     </div>
-
-    <nav class="cat-nav" id="cat-nav">
-      <div class="cat-cards" id="cat-cards">
-        <button class="cat-card active" id="card-pasteis" onclick="selectCat('pasteis')">
-          <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 4L21 19H3Z"/></svg></div>
-        </button>
-        <button class="cat-card" id="card-salgados" onclick="selectCat('salgados')">
-          <div class="cat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div>
-        </button>
-        <button class="cat-card" id="card-bebidas" onclick="selectCat('bebidas')">
-          <div class="cat-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6Q4 14 7 18Q9 21 12 21Q15 21 17 18Q20 14 19 6Z"/></svg></div>
-        </button>
-      </div>
-
-      <div class="cat-tabs">
-        <button class="cat-tab active" id="tab-pasteis"  onclick="selectCat('pasteis')">Pastéis</button>
-        <button class="cat-tab"        id="tab-salgados" onclick="selectCat('salgados')">Salgados</button>
-        <button class="cat-tab"        id="tab-bebidas"  onclick="selectCat('bebidas')">Bebidas</button>
-      </div>
-    </nav>
   </header>
+
+  <nav class="cat-nav" id="cat-nav">
+    <div class="cat-cards" id="cat-cards">
+      <button class="cat-card active" id="card-pasteis" onclick="selectCat('pasteis')">
+        <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 4L21 19H3Z"/></svg></div>
+      </button>
+      <button class="cat-card" id="card-salgados" onclick="selectCat('salgados')">
+        <div class="cat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div>
+      </button>
+      <button class="cat-card" id="card-bebidas" onclick="selectCat('bebidas')">
+        <div class="cat-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6Q4 14 7 18Q9 21 12 21Q15 21 17 18Q20 14 19 6Z"/></svg></div>
+      </button>
+    </div>
+    <div class="cat-tabs">
+      <button class="cat-tab active" id="tab-pasteis"  onclick="selectCat('pasteis')">Pastéis</button>
+      <button class="cat-tab"        id="tab-salgados" onclick="selectCat('salgados')">Salgados</button>
+      <button class="cat-tab"        id="tab-bebidas"  onclick="selectCat('bebidas')">Bebidas</button>
+    </div>
+  </nav>
 
   <main id="menu-wrap"></main>
 
@@ -395,7 +384,7 @@ const toId = s => s.replace(/[^a-z0-9]/gi,'_');
 
 const navEl = document.getElementById('cat-nav');
 window.addEventListener('scroll', () => {
-  navEl.classList.toggle('scrolled', window.scrollY > 20);
+  navEl.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive:true });
 
 function selectCat(cat) {
