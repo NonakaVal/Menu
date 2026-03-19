@@ -6,16 +6,17 @@
 <title>Mary Pastelaria — Cardápio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #ffffff;
-    --surface:   #f6f2ed;
-    --red:       #a0171c;
-    --red-faint: rgba(160,23,28,0.07);
-    --text:      #0f0e0c;
-    --muted:     #7a6e62;
-    --border:    #ebe3da;
+    --bg:      #ffffff;
+    --surface: #f6f2ed;
+    --red:     #a0171c;
+    --red-dim: #7e1115;
+    --red-hi:  rgba(160,23,28,0.08);
+    --text:    #111010;
+    --muted:   #7a6e62;
+    --border:  #e8e0d6;
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -32,48 +33,57 @@
 
   /* ── HERO ── */
   .hero {
-    background: linear-gradient(to bottom, #bb1118 0%, #dd1f28 45%, #f0ddd6 82%, #fff 100%);
+    background: linear-gradient(
+      to bottom,
+      #b81017 0%,
+      #d41e27 36%,
+      #e2c4bc 70%,
+      #f3ecea 86%,
+      #ffffff 100%
+    );
     position: relative;
   }
   .hero::after {
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 55% 60% at 0% 0%, rgba(0,0,0,0.2) 0%, transparent 70%),
-      radial-gradient(ellipse 55% 60% at 100% 0%, rgba(0,0,0,0.2) 0%, transparent 70%);
+      radial-gradient(ellipse 50% 65% at 0% 0%, rgba(0,0,0,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 65% at 100% 0%, rgba(0,0,0,0.18) 0%, transparent 65%);
     pointer-events: none;
   }
   .hero-content {
+    position: relative; z-index: 1;
     display: flex; flex-direction: column; align-items: center;
-    padding: 44px 28px 52px;
+    padding: 48px 28px 0;
   }
   .brand-logo {
     display: block;
-    width: clamp(280px, 72vw, 440px);
+    width: clamp(260px, 68vw, 420px);
     height: auto;
-    filter: drop-shadow(0 3px 14px rgba(0,0,0,0.42));
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.38));
   }
 
-  /* ── NAV WRAPPER — sticky ── */
+  /* ── NAV — dentro do hero, fundo transparente no topo ── */
   .cat-nav {
     position: sticky;
     top: 0;
     z-index: 50;
+    background: transparent;
+    transition: background .18s ease, box-shadow .18s ease;
+  }
+  .cat-nav.scrolled {
     background: #fff;
-    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 0 var(--border);
   }
 
-
-
-  /* icon cards — collapse when sticky */
+  /* ícones — colapsam ao rolar */
   .cat-cards {
     display: flex;
-    padding: 8px 12px 0;
-    gap: 6px;
+    padding: 18px 16px 2px;
     max-height: 72px;
     overflow: hidden;
     opacity: 1;
-    transition: max-height .2s ease, opacity .18s ease, padding .2s ease;
+    transition: max-height .2s ease, opacity .16s ease, padding .2s ease;
   }
   .cat-nav.scrolled .cat-cards {
     max-height: 0;
@@ -81,45 +91,52 @@
     padding-top: 0;
     padding-bottom: 0;
   }
-
   .cat-card {
     flex: 1;
     display: flex; align-items: center; justify-content: center;
-    padding: 7px 4px 8px;
+    padding: 4px 0;
     background: none; border: none; cursor: pointer;
   }
-
-  .cat-icon {
-    width: 17px; height: 17px;
-    display: flex; align-items: center; justify-content: center;
+  .cat-icon svg {
+    width: 16px; height: 16px;
+    fill: rgba(0,0,0,0.25); stroke: none;
+    transition: fill .15s;
   }
-  .cat-icon svg { width: 16px; height: 16px; fill: var(--border); stroke: none; }
   .cat-card.active .cat-icon svg { fill: var(--red); }
 
-  /* tab bar (always visible, thinner) */
+  /* tabs */
   .cat-tabs {
     display: flex;
-    padding: 0 12px;
+    padding: 0 16px;
   }
   .cat-tab {
     flex: 1; background: none; border: none; cursor: pointer;
     font-family: 'Sora', sans-serif; font-weight: 700;
-    font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--muted); padding: 11px 4px 10px;
+    font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(0,0,0,0.35);
+    padding: 10px 4px 13px;
     border-bottom: 2px solid transparent;
     transition: color .15s, border-color .15s;
   }
-  .cat-tab.active { color: var(--text); border-bottom-color: var(--red); }
+  .cat-tab.active {
+    color: var(--text);
+    border-bottom-color: var(--red);
+  }
   .cat-tab:hover:not(.active) { color: var(--text); }
+
+  /* tabs quando sticky — viram escuras */
+  .cat-nav.scrolled .cat-tab { color: var(--muted); }
+  .cat-nav.scrolled .cat-tab.active { color: var(--text); border-bottom-color: var(--red); }
+  .cat-nav.scrolled .cat-tab:hover:not(.active) { color: var(--text); }
 
   /* ── SECTION LABEL ── */
   .section-label {
     display: flex; align-items: center; gap: 10px;
-    padding: 20px 20px 7px;
+    padding: 22px 20px 8px;
   }
   .section-label h2 {
-    font-size: 0.58rem; font-weight: 700;
-    letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 0.57rem; font-weight: 700;
+    letter-spacing: 0.3em; text-transform: uppercase;
     color: var(--red); white-space: nowrap;
   }
   .section-label::after { content:''; flex:1; height:1px; background: var(--border); }
@@ -127,7 +144,7 @@
   /* ── ITEM ROW ── */
   .item {
     display: flex; align-items: center;
-    padding: 12px 20px;
+    padding: 13px 20px;
     border-bottom: 1px solid var(--border);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
@@ -139,51 +156,50 @@
   .item-name {
     flex: 1; min-width: 0;
     font-size: 0.88rem; font-weight: 600;
-    color: var(--text); line-height: 1.2;
+    color: var(--text); line-height: 1.25;
   }
   .item.in-cart .item-name { color: var(--red); }
 
   .item-right {
     display: flex; align-items: center; gap: 8px;
-    flex-shrink: 0; margin-left: 10px;
+    flex-shrink: 0; margin-left: 12px;
   }
 
   .item-price {
     font-size: 0.78rem; font-weight: 500;
     color: var(--muted); white-space: nowrap;
-    min-width: 50px; text-align: right;
+    min-width: 52px; text-align: right;
   }
-  .item.premium  .item-price { color: var(--red); }
-  .item.in-cart  .item-price { color: var(--red); }
+  .item.premium .item-price { color: var(--red); }
+  .item.in-cart .item-price { color: var(--red); }
 
-  /* add button */
   .btn-add-initial {
     width: 22px; height: 22px; border-radius: 50%;
-    background: transparent; color: var(--muted);
+    background: transparent; color: var(--border);
     border: 1px solid var(--border); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.05rem; font-weight: 300; line-height: 1;
+    font-size: 1rem; font-weight: 300; line-height: 1;
     flex-shrink: 0;
+    transition: border-color .12s, color .12s;
   }
   .btn-add-initial:hover { border-color: var(--red); color: var(--red); }
   .item.in-cart .btn-add-initial { display: none; }
 
-  /* stepper */
-  .item-stepper { display: none; align-items: center; gap: 5px; }
+  .item-stepper { display: none; align-items: center; gap: 4px; }
   .item.in-cart .item-stepper { display: flex; }
 
   .item-qty {
-    font-size: 0.75rem; font-weight: 600; color: var(--red);
-    min-width: 14px; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--red);
+    min-width: 16px; text-align: center;
   }
-
   .btn-stepper {
     width: 22px; height: 22px; border-radius: 50%;
     cursor: pointer; background: transparent;
     display: flex; align-items: center; justify-content: center;
     font-size: 1rem; line-height: 1; flex-shrink: 0;
+    transition: border-color .12s, color .12s;
   }
-  .btn-stepper.plus  { color: var(--red);   border: 1px solid rgba(160,23,28,0.3); }
+  .btn-stepper.plus  { color: var(--red);   border: 1px solid rgba(160,23,28,0.28); }
   .btn-stepper.plus:hover  { border-color: var(--red); }
   .btn-stepper.minus { color: var(--muted); border: 1px solid var(--border); }
   .btn-stepper.minus:hover { color: var(--red); border-color: var(--red); }
@@ -193,8 +209,8 @@
     position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
     width: 100%; max-width: 600px;
     background: var(--bg); border-top: 1px solid var(--border);
-    padding: 14px 20px 24px; z-index: 100;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    padding: 14px 20px 26px; z-index: 100;
+    box-shadow: 0 -6px 24px rgba(0,0,0,0.07);
     transition: transform .24s ease, opacity .24s ease;
   }
   .cart-bar.hidden { transform: translateX(-50%) translateY(110%); opacity:0; pointer-events:none; }
@@ -204,23 +220,23 @@
   .cart-info strong { color: var(--text); font-weight: 700; }
 
   .delivery-question { overflow:hidden; max-height:0; opacity:0; transition: max-height .25s ease, opacity .22s ease, margin .22s ease; }
-  .delivery-question.open { max-height:120px; opacity:1; margin-bottom:12px; }
+  .delivery-question.open { max-height:130px; opacity:1; margin-bottom:12px; }
 
   .dq-label {
-    display: block; font-size: 0.62rem; font-weight: 700;
-    letter-spacing: 0.2em; text-transform: uppercase;
+    display: block; font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px;
   }
   .dq-options { display: flex; gap: 8px; }
   .dq-btn {
     flex:1; background:none; border:1px solid var(--border);
     color:var(--muted); border-radius:4px;
-    font-family:'Sora',sans-serif; font-size:0.63rem;
+    font-family:'Sora',sans-serif; font-size:0.68rem;
     font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
-    padding:9px 0; cursor:pointer;
-    transition: border-color .15s, color .15s, background .15s;
+    padding:10px 0; cursor:pointer;
+    transition: border-color .14s, color .14s, background .14s;
   }
-  .dq-btn.chosen { border-color:var(--red); color:var(--text); background:var(--red-faint); }
+  .dq-btn.chosen { border-color:var(--red); color:var(--text); background:var(--red-hi); }
   .dq-btn:hover:not(.chosen) { border-color:var(--muted); color:var(--text); }
 
   .addr-wrap { overflow:hidden; max-height:0; opacity:0; transition: max-height .2s ease, opacity .2s ease, margin .2s ease; }
@@ -229,46 +245,45 @@
     width:100%; background:var(--surface);
     border:1px solid var(--border); border-radius:4px;
     color:var(--text); font-family:'Sora',sans-serif;
-    font-size:0.78rem; font-weight:400;
+    font-size:0.82rem; font-weight:400;
     padding:9px 12px; outline:none;
+    transition: border-color .14s;
   }
   .addr-input::placeholder { color:var(--muted); }
   .addr-input:focus { border-color:var(--red); }
 
   .send-btn {
     width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
-    background:var(--red); color:#fff; border:none; border-radius:4px; cursor:pointer;
-    font-family:'Sora',sans-serif; font-size:0.67rem;
-    font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
+    background:var(--red); color:#fff; border:none; border-radius:5px; cursor:pointer;
+    font-family:'Sora',sans-serif; font-size:0.7rem;
+    font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
     padding:13px 0; transition:background .15s;
   }
-  .send-btn:hover { background:#861216; }
-  .send-btn svg { width:14px; height:14px; fill:#fff; }
+  .send-btn:hover { background:var(--red-dim); }
+  .send-btn svg { width:16px; height:16px; fill:#fff; flex-shrink:0; }
 
-  /* toast */
   .toast {
-    position:fixed; bottom:86px; left:50%; transform:translateX(-50%);
+    position:fixed; bottom:88px; left:50%; transform:translateX(-50%);
     background:#111; color:#fff;
-    font-family:'Sora',sans-serif; font-size:0.68rem;
-    font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
-    padding:9px 20px; border-radius:100px;
+    font-family:'Sora',sans-serif; font-size:0.65rem;
+    font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
+    padding:9px 22px; border-radius:100px;
     z-index:200; opacity:0; pointer-events:none;
     transition: opacity .2s ease, transform .2s ease;
     white-space:nowrap;
   }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(-6px); }
 
-  /* footer */
-  .footer { text-align:center; padding:30px 24px 22px; border-top:1px solid var(--border); }
-  .footer p { font-size:0.58rem; font-weight:500; color:var(--muted); letter-spacing:0.2em; text-transform:uppercase; }
+  .footer { text-align:center; padding:28px 24px 20px; border-top:1px solid var(--border); }
+  .footer p { font-size:0.56rem; font-weight:500; color:var(--muted); letter-spacing:0.22em; text-transform:uppercase; }
 
   @media(max-width:480px){
-    .item          { padding: 11px 14px; }
-    .section-label { padding: 18px 14px 6px; }
-    .hero-content  { padding: 32px 14px 44px; }
-    .cart-bar      { padding: 12px 14px 20px; }
-    .cat-cards     { padding: 8px 8px 0; }
-    .cat-tabs      { padding: 0 8px; }
+    .item          { padding: 12px 16px; }
+    .section-label { padding: 20px 16px 7px; }
+    .cart-bar      { padding: 12px 16px 22px; }
+    .hero-content  { padding: 40px 16px 0; }
+    .cat-cards     { padding: 14px 10px 2px; }
+    .cat-tabs      { padding: 0 10px; }
   }
 </style>
 </head>
@@ -279,30 +294,27 @@
     <div class="hero-content">
       <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
     </div>
+
+    <nav class="cat-nav" id="cat-nav">
+      <div class="cat-cards" id="cat-cards">
+        <button class="cat-card active" id="card-pasteis" onclick="selectCat('pasteis')">
+          <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 4L21 19H3Z"/></svg></div>
+        </button>
+        <button class="cat-card" id="card-salgados" onclick="selectCat('salgados')">
+          <div class="cat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div>
+        </button>
+        <button class="cat-card" id="card-bebidas" onclick="selectCat('bebidas')">
+          <div class="cat-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6Q4 14 7 18Q9 21 12 21Q15 21 17 18Q20 14 19 6Z"/></svg></div>
+        </button>
+      </div>
+
+      <div class="cat-tabs">
+        <button class="cat-tab active" id="tab-pasteis"  onclick="selectCat('pasteis')">Pastéis</button>
+        <button class="cat-tab"        id="tab-salgados" onclick="selectCat('salgados')">Salgados</button>
+        <button class="cat-tab"        id="tab-bebidas"  onclick="selectCat('bebidas')">Bebidas</button>
+      </div>
+    </nav>
   </header>
-
-  <!-- NAV: sticky, colapsa os cards ao rolar -->
-  <nav class="cat-nav" id="cat-nav">
-
-    <div class="cat-cards" id="cat-cards">
-      <button class="cat-card active" id="card-pasteis" onclick="selectCat('pasteis')">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4 L21 19 H3 Z"/></svg></div>
-      </button>
-      <button class="cat-card" id="card-salgados" onclick="selectCat('salgados')">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div>
-      </button>
-      <button class="cat-card" id="card-bebidas" onclick="selectCat('bebidas')">
-        <div class="cat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6 Q4 14 7 18 Q9 21 12 21 Q15 21 17 18 Q20 14 19 6Z"/></svg></div>
-      </button>
-    </div>
-
-    <div class="cat-tabs">
-      <button class="cat-tab active" id="tab-pasteis"  onclick="selectCat('pasteis')">Pastéis</button>
-      <button class="cat-tab"        id="tab-salgados" onclick="selectCat('salgados')">Salgados</button>
-      <button class="cat-tab"        id="tab-bebidas"  onclick="selectCat('bebidas')">Bebidas</button>
-    </div>
-
-  </nav>
 
   <main id="menu-wrap"></main>
 
@@ -326,214 +338,167 @@
     </div>
   </div>
   <button class="send-btn" onclick="handleSend()">
-    <svg viewBox="0 0 32 32" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.668 4.61 1.827 6.505L4 29l7.745-1.802A11.94 11.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 21.75a9.71 9.71 0 01-4.91-1.327l-.352-.21-4.596 1.07 1.094-4.473-.23-.364A9.71 9.71 0 016.25 15c0-5.385 4.365-9.75 9.75-9.75S25.75 9.615 25.75 15 21.385 24.75 16 24.75z"/><path d="M21.31 17.415c-.29-.146-1.72-.848-1.987-.945-.265-.098-.458-.146-.65.146-.194.292-.748.945-.917 1.14-.169.193-.34.218-.63.073-.29-.146-1.224-.451-2.331-1.437-.862-.768-1.443-1.717-1.613-2.007-.169-.291-.018-.448.127-.593.13-.13.29-.34.435-.51.146-.17.194-.291.291-.485.098-.194.049-.364-.024-.51-.073-.146-.65-1.566-.89-2.145-.235-.563-.474-.487-.65-.496-.168-.008-.362-.01-.556-.01-.194 0-.51.073-.777.364-.267.29-1.02.997-1.02 2.43s1.044 2.818 1.19 3.012c.146.194 2.054 3.137 4.977 4.398.696.3 1.238.48 1.661.614.698.222 1.334.19 1.836.116.56-.083 1.72-.703 1.963-1.382.242-.68.242-1.263.169-1.385-.072-.122-.266-.194-.556-.34z"/></svg>
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.668 4.61 1.827 6.505L4 29l7.745-1.802A11.94 11.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 21.75a9.71 9.71 0 01-4.91-1.327l-.352-.21-4.596 1.07 1.094-4.473-.23-.364A9.71 9.71 0 016.25 15c0-5.385 4.365-9.75 9.75-9.75S25.75 9.615 25.75 15 21.385 24.75 16 24.75z"/><path d="M21.31 17.415c-.29-.146-1.72-.848-1.987-.945-.265-.098-.458-.146-.65.146-.194.292-.748.945-.917 1.14-.169.193-.34.218-.63.073-.29-.146-1.224-.451-2.331-1.437-.862-.768-1.443-1.717-1.613-2.007-.169-.291-.018-.448.127-.593.13-.13.29-.34.435-.51.146-.17.194-.291.291-.485.098-.194.049-.364-.024-.51-.073-.146-.65-1.566-.89-2.145-.235-.563-.474-.487-.65-.496-.168-.008-.362-.01-.556-.01-.194 0-.51.073-.777.364-.267.29-1.02.997-1.02 2.43s1.044 2.818 1.19 3.012c.146.194 2.054 3.137 4.977 4.398.696.3 1.238.48 1.661.614.698.222 1.334.19 1.836.116.56-.083 1.72-.703 1.963-1.382.242-.68.242-1.263.169-1.385-.072-.122-.266-.194-.556-.34z"/></svg>
     Enviar pedido
   </button>
 </div>
 
 <script>
 const WA = '5515998304344';
-
 const menu = {
   pasteis:{
     "Simples":[
-      {name:"Carne",         price:8},
-      {name:"Queijo",        price:8},
-      {name:"Frango",        price:8},
-      {name:"Pizza",         price:8},
+      {name:"Carne",price:8},{name:"Queijo",price:8},{name:"Frango",price:8},{name:"Pizza",price:8},
     ],
     "Combinados":[
-      {name:"Carne c/ Queijo",     price:10},
-      {name:"Frango c/ Queijo",    price:10},
-      {name:"Frango c/ Catupiry",  price:10},
-      {name:"Calabresa c/ Queijo", price:10},
-      {name:"Portuguesa",          price:10},
+      {name:"Carne c/ Queijo",price:10},{name:"Frango c/ Queijo",price:10},
+      {name:"Frango c/ Catupiry",price:10},{name:"Calabresa c/ Queijo",price:10},{name:"Portuguesa",price:10},
     ],
     "Especiais":[
-      {name:"Costela",              price:15, premium:true},
-      {name:"Costela c/ Queijo",    price:15, premium:true},
-      {name:"Bacon",                price:15, premium:true},
-      {name:"X-Tudo",               price:15, premium:true},
-      {name:"Strogonoff de Frango", price:15, premium:true},
-      {name:"Carne Seca",           price:15, premium:true},
-      {name:"Pernil",               price:15, premium:true},
-      {name:"Palmito",              price:15, premium:true},
+      {name:"Costela",price:15,premium:true},{name:"Costela c/ Queijo",price:15,premium:true},
+      {name:"Bacon",price:15,premium:true},{name:"X-Tudo",price:15,premium:true},
+      {name:"Strogonoff de Frango",price:15,premium:true},{name:"Carne Seca",price:15,premium:true},
+      {name:"Pernil",price:15,premium:true},{name:"Palmito",price:15,premium:true},
     ],
     "Doces":[
-      {name:"Brigadeiro",            price:12},
-      {name:"Prestígio",             price:12},
-      {name:"Doce de Leite",         price:12},
-      {name:"Brigadeiro c/ Morango", price:12},
-      {name:"Banana c/ Canela",      price:12},
-      {name:"Nutella",               price:15, premium:true},
-      {name:"Romeu e Julieta",       price:12},
+      {name:"Brigadeiro",price:12},{name:"Prestígio",price:12},{name:"Doce de Leite",price:12},
+      {name:"Brigadeiro c/ Morango",price:12},{name:"Banana c/ Canela",price:12},
+      {name:"Nutella",price:15,premium:true},{name:"Romeu e Julieta",price:12},
     ]
   },
   salgados:{
     "Salgados":[
-      {name:"Coxinha de Frango",          price:7},
-      {name:"Coxinha de Costela",         price:9, premium:true},
-      {name:"Risoles de Presunto/Queijo", price:7},
-      {name:"Risoles de Carne",           price:7},
-      {name:"Bolinha de Queijo",          price:8},
-      {name:"Kibe",                       price:7},
-      {name:"Kibe c/ Requeijão",          price:8},
-      {name:"Esfiha de Carne",            price:6},
-      {name:"Esfiha de Frango",           price:6},
-      {name:"Enroladinho de Salsicha",    price:6},
-      {name:"Folhado de Calabresa",       price:8},
-      {name:"Pão de Queijo",              price:4},
-      {name:"Croquete de Carne",          price:6},
+      {name:"Coxinha de Frango",price:7},{name:"Coxinha de Costela",price:9,premium:true},
+      {name:"Risoles de Presunto/Queijo",price:7},{name:"Risoles de Carne",price:7},
+      {name:"Bolinha de Queijo",price:8},{name:"Kibe",price:7},{name:"Kibe c/ Requeijão",price:8},
+      {name:"Esfiha de Carne",price:6},{name:"Esfiha de Frango",price:6},
+      {name:"Enroladinho de Salsicha",price:6},{name:"Folhado de Calabresa",price:8},
+      {name:"Pão de Queijo",price:4},{name:"Croquete de Carne",price:6},
     ]
   },
   bebidas:{
     "Bebidas":[
-      {name:"Refrigerante Lata",     price:6},
-      {name:"Refrigerante 600ml",    price:9},
-      {name:"Água sem Gás",          price:4},
-      {name:"Água com Gás",          price:5},
-      {name:"Suco Natural Laranja",  price:9},
-      {name:"Suco Natural Maracujá", price:9},
-      {name:"Suco Natural Limão",    price:8},
-      {name:"Café Expresso",         price:5},
-      {name:"Café com Leite",        price:6},
-      {name:"Cappuccino",            price:8},
-      {name:"Chá Gelado",            price:7},
-      {name:"Caldo de Cana",         price:6},
-      {name:"Água de Coco",          price:7},
+      {name:"Refrigerante Lata",price:6},{name:"Refrigerante 600ml",price:9},
+      {name:"Água sem Gás",price:4},{name:"Água com Gás",price:5},
+      {name:"Suco Natural Laranja",price:9},{name:"Suco Natural Maracujá",price:9},
+      {name:"Suco Natural Limão",price:8},{name:"Café Expresso",price:5},
+      {name:"Café com Leite",price:6},{name:"Cappuccino",price:8},
+      {name:"Chá Gelado",price:7},{name:"Caldo de Cana",price:6},{name:"Água de Coco",price:7},
     ]
   }
 };
 
 const cart = new Map();
-let dqShown = false, deliveryChoice = null, currentCat = 'pasteis';
-const fmt  = n => 'R$ ' + n.toFixed(2).replace('.',',');
+let dqShown=false, deliveryChoice=null, currentCat='pasteis';
+const fmt  = n => 'R$ '+n.toFixed(2).replace('.',',');
 const toId = s => s.replace(/[^a-z0-9]/gi,'_');
 
-/* ── STICKY COLLAPSE ── */
-const navEl   = document.getElementById('cat-nav');
-const navTop  = () => navEl.getBoundingClientRect().top;
-
+const navEl = document.getElementById('cat-nav');
 window.addEventListener('scroll', () => {
-  navEl.classList.toggle('scrolled', window.scrollY > 10);
-}, { passive: true });
+  navEl.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive:true });
 
-/* ── CATEGORY ── */
 function selectCat(cat) {
-  currentCat = cat;
-  ['pasteis','salgados','bebidas'].forEach(c => {
-    document.getElementById('card-' + c).classList.toggle('active', c === cat);
-    document.getElementById('tab-'  + c).classList.toggle('active', c === cat);
+  currentCat=cat;
+  ['pasteis','salgados','bebidas'].forEach(c=>{
+    document.getElementById('card-'+c).classList.toggle('active',c===cat);
+    document.getElementById('tab-'+c).classList.toggle('active',c===cat);
   });
   renderMenu(cat);
 }
-
-/* ── RESET ── */
 function resetCart() {
-  cart.clear(); dqShown = false; deliveryChoice = null;
+  cart.clear(); dqShown=false; deliveryChoice=null;
   closeDQ(); refreshBar(); renderMenu(currentCat);
 }
-
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2400);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
 }
-
-/* ── RENDER ── */
 function renderMenu(cat) {
-  const wrap = document.getElementById('menu-wrap');
-  let html = '';
-  Object.entries(menu[cat]).forEach(([sec, items]) => {
-    html += `<div class="section-label"><h2>${sec}</h2></div>`;
-    items.forEach(item => {
-      const id       = toId(item.name);
-      const qty      = cart.has(id) ? cart.get(id).qty : 0;
-      const inCart   = qty > 0 ? ' in-cart' : '';
-      const premium  = item.premium ? ' premium' : '';
-      const safeName = item.name.replace(/'/g,"\\'");
-      html += `
-        <div class="item${inCart}${premium}" id="row-${id}">
-          <span class="item-name">${item.name}</span>
-          <div class="item-right">
-            <span class="item-price">${fmt(item.price)}</span>
-            <div class="item-stepper">
-              <button class="btn-stepper minus" onclick="decrement(event,'${id}')">−</button>
-              <span class="item-qty" id="qty-${id}">${qty}</span>
-              <button class="btn-stepper plus" onclick="increment(event,'${id}','${safeName}',${item.price})">+</button>
-            </div>
-            <button class="btn-add-initial" onclick="addFirst(event,'${id}','${safeName}',${item.price})">+</button>
+  const wrap=document.getElementById('menu-wrap');
+  let html='';
+  Object.entries(menu[cat]).forEach(([sec,items])=>{
+    html+=`<div class="section-label"><h2>${sec}</h2></div>`;
+    items.forEach(item=>{
+      const id=toId(item.name), qty=cart.has(id)?cart.get(id).qty:0;
+      const inCart=qty>0?' in-cart':'', premium=item.premium?' premium':'';
+      const safe=item.name.replace(/'/g,"\\'");
+      html+=`<div class="item${inCart}${premium}" id="row-${id}">
+        <span class="item-name">${item.name}</span>
+        <div class="item-right">
+          <span class="item-price">${fmt(item.price)}</span>
+          <div class="item-stepper">
+            <button class="btn-stepper minus" onclick="decrement(event,'${id}')">−</button>
+            <span class="item-qty" id="qty-${id}">${qty}</span>
+            <button class="btn-stepper plus" onclick="increment(event,'${id}','${safe}',${item.price})">+</button>
           </div>
-        </div>`;
+          <button class="btn-add-initial" onclick="addFirst(event,'${id}','${safe}',${item.price})">+</button>
+        </div>
+      </div>`;
     });
   });
-  wrap.innerHTML = html;
+  wrap.innerHTML=html;
 }
-
-function addFirst(e, id, name, price) {
-  e.stopPropagation(); cart.set(id, {name, price, qty:1}); updateRow(id); refreshBar();
-}
-function increment(e, id, name, price) {
+function addFirst(e,id,name,price){ e.stopPropagation(); cart.set(id,{name,price,qty:1}); updateRow(id); refreshBar(); }
+function increment(e,id,name,price){
   e.stopPropagation();
-  if (cart.has(id)) cart.get(id).qty++; else cart.set(id, {name, price, qty:1});
+  if(cart.has(id)) cart.get(id).qty++; else cart.set(id,{name,price,qty:1});
   updateRow(id); refreshBar();
 }
-function decrement(e, id) {
-  e.stopPropagation(); if (!cart.has(id)) return;
+function decrement(e,id){
+  e.stopPropagation(); if(!cart.has(id)) return;
   cart.get(id).qty--;
-  if (cart.get(id).qty <= 0) cart.delete(id);
+  if(cart.get(id).qty<=0) cart.delete(id);
   updateRow(id); refreshBar();
 }
-function updateRow(id) {
-  const row = document.getElementById('row-'+id);
-  const badge = document.getElementById('qty-'+id);
-  const qty = cart.has(id) ? cart.get(id).qty : 0;
-  if (badge) badge.textContent = qty;
-  if (row) qty > 0 ? row.classList.add('in-cart') : row.classList.remove('in-cart');
+function updateRow(id){
+  const row=document.getElementById('row-'+id);
+  const badge=document.getElementById('qty-'+id);
+  const qty=cart.has(id)?cart.get(id).qty:0;
+  if(badge) badge.textContent=qty;
+  if(row) qty>0?row.classList.add('in-cart'):row.classList.remove('in-cart');
 }
-function refreshBar() {
-  const bar = document.getElementById('cart-bar');
-  const info = document.getElementById('cart-info');
-  if (!cart.size) { bar.classList.add('hidden'); closeDQ(); return; }
+function refreshBar(){
+  const bar=document.getElementById('cart-bar');
+  const info=document.getElementById('cart-info');
+  if(!cart.size){ bar.classList.add('hidden'); closeDQ(); return; }
   bar.classList.remove('hidden');
-  let total=0, count=0;
-  cart.forEach(e => { total += e.price*e.qty; count += e.qty; });
-  info.innerHTML = `<strong>${count} ${count===1?'item':'itens'}</strong> &middot; ${fmt(total)}`;
+  let total=0,count=0;
+  cart.forEach(e=>{ total+=e.price*e.qty; count+=e.qty; });
+  info.innerHTML=`<strong>${count} ${count===1?'item':'itens'}</strong> &middot; ${fmt(total)}`;
 }
-function openDQ()  { dqShown=true; document.getElementById('dq').classList.add('open'); }
-function closeDQ() {
+function openDQ(){ dqShown=true; document.getElementById('dq').classList.add('open'); }
+function closeDQ(){
   dqShown=false; deliveryChoice=null;
-  ['dq','addr-wrap'].forEach(id => document.getElementById(id).classList.remove('open'));
-  ['dq-yes','dq-no'].forEach(id => document.getElementById(id).classList.remove('chosen'));
+  ['dq','addr-wrap'].forEach(id=>document.getElementById(id).classList.remove('open'));
+  ['dq-yes','dq-no'].forEach(id=>document.getElementById(id).classList.remove('chosen'));
   document.getElementById('addr-input').value='';
 }
-function chooseDelivery(yes) {
+function chooseDelivery(yes){
   deliveryChoice=yes;
-  document.getElementById('dq-yes').classList.toggle('chosen', yes);
-  document.getElementById('dq-no').classList.toggle('chosen', !yes);
-  document.getElementById('addr-wrap').classList.toggle('open', yes);
-  if (yes) setTimeout(() => document.getElementById('addr-input').focus(), 240);
+  document.getElementById('dq-yes').classList.toggle('chosen',yes);
+  document.getElementById('dq-no').classList.toggle('chosen',!yes);
+  document.getElementById('addr-wrap').classList.toggle('open',yes);
+  if(yes) setTimeout(()=>document.getElementById('addr-input').focus(),240);
 }
-function handleSend() {
-  if (!cart.size) return;
-  if (!dqShown) { openDQ(); return; }
-  if (deliveryChoice===null) return;
-  if (deliveryChoice) {
-    const addr = document.getElementById('addr-input').value.trim();
-    if (!addr) { document.getElementById('addr-input').focus(); return; }
+function handleSend(){
+  if(!cart.size) return;
+  if(!dqShown){ openDQ(); return; }
+  if(deliveryChoice===null) return;
+  if(deliveryChoice){
+    const addr=document.getElementById('addr-input').value.trim();
+    if(!addr){ document.getElementById('addr-input').focus(); return; }
   }
-  let lines=['*Pedido — Mary Pastelaria*',''], total=0;
-  cart.forEach(e => {
-    const sub=e.price*e.qty; total+=sub;
-    lines.push(`• ${e.qty}x ${e.name} — ${fmt(sub)}`);
-  });
+  let lines=['*Pedido — Mary Pastelaria*',''],total=0;
+  cart.forEach(e=>{ const sub=e.price*e.qty; total+=sub; lines.push(`• ${e.qty}x ${e.name} — ${fmt(sub)}`); });
   lines.push('',`*Total: ${fmt(total)}*`,'');
   lines.push(deliveryChoice
-    ? `- *Entrega:* ${document.getElementById('addr-input').value.trim()}`
-    : '- *Retirada no local*');
-  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
+    ?`- *Entrega:* ${document.getElementById('addr-input').value.trim()}`
+    :'- *Retirada no local*');
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`,'_blank');
   showToast('Pedido enviado!');
-  setTimeout(() => resetCart(), 600);
+  setTimeout(()=>resetCart(),600);
 }
 
 renderMenu('pasteis');
