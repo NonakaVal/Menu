@@ -13,6 +13,8 @@
       --primary:      #E61A25;
       --primary-dark: #B8141E;
       --primary-soft: rgba(230, 26, 37, 0.07);
+      --primary-muted: #c0383e;
+      --primary-muted-soft: rgba(192, 56, 62, 0.09);
 
       --text:         #1E1B18;
       --text-light:   #5a524a;
@@ -32,6 +34,8 @@
       --primary:      #E61A25;
       --primary-dark: #B8141E;
       --primary-soft: rgba(230, 26, 37, 0.10);
+      --primary-muted: #b8484c;
+      --primary-muted-soft: rgba(184, 72, 76, 0.11);
 
       --text:         #f0ebe4;
       --text-light:   #9a9088;
@@ -223,8 +227,8 @@
       font-size: .45rem;
       letter-spacing: .08em;
       color: var(--text-light);
-      opacity: .5;
-      padding: 2px 20px 8px;
+      opacity: .72;
+      padding: 6px 20px 8px;
       border-bottom: 1px dotted var(--border);
       margin-bottom: 4px;
       display: flex;
@@ -234,7 +238,7 @@
     }
     .extras-hint span.accent {
       color: var(--primary);
-      opacity: .8;
+      opacity: .9;
     }
     /* info de delivery — sempre visível */
     .hint-delivery {
@@ -250,7 +254,6 @@
       fill: none;
       stroke-width: 1.8;
       flex-shrink: 0;
-      opacity: .7;
     }
     /* info de obs — só no modo pedido */
     .hint-obs {
@@ -258,15 +261,20 @@
       align-items: center;
       gap: 5px;
       white-space: nowrap;
+      background: var(--primary-soft);
+      border: 1px solid rgba(230,26,37,.18);
+      border-radius: 2px;
+      padding: 3px 7px;
+      color: var(--primary);
+      opacity: 1;
     }
     .hint-obs svg {
       width: 10px;
       height: 10px;
-      stroke: var(--text-light);
+      stroke: var(--primary);
       fill: none;
       stroke-width: 1.8;
       flex-shrink: 0;
-      opacity: .7;
     }
     body.order-mode .hint-obs { display: flex; }
 
@@ -321,7 +329,7 @@
       transition: background .15s, transform .15s;
     }
     .item.in-cart .item-marker {
-      background: var(--primary);
+      background: var(--primary-muted);
       transform: scale(1.4);
     }
 
@@ -338,7 +346,7 @@
     }
 
     .item.in-cart {
-      background: var(--primary-soft);
+      background: var(--primary-muted-soft);
     }
     .item.in-cart .item-left { padding-left: 17px; }
 
@@ -353,7 +361,7 @@
     /* qty badge shown left of price */
     .item-qty-badge {
       font-size: .7rem;
-      color: var(--primary);
+      color: var(--primary-muted);
       font-variant-numeric: tabular-nums;
       font-weight: 700;
       white-space: nowrap;
@@ -373,7 +381,7 @@
       min-width: 45px;
       text-align: right;
     }
-    .item.premium .item-price { color: var(--primary); }
+    .item.premium .item-price { color: var(--primary-muted); }
 
     /* Ícone de observação compacto na mesma linha */
     .item-obs-icon {
@@ -393,7 +401,7 @@
     }
     .item-obs-icon.active {
       opacity: 1;
-      color: var(--primary);
+      color: var(--primary-muted);
     }
     .item-obs-icon svg {
       width: 12px;
@@ -493,7 +501,7 @@
       font-size: .78rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
-      color: var(--primary);
+      color: var(--primary-muted);
       background: none;
       transition: color .15s;
       padding: 0;
@@ -502,18 +510,19 @@
 
     /* ── MODE CARD ── */
     .mode-card {
-      margin: 0 20px;
-      padding: 5px 10px 5px 12px;
-      border: 1px solid var(--border);
+      margin: 10px 20px 6px;
+      padding: 8px 12px 8px 14px;
+      border: 1px dashed var(--border);
       border-radius: 2px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      opacity: .55;
-      transition: opacity .2s, border-color .2s;
+      opacity: .78;
+      transition: opacity .2s, border-color .2s, background .2s;
+      background: var(--surface);
     }
-    .mode-card:hover { opacity: .85; }
+    .mode-card:hover { opacity: 1; border-color: var(--primary); }
     .mode-card-label {
       font-size: .5rem;
       font-weight: 600;
@@ -524,7 +533,8 @@
     .mode-card-btn {
       flex-shrink: 0;
       background: none;
-      border: none;
+      border: 1px solid var(--border);
+      border-radius: 2px;
       cursor: pointer;
       font-family: 'Outfit', sans-serif;
       font-size: .5rem;
@@ -532,16 +542,25 @@
       letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--text-light);
-      padding: 4px 0;
-      transition: color .15s;
+      padding: 5px 10px;
+      transition: color .15s, border-color .15s, background .15s;
       white-space: nowrap;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    .mode-card-btn:hover { color: var(--primary); }
-    body.order-mode .mode-card { opacity: .7; border-color: rgba(230,26,37,.25); }
+    .mode-card-btn svg {
+      width: 8px;
+      height: 8px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      flex-shrink: 0;
+    }
+    .mode-card-btn:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-soft); }
+    body.order-mode .mode-card { opacity: .85; border-style: solid; border-color: rgba(230,26,37,.3); background: var(--primary-soft); }
     body.order-mode .mode-card-label { color: var(--primary); }
-    body.order-mode .mode-card-btn { color: var(--primary); }
+    body.order-mode .mode-card-btn { color: var(--primary); border-color: rgba(230,26,37,.35); }
 
     /* hide stepper and obs in read mode, and hide menu hint */
     .item .item-controls:first-child,
@@ -654,7 +673,7 @@
     }
     .summary-row-qty {
       font-size: .72rem;
-      color: var(--primary);
+      color: var(--primary-muted);
       font-weight: 700;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
@@ -677,7 +696,7 @@
       font-style: italic;
       margin-top: 4px;
       padding-left: 8px;
-      border-left: 2px solid var(--primary);
+      border-left: 2px solid var(--primary-muted);
       opacity: .7;
       line-height: 1.4;
     }
@@ -686,7 +705,7 @@
       font-family: 'Playfair Display', serif;
       font-size: .92rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--primary-muted);
       white-space: nowrap;
       min-width: 60px;
       text-align: right;
@@ -1062,7 +1081,10 @@
 
     <div class="mode-card" id="mode-card">
       <span class="mode-card-label" id="mode-label">Leitura</span>
-      <button class="mode-card-btn" onclick="toggleMode()" id="mode-btn">Ativar opções de pedido</button>
+      <button class="mode-card-btn" onclick="toggleMode()" id="mode-btn">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        Ativar opções de pedido
+      </button>
     </div>
 
     <!-- Informação sutil sobre adicionais -->
@@ -1441,7 +1463,9 @@
     function applyMode() {
       document.body.classList.toggle('order-mode', orderMode);
       document.getElementById('mode-label').textContent = orderMode ? 'Pedido' : 'Leitura';
-      document.getElementById('mode-btn').textContent   = orderMode ? 'Encerrar' : 'Ativar opções de pedido';
+      document.getElementById('mode-btn').innerHTML = orderMode
+        ? `<svg viewBox="0 0 24 24" style="width:8px;height:8px;stroke:currentColor;fill:none;stroke-width:2.2;flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg> Encerrar`
+        : `<svg viewBox="0 0 24 24" style="width:8px;height:8px;stroke:currentColor;fill:none;stroke-width:2.2;flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg> Ativar opções de pedido`;
       
       if (!orderMode) {
         cart.clear();
