@@ -224,15 +224,51 @@
       letter-spacing: .08em;
       color: var(--text-light);
       opacity: .5;
-      text-align: right;
       padding: 2px 20px 8px;
       border-bottom: 1px dotted var(--border);
       margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
     }
-    .extras-hint span {
+    .extras-hint span.accent {
       color: var(--primary);
       opacity: .8;
     }
+    /* info de delivery — sempre visível */
+    .hint-delivery {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .hint-delivery svg {
+      width: 10px;
+      height: 10px;
+      stroke: var(--text-light);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+      opacity: .7;
+    }
+    /* info de obs — só no modo pedido */
+    .hint-obs {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .hint-obs svg {
+      width: 10px;
+      height: 10px;
+      stroke: var(--text-light);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+      opacity: .7;
+    }
+    body.order-mode .hint-obs { display: flex; }
 
     /* ── ITEMS ── */
     .item {
@@ -257,10 +293,10 @@
     .item-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       flex: 1;
       min-width: 0;
-      padding: 12px 10px 12px 20px;
+      padding: 12px 8px 12px 20px;
       position: relative;
     }
 
@@ -296,6 +332,9 @@
       letter-spacing: .01em;
       flex: 1;
       min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .item.in-cart {
@@ -326,13 +365,94 @@
 
     .item-price {
       font-family: 'Playfair Display', serif;
-      font-size: .95rem;
+      font-size: .9rem;
       font-weight: 700;
       color: var(--text-light);
       white-space: nowrap;
       flex-shrink: 0;
+      min-width: 45px;
+      text-align: right;
     }
     .item.premium .item-price { color: var(--primary); }
+
+    /* Ícone de observação compacto na mesma linha */
+    .item-obs-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-light);
+      opacity: .4;
+      transition: opacity .15s, color .15s;
+      margin-right: 2px;
+      flex-shrink: 0;
+    }
+    .item-obs-icon:hover {
+      opacity: 1;
+      color: var(--primary);
+    }
+    .item-obs-icon.active {
+      opacity: 1;
+      color: var(--primary);
+    }
+    .item-obs-icon svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+    
+    .item-obs-field {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .26s ease, opacity .22s ease;
+      padding: 0 20px 0 52px;
+    }
+    .item-obs-field.open { 
+      max-height: 70px; 
+      opacity: 1; 
+      padding-bottom: 8px;
+    }
+    .obs-field-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .44rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      opacity: .55;
+      margin-bottom: 4px;
+    }
+    .obs-field-label svg {
+      width: 9px;
+      height: 9px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+    .item-obs-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: .65rem;
+      font-weight: 400;
+      padding: 6px 8px;
+      outline: none;
+      transition: border-color .18s;
+    }
+    .item-obs-input:focus { border-color: var(--primary); }
+    .item-obs-input::placeholder {
+      color: var(--text-light);
+      opacity: .5;
+      font-style: italic;
+    }
 
     /* ── STEPPER (full-height touch targets) ── */
     .item-controls {
@@ -380,74 +500,6 @@
     }
     .ctrl-count.zero { color: var(--border); }
 
-    /* ── ITEM OBSERVATION (SUBTIL) ── */
-    .item-obs-container {
-      display: flex;
-      flex-direction: column;
-      padding: 0 20px 8px 52px; /* Alinhado com o nome do item */
-      font-size: .6rem;
-    }
-    
-    .item-obs-trigger {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      color: var(--text-light);
-      opacity: .5;
-      transition: opacity .15s, color .15s;
-      font-size: .5rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      width: fit-content;
-    }
-    .item-obs-trigger:hover {
-      opacity: 1;
-      color: var(--primary);
-    }
-    .item-obs-trigger.active {
-      opacity: 1;
-      color: var(--primary);
-    }
-    .item-obs-trigger svg {
-      width: 10px;
-      height: 10px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-    }
-    
-    .item-obs-field {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transition: max-height .26s ease, opacity .22s ease;
-      margin-top: 4px;
-    }
-    .item-obs-field.open { 
-      max-height: 60px; 
-      opacity: 1; 
-    }
-    .item-obs-input {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--text);
-      font-family: 'Outfit', sans-serif;
-      font-size: .65rem;
-      font-weight: 400;
-      padding: 6px 8px;
-      outline: none;
-      transition: border-color .18s;
-    }
-    .item-obs-input:focus { border-color: var(--primary); }
-    .item-obs-input::placeholder {
-      color: var(--text-light);
-      opacity: .5;
-      font-style: italic;
-    }
-
     /* ── MODE CARD ── */
     .mode-card {
       margin: 0 20px;
@@ -494,13 +546,15 @@
     /* hide stepper and obs in read mode, and hide menu hint */
     .item .item-controls:first-child,
     .item .item-controls:last-child,
-    .item-obs-container,
+    .item-obs-icon,
+    .item-obs-field,
     .menu-hint {
       transition: opacity .18s;
     }
     body:not(.order-mode) .item .item-controls:first-child,
     body:not(.order-mode) .item .item-controls:last-child,
-    body:not(.order-mode) .item-obs-container,
+    body:not(.order-mode) .item-obs-icon,
+    body:not(.order-mode) .item-obs-field,
     body:not(.order-mode) .menu-hint {
       display: none;
     }
@@ -604,13 +658,18 @@
       font-weight: 700;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
+      min-width: 28px;
+      text-align: right;
     }
     .summary-row-price {
       font-family: 'Playfair Display', serif;
-      font-size: .88rem;
-      font-weight: 700;
+      font-size: .82rem;
+      font-weight: 600;
       color: var(--text-light);
       white-space: nowrap;
+      min-width: 55px;
+      text-align: right;
+      opacity: .8;
     }
     .summary-row-obs {
       font-size: .55rem;
@@ -621,6 +680,24 @@
       border-left: 2px solid var(--primary);
       opacity: .7;
       line-height: 1.4;
+    }
+    /* total destacado quando qty > 1 */
+    .summary-row-total {
+      font-family: 'Playfair Display', serif;
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      min-width: 60px;
+      text-align: right;
+    }
+    .summary-row-unit {
+      font-size: .5rem;
+      color: var(--text-light);
+      text-align: right;
+      opacity: .55;
+      margin-top: 1px;
+      letter-spacing: .02em;
     }
     
     /* borderline text for fees */
@@ -660,17 +737,18 @@
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
+      background: var(--primary-soft);
     }
     .summary-total-label {
-      font-size: .6rem;
+      font-size: .65rem;
       font-weight: 700;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--text-light);
+      color: var(--text);
     }
     .summary-total-value {
       font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--primary);
     }
@@ -989,7 +1067,19 @@
 
     <!-- Informação sutil sobre adicionais -->
     <div class="extras-hint">
-      <span>+</span> observações · <span>+</span> delivery R$ 3,00
+      <span class="hint-obs">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        toque no balão para adicionar observação
+      </span>
+      <span class="hint-delivery">
+        <svg viewBox="0 0 24 24">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 5v3h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        delivery <span class="accent">· R$ 3,00</span>
+      </span>
     </div>
 
     <main id="menu-wrap"></main>
@@ -1114,6 +1204,11 @@
                   <span class="item-marker"></span>
                   <span class="item-name">${item.name}</span>
                   <span class="item-dots"></span>
+                  <span class="item-obs-icon ${obsActive}" onclick="toggleItemObs('${id}')" title="${cartItem && cartItem.obs ? 'Editar observação' : 'Adicionar observação'}">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </span>
                   <span class="item-qty-badge" id="badge-${id}">${qty>0?qty+'×':''}</span>
                   <span class="item-price">${fmt(item.price)}</span>
                 </div>
@@ -1122,19 +1217,15 @@
                 </div>
               </div>
               
-              <div class="item-obs-container">
-                <span class="item-obs-trigger ${obsActive}" onclick="toggleItemObs('${id}')">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                  </svg>
-                  <span>${cartItem && cartItem.obs ? 'editar' : 'obs'}</span>
-                </span>
-                <div class="item-obs-field ${cartItem && cartItem.obs ? 'open' : ''}" id="obs-field-${id}">
-                  <textarea class="item-obs-input" id="obs-${id}" 
-                    placeholder="Ex: sem cebola, ponto da carne..."
-                    onchange="updateItemObs('${id}', this.value)"
-                    rows="1">${obs}</textarea>
+              <div class="item-obs-field ${cartItem && cartItem.obs ? 'open' : ''}" id="obs-field-${id}">
+                <div class="obs-field-label">
+                  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  ${cartItem && cartItem.obs ? 'Editar observação' : 'Adicionar observação'}
                 </div>
+                <textarea class="item-obs-input" id="obs-${id}" 
+                  placeholder="Ex: sem cebola, ponto da carne..."
+                  onchange="updateItemObs('${id}', this.value)"
+                  rows="1">${obs}</textarea>
               </div>
             </div>`;
         });
@@ -1145,15 +1236,17 @@
     function toggleItemObs(id) {
       if (!orderMode) return;
       const field = document.getElementById('obs-field-' + id);
-      const trigger = document.querySelector(`#row-${id} .item-obs-trigger`);
+      const icon = document.querySelector(`#row-${id} .item-obs-icon`);
       const item = cart.get(id);
       
       if (field.classList.contains('open')) {
         field.classList.remove('open');
-        trigger?.classList.remove('active');
+        if (!item?.obs) {
+          icon?.classList.remove('active');
+        }
       } else {
         field.classList.add('open');
-        trigger?.classList.add('active');
+        icon?.classList.add('active');
         setTimeout(() => document.getElementById('obs-' + id)?.focus(), 260);
       }
     }
@@ -1164,14 +1257,16 @@
       const trimmed = value.trim();
       item.obs = trimmed || undefined;
       
-      const triggerSpan = document.querySelector(`#row-${id} .item-obs-trigger span`);
-      if (triggerSpan) {
-        triggerSpan.textContent = trimmed ? 'editar' : 'obs';
-      }
-      
-      if (!trimmed) {
-        const trigger = document.querySelector(`#row-${id} .item-obs-trigger`);
-        trigger?.classList.remove('active');
+      const icon = document.querySelector(`#row-${id} .item-obs-icon`);
+      const label = document.querySelector(`#obs-field-${id} .obs-field-label`);
+      if (trimmed) {
+        icon?.classList.add('active');
+        icon?.setAttribute('title', 'Editar observação');
+        if (label) label.childNodes[label.childNodes.length - 1].textContent = ' Editar observação';
+      } else {
+        icon?.classList.remove('active');
+        icon?.setAttribute('title', 'Adicionar observação');
+        if (label) label.childNodes[label.childNodes.length - 1].textContent = ' Adicionar observação';
       }
     }
 
@@ -1263,23 +1358,41 @@
       const delivery = wantsDelivery ? DELIVERY_FEE : 0;
       const total = subtotal + delivery;
       
-      let lines = ['🥟 *Pedido — Mary Pastelaria*', ''];
+      const now = new Date();
+      const hora = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const data = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      
+      let lines = [
+        `*PEDIDO — Mary Pastelaria*`,
+        `_${data} · ${hora}_`,
+        ``,
+        `*Itens*`
+      ];
       
       cart.forEach(e => {
         const s = e.price * e.qty;
-        lines.push(`• ${e.qty}x ${e.name} — ${fmt(s)}`);
+        if (e.qty > 1) {
+          lines.push(`  ${e.qty}x ${e.name}  (${fmt(e.price)} cada)  =  ${fmt(s)}`);
+        } else {
+          lines.push(`  ${e.qty}x ${e.name}  =  ${fmt(s)}`);
+        }
         if (e.obs) {
-          lines.push(`   └ Obs: ${e.obs}`);
+          lines.push(`     Obs: ${e.obs}`);
         }
       });
       
-      lines.push('', `*Subtotal: ${fmt(subtotal)}*`);
-      if (delivery > 0) lines.push(`*Entrega: ${fmt(delivery)}*`);
-      lines.push('', `*TOTAL: ${fmt(total)}*`, '');
+      lines.push('');
+      lines.push(`Subtotal   ${fmt(subtotal)}`);
+      if (delivery > 0) lines.push(`Entrega    ${fmt(delivery)}`);
+      lines.push(`*Total     ${fmt(total)}*`);
+      lines.push('');
       
-      lines.push(wantsDelivery
-        ? `📍 *Entrega:* ${document.getElementById('addr-input').value.trim()}`
-        : '🏠 *Retirada no local*');
+      if (wantsDelivery) {
+        lines.push(`*Entrega*`);
+        lines.push(`  ${document.getElementById('addr-input').value.trim()}`);
+      } else {
+        lines.push(`*Retirada no local*`);
+      }
       
       window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
     }
@@ -1299,13 +1412,19 @@
       
       cart.forEach(e => {
         const sub = e.price * e.qty;
+        const isMulti = e.qty > 1;
         rows += `<div class="summary-row">
           <div class="summary-row-main">
             <span class="summary-row-name">${e.name}</span>
             <span class="summary-row-qty">${e.qty}×</span>
-            <span class="summary-row-price">${fmt(sub)}</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;min-width:60px;">
+              ${isMulti
+                ? `<span class="summary-row-total">${fmt(sub)}</span>
+                   <span class="summary-row-unit">${fmt(e.price)} cada</span>`
+                : `<span class="summary-row-price">${fmt(e.price)}</span>`}
+            </div>
           </div>
-          ${e.obs ? `<div class="summary-row-obs">📝 ${e.obs}</div>` : ''}
+          ${e.obs ? `<div class="summary-row-obs">${e.obs}</div>` : ''}
         </div>`;
       });
       
@@ -1390,7 +1509,10 @@
             <circle cx="5.5" cy="18.5" r="2.5"/>
             <circle cx="18.5" cy="18.5" r="2.5"/>
           </svg>
-          Delivery (+R$ 3,00)
+          <span style="display:flex;flex-direction:column;gap:1px;">
+            <span>Delivery</span>
+            <span style="font-size:.44rem;font-weight:400;letter-spacing:.06em;opacity:.6;text-transform:none;">taxa de entrega · R$ 3,00</span>
+          </span>
         </span>
         <span class="toggle-switch">
           <input type="checkbox" id="delivery-toggle" onchange="onToggleDelivery(this.checked)">
