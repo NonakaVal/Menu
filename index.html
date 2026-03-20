@@ -191,7 +191,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 30px 20px 12px;
+      padding: 20px 20px 9px;
     }
     .section-label h2 {
       font-size: .54rem;
@@ -296,7 +296,7 @@
       gap: 8px;
       flex: 1;
       min-width: 0;
-      padding: 12px 8px 12px 20px;
+      padding: 9px 8px 9px 20px;
       position: relative;
     }
 
@@ -1056,7 +1056,7 @@
   <div class="page">
     <nav class="cat-nav">
       <button class="cat-btn active" onclick="selectCat('pasteis',this)">Pastéis</button>
-      <button class="cat-btn" onclick="selectCat('salgados',this)">Salgados</button>
+      <button class="cat-btn" onclick="selectCat('salgados',this)">Especiais</button>
       <button class="cat-btn" onclick="selectCat('bebidas',this)">Bebidas</button>
     </nav>
 
@@ -1133,12 +1133,6 @@
           { name:"Frango c/ Catupiry",   price:10 }, { name:"Calabresa c/ Queijo", price:10 },
           { name:"Portuguesa",           price:10 }
         ],
-        "Especiais": [
-          { name:"Costela",              price:15, premium:true }, { name:"Costela c/ Queijo",      price:15, premium:true },
-          { name:"Bacon",                price:15, premium:true }, { name:"X-Tudo",                 price:15, premium:true },
-          { name:"Strogonoff de Frango", price:15, premium:true }, { name:"Carne Seca",             price:15, premium:true },
-          { name:"Pernil",               price:15, premium:true }, { name:"Palmito",                price:15, premium:true }
-        ],
         "Doces": [
           { name:"Brigadeiro",           price:12 }, { name:"Prestígio",             price:12 },
           { name:"Doce de Leite",        price:12 }, { name:"Brigadeiro c/ Morango", price:12 },
@@ -1147,14 +1141,11 @@
         ]
       },
       salgados: {
-        "Salgados": [
-          { name:"Coxinha de Frango",          price:7  }, { name:"Coxinha de Costela",      price:9, premium:true },
-          { name:"Risoles de Presunto/Queijo", price:7  }, { name:"Risoles de Carne",        price:7  },
-          { name:"Bolinha de Queijo",          price:8  }, { name:"Kibe",                    price:7  },
-          { name:"Kibe c/ Requeijão",          price:8  }, { name:"Esfiha de Carne",         price:6  },
-          { name:"Esfiha de Frango",           price:6  }, { name:"Enroladinho de Salsicha", price:6  },
-          { name:"Folhado de Calabresa",       price:8  }, { name:"Pão de Queijo",           price:4  },
-          { name:"Croquete de Carne",          price:6  }
+        "Especiais": [
+          { name:"Costela",              price:15, premium:true }, { name:"Costela c/ Queijo",      price:15, premium:true },
+          { name:"Bacon",                price:15, premium:true }, { name:"X-Tudo",                 price:15, premium:true },
+          { name:"Strogonoff de Frango", price:15, premium:true }, { name:"Carne Seca",             price:15, premium:true },
+          { name:"Pernil",               price:15, premium:true }, { name:"Palmito",                price:15, premium:true }
         ]
       },
       bebidas: {
