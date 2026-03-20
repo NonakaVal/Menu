@@ -124,31 +124,70 @@
       padding-bottom: 140px;
     }
 
-    /* ── THEME TOGGLE ── */
-    .theme-toggle {
+    /* ── TOPBAR ── */
+    .topbar {
       position: fixed;
-      top: 16px;
-      right: 16px;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 580px;
       z-index: 200;
-      width: 30px;
-      height: 30px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 6px;
-      cursor: pointer;
-      opacity: .85;
-      transition: opacity .2s, transform .2s;
+      justify-content: space-between;
+      padding: 10px 16px;
+      pointer-events: none;
     }
-    .theme-toggle:hover { opacity: 1; transform: scale(1.06); }
-    .theme-toggle svg {
-      width: 14px;
-      height: 14px;
-      stroke: #fff;
-      fill: none;
-      stroke-width: 1.8;
+    .topbar-mode {
+      pointer-events: all;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(0,0,0,.38);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 20px;
+      cursor: pointer;
+      color: rgba(255,255,255,.92);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 6px 12px 6px 14px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background .2s, color .2s;
+    }
+    .topbar-mode svg {
+      width: 10px; height: 10px;
+      stroke: currentColor; fill: none; stroke-width: 2.2;
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .topbar-mode:hover { background: rgba(0,0,0,.55); }
+    body.order-mode .topbar-mode {
+      background: rgba(230,26,37,.7);
+      border-color: rgba(255,255,255,.22);
+    }
+    body.order-mode .topbar-mode svg { transform: rotate(180deg); }
+
+    .topbar-theme {
+      pointer-events: all;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.38);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50%;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background .2s;
+    }
+    .topbar-theme:hover { background: rgba(0,0,0,.55); }
+    .topbar-theme svg {
+      width: 13px; height: 13px;
+      stroke: rgba(255,255,255,.9); fill: none; stroke-width: 1.8;
     }
     .icon-sun  { display: block; }
     .icon-moon { display: none; }
@@ -195,7 +234,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 16px 20px 8px;
+      padding: 16px 28px 6px;
     }
     .section-label h2 {
       font-size: .54rem;
@@ -222,61 +261,20 @@
       padding-left: 4px;
     }
     
-    /* Sutil informação de adicionais */
-    .extras-hint {
-      font-size: .45rem;
-      letter-spacing: .08em;
-      color: var(--text-light);
-      opacity: .72;
-      padding: 6px 20px 8px;
-      border-bottom: 1px dotted var(--border);
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+    /* ── ITEM GROUP CARD ── */
+    .item-group {
+      margin: 0 14px 6px;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
-    .extras-hint span.accent {
-      color: var(--primary);
-      opacity: .9;
+    .item-group .item {
+      background: transparent;
     }
-    /* info de delivery — sempre visível */
-    .hint-delivery {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
+    .item-group .item:last-child {
+      border-bottom: none;
     }
-    .hint-delivery svg {
-      width: 10px;
-      height: 10px;
-      stroke: var(--text-light);
-      fill: none;
-      stroke-width: 1.8;
-      flex-shrink: 0;
-    }
-    /* info de obs — só no modo pedido */
-    .hint-obs {
-      display: none;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-      background: var(--primary-soft);
-      border: 1px solid rgba(230,26,37,.18);
-      border-radius: 6px;
-      padding: 3px 7px;
-      color: var(--primary);
-      opacity: 1;
-    }
-    .hint-obs svg {
-      width: 10px;
-      height: 10px;
-      stroke: var(--primary);
-      fill: none;
-      stroke-width: 1.8;
-      flex-shrink: 0;
-    }
-    body.order-mode .hint-obs { display: flex; }
 
     /* ── ITEMS ── */
     .item {
@@ -508,60 +506,6 @@
     }
     .ctrl-count.zero { color: var(--border); }
 
-    /* ── MODE CARD ── */
-    .mode-card {
-      margin: 10px 20px 6px;
-      padding: 8px 12px 8px 14px;
-      border: 1px dashed var(--border);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      opacity: .78;
-      transition: opacity .2s, border-color .2s, background .2s;
-      background: var(--surface);
-    }
-    .mode-card:hover { opacity: 1; border-color: var(--primary); }
-    .mode-card-label {
-      font-size: .5rem;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--text-light);
-    }
-    .mode-card-btn {
-      flex-shrink: 0;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .5rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      padding: 5px 10px;
-      transition: color .15s, border-color .15s, background .15s;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .mode-card-btn svg {
-      width: 8px;
-      height: 8px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2.2;
-      flex-shrink: 0;
-    }
-    .mode-card-btn:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-soft); }
-    body.order-mode .mode-card { opacity: .85; border-style: solid; border-color: rgba(230,26,37,.3); background: var(--primary-soft); }
-    body.order-mode .mode-card-label { color: var(--primary); }
-    body.order-mode .mode-card-btn { color: var(--primary); border-color: rgba(230,26,37,.35); }
-
     /* hide stepper and obs in read mode, and hide menu hint */
     .item .item-controls:first-child,
     .item .item-controls:last-child,
@@ -585,7 +529,9 @@
     .summary-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.45);
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
       z-index: 149;
       opacity: 0;
       pointer-events: none;
@@ -1045,22 +991,29 @@
 </head>
 <body>
 
-  <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">
-    <svg class="icon-sun" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="4"/>
-      <line x1="12" y1="2"  x2="12" y2="5"/>
-      <line x1="12" y1="19" x2="12" y2="22"/>
-      <line x1="2"  y1="12" x2="5"  y2="12"/>
-      <line x1="19" y1="12" x2="22" y2="12"/>
-      <line x1="4.22"  y1="4.22"  x2="6.34"  y2="6.34"/>
-      <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-      <line x1="19.78" y1="4.22"  x2="17.66" y2="6.34"/>
-      <line x1="6.34"  y1="17.66" x2="4.22"  y2="19.78"/>
-    </svg>
-    <svg class="icon-moon" viewBox="0 0 24 24">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  </button>
+  <!-- Top bar: mode toggle (left) + theme (right) -->
+  <div class="topbar">
+    <button class="topbar-mode" onclick="toggleMode()" id="mode-btn">
+      <span id="mode-label">Cardápio</span>
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="topbar-theme" onclick="toggleTheme()" aria-label="Alternar tema">
+      <svg class="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2"  x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="2"  y1="12" x2="5"  y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.22"  y1="4.22"  x2="6.34"  y2="6.34"/>
+        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+        <line x1="19.78" y1="4.22"  x2="17.66" y2="6.34"/>
+        <line x1="6.34"  y1="17.66" x2="4.22"  y2="19.78"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
 
   <div class="hero">
     <div class="hero-content">
@@ -1084,36 +1037,10 @@
       <button class="cat-btn" onclick="selectCat('bebidas',this)">Bebidas</button>
     </nav>
 
-    <div class="mode-card" id="mode-card">
-      <span class="mode-card-label" id="mode-label">Leitura</span>
-      <button class="mode-card-btn" onclick="toggleMode()" id="mode-btn">
-        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        Ativar opções de pedido
-      </button>
-    </div>
-
-    <!-- Informação sutil sobre adicionais -->
-    <div class="extras-hint">
-      <span class="hint-obs">
-        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        toque no balão para adicionar observação
-      </span>
-      <span class="hint-delivery">
-        <svg viewBox="0 0 24 24">
-          <rect x="1" y="3" width="15" height="13" rx="1"/>
-          <path d="M16 8h4l3 5v3h-7V8z"/>
-          <circle cx="5.5" cy="18.5" r="2.5"/>
-          <circle cx="18.5" cy="18.5" r="2.5"/>
-        </svg>
-        delivery <span class="accent">· R$ 3,00</span>
-      </span>
-    </div>
-
     <main id="menu-wrap"></main>
 
     <footer class="footer">
-      <div class="footer-line"></div>
-      <p>selecione os itens e envie pelo whatsapp</p>
+      <p>Mary Pastelaria · Guapiara-SP</p>
     </footer>
   </div>
 
@@ -1197,9 +1124,9 @@
     function renderMenu(cat) {
       const wrap = document.getElementById('menu-wrap');
       let html = '';
-      let isFirst = true;
       Object.entries(menu[cat]).forEach(([sec, items]) => {
-        html += `<div class="section-label"><h2>${sec}</h2>${isFirst ? '<span class="menu-hint">← remover &nbsp;·&nbsp; adicionar →</span>' : ''}</div>`;
+        html += `<div class="section-label"><h2>${sec}</h2></div>`;
+        html += `<div class="item-group">`;
         isFirst = false;
         items.forEach(item => {
           const id  = toId(item.name);
@@ -1247,6 +1174,7 @@
               </div>
             </div>`;
         });
+        html += `</div>`; // .item-group
       });
       wrap.innerHTML = html;
     }
