@@ -261,6 +261,37 @@
       padding-left: 4px;
     }
     
+    /* ── MENU LEGEND ── */
+    .menu-legend {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 28px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    body.order-mode .menu-legend { display: flex; }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: .42rem;
+      font-weight: 500;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      opacity: .65;
+    }
+    .legend-item svg {
+      width: 9px; height: 9px;
+      stroke: currentColor; fill: none; stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+    .legend-sep {
+      font-size: .42rem;
+      color: var(--border);
+      opacity: .8;
+    }
+
     /* ── ITEM GROUP CARD ── */
     .item-group {
       margin: 0 14px 6px;
@@ -1036,6 +1067,23 @@
       <button class="cat-btn" onclick="selectCat('salgados',this)">Especiais</button>
       <button class="cat-btn" onclick="selectCat('bebidas',this)">Bebidas</button>
     </nav>
+
+    <div class="menu-legend" id="menu-legend">
+      <span class="legend-item">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        observação
+      </span>
+      <span class="legend-sep">·</span>
+      <span class="legend-item">
+        <svg viewBox="0 0 24 24">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 5v3h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        delivery R$ 3,00
+      </span>
+    </div>
 
     <main id="menu-wrap"></main>
 
