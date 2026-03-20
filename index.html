@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mary Pastelaria — Cardápio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg:           #f5f3f0;
@@ -55,7 +55,7 @@
       min-height: 100vh;
       background: var(--bg-solid);
       color: var(--text);
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 500;
       -webkit-font-smoothing: antialiased;
       transition: background .3s, color .3s;
@@ -137,7 +137,7 @@
       justify-content: center;
       background: rgba(0,0,0,.45);
       border: 1px solid rgba(255,255,255,.25);
-      border-radius: 2px;
+      border-radius: 6px;
       cursor: pointer;
       opacity: .85;
       transition: opacity .2s, transform .2s;
@@ -174,7 +174,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 600;
       font-size: .62rem;
       letter-spacing: .22em;
@@ -195,7 +195,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 20px 20px 9px;
+      padding: 16px 20px 8px;
     }
     .section-label h2 {
       font-size: .54rem;
@@ -263,7 +263,7 @@
       white-space: nowrap;
       background: var(--primary-soft);
       border: 1px solid rgba(230,26,37,.18);
-      border-radius: 2px;
+      border-radius: 6px;
       padding: 3px 7px;
       color: var(--primary);
       opacity: 1;
@@ -304,7 +304,7 @@
       gap: 8px;
       flex: 1;
       min-width: 0;
-      padding: 9px 8px 9px 20px;
+      padding: 7px 8px 7px 20px;
       position: relative;
     }
 
@@ -446,9 +446,9 @@
       width: 100%;
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 6px;
       color: var(--text);
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: .65rem;
       font-weight: 400;
       padding: 6px 8px;
@@ -482,7 +482,7 @@
       cursor: pointer;
       color: var(--text-light);
       font-size: 1.1rem;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 400;
       line-height: 1;
       flex-shrink: 0;
@@ -513,7 +513,7 @@
       margin: 10px 20px 6px;
       padding: 8px 12px 8px 14px;
       border: 1px dashed var(--border);
-      border-radius: 2px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -534,9 +534,9 @@
       flex-shrink: 0;
       background: none;
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 6px;
       cursor: pointer;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: .5rem;
       font-weight: 700;
       letter-spacing: .14em;
@@ -602,7 +602,8 @@
       max-width: 480px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
-      border-radius: 0 0 2px 2px;
+      box-shadow: 0 8px 48px rgba(0,0,0,.18);
+      border-radius: 0 0 10px 10px;
       z-index: 150;
       transition: transform .25s cubic-bezier(.4,0,.2,1), opacity .25s;
       max-height: 88vh;
@@ -637,7 +638,7 @@
       display: flex; align-items: center; justify-content: center;
       background: none;
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 6px;
       cursor: pointer;
       color: var(--text-light);
       font-size: 1.1rem;
@@ -781,10 +782,10 @@
     .review-btn {
       background: var(--primary);
       border: none;
-      border-radius: 2px;
+      border-radius: 6px;
       cursor: pointer;
       color: #fff;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: .6rem;
       font-weight: 700;
       letter-spacing: .14em;
@@ -836,9 +837,11 @@
       max-width: 580px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
+      border-radius: 14px 14px 0 0;
       padding: 12px 22px 28px;
       z-index: 100;
       transition: transform .28s ease;
+      box-shadow: 0 -4px 24px rgba(0,0,0,.08);
     }
     .cart-bar.hidden {
       transform: translateX(-50%) translateY(120%);
@@ -868,9 +871,9 @@
       background: var(--primary);
       color: #fff;
       border: none;
-      border-radius: 2px;
+      border-radius: 6px;
       cursor: pointer;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: .68rem;
       font-weight: 700;
       letter-spacing: .16em;
@@ -919,7 +922,7 @@
       position: absolute;
       inset: 0;
       background: var(--border);
-      border-radius: 2px;
+      border-radius: 20px;
       transition: background .2s;
     }
     .toggle-track::after {
@@ -928,7 +931,7 @@
       top: 3px; left: 3px;
       width: 14px; height: 14px;
       background: var(--text-light);
-      border-radius: 1px;
+      border-radius: 50%;
       transition: transform .2s, background .2s;
     }
     .toggle-switch input:checked + .toggle-track { background: var(--primary); }
@@ -941,9 +944,9 @@
       width: 100%;
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 6px;
       color: var(--text);
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: .85rem;
       font-weight: 400;
       padding: 10px 12px;
@@ -969,8 +972,10 @@
       max-width: 580px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
+      border-radius: 14px 14px 0 0;
       padding: 12px 22px 28px;
       z-index: 100;
+      box-shadow: 0 -4px 24px rgba(0,0,0,.08);
     }
     body:not(.order-mode) .wa-read-bar { display: block; }
     body.order-mode .wa-read-bar { display: none; }
@@ -983,9 +988,9 @@
       background: #25D366;
       color: #fff;
       border: none;
-      border-radius: 2px;
+      border-radius: 6px;
       cursor: pointer;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: .68rem;
       font-weight: 700;
       letter-spacing: .14em;
