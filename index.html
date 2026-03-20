@@ -71,7 +71,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 32px 20px 8px;
+      padding: 56px 20px 8px;
     }
 
     .brand-logo {
@@ -113,10 +113,10 @@
       padding-bottom: 100px;
     }
 
-    /* Topbar simplificada */
+    /* Topbar redesenhada — minimalista, angular */
     .topbar {
       position: fixed;
-      top: 8px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 24px);
@@ -128,21 +128,67 @@
       pointer-events: none;
     }
 
-    .topbar-mode {
+    .topbar-left {
       pointer-events: all;
       display: flex;
       align-items: center;
-      gap: 4px;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 30px;
-      padding: 6px 12px;
+      background: rgba(0,0,0,0.52);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 6px;
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .topbar-mode {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
       color: white;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      border-right: 1px solid rgba(255,255,255,0.13);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .topbar-mode-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+    }
+
+    body.order-mode .topbar-mode-dot {
+      background: #4ade80;
+    }
+
+    .topbar-back {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 7px 11px;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.55rem;
       font-weight: 600;
       letter-spacing: 0.5px;
-      backdrop-filter: blur(8px);
+      text-transform: uppercase;
+      background: none;
+      border: none;
       cursor: pointer;
+    }
+
+    body.order-mode .topbar-mode {
+      display: none;
+    }
+
+    body.order-mode .topbar-back {
+      display: flex;
     }
 
     .topbar-theme {
@@ -152,10 +198,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.52);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 6px;
+      backdrop-filter: blur(10px);
       cursor: pointer;
     }
 
@@ -220,7 +266,7 @@
     .item-group {
       margin: 0 12px 8px;
       background: var(--surface);
-      border-radius: 12px;
+      border-radius: 4px;
       border: 1px solid var(--border);
       overflow: hidden;
     }
@@ -240,7 +286,7 @@
     .item-main {
       display: flex;
       align-items: center;
-      min-height: 48px;
+      min-height: 36px;
     }
 
     /* Controles mais compactos */
@@ -251,15 +297,15 @@
     }
 
     .ctrl-btn {
-      width: 36px;
-      height: 48px;
+      width: 32px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: none;
       border: none;
       color: var(--text-light);
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
       flex-shrink: 0;
@@ -270,12 +316,12 @@
     }
 
     .ctrl-count {
-      width: 28px;
-      height: 48px;
+      width: 24px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--primary-muted);
       border-left: 1px solid var(--border);
@@ -291,8 +337,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 4px 8px 12px;
-      min-width: 0; /* Permite wrapping */
+      padding: 5px 4px 5px 10px;
+      min-width: 0;
     }
 
     .item-marker {
@@ -308,7 +354,7 @@
     }
 
     .item-name {
-      font-size: 0.8rem;
+      font-size: 0.77rem;
       font-weight: 500;
       color: var(--text);
       word-break: break-word;
@@ -388,7 +434,7 @@
       width: 100%;
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 3px;
       padding: 8px 10px;
       font-size: 0.7rem;
       color: var(--text);
@@ -405,7 +451,7 @@
       max-width: 600px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
-      border-radius: 16px 16px 0 0;
+      border-radius: 0;
       padding: 12px 20px 24px;
       z-index: 100;
       transition: transform 0.25s ease;
@@ -434,7 +480,7 @@
     .review-btn {
       background: var(--primary);
       border: none;
-      border-radius: 30px;
+      border-radius: 4px;
       padding: 10px 16px;
       color: white;
       font-size: 0.6rem;
@@ -472,7 +518,7 @@
       width: calc(100% - 32px);
       max-width: 480px;
       background: var(--surface);
-      border-radius: 16px;
+      border-radius: 6px;
       z-index: 150;
       opacity: 0;
       pointer-events: none;
@@ -507,7 +553,7 @@
       width: 28px;
       height: 28px;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 4px;
       background: none;
       cursor: pointer;
       font-size: 1rem;
@@ -640,15 +686,28 @@
       background: white;
     }
 
+    .summary-addr-wrap {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.25s ease, opacity 0.2s ease;
+    }
+
+    .summary-addr-wrap.open {
+      max-height: 80px;
+      opacity: 1;
+    }
+
     .addr-input {
       width: calc(100% - 40px);
       margin: 0 20px 12px;
       padding: 10px 12px;
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 3px;
       color: var(--text);
       font-size: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
     }
 
     .send-btn {
@@ -656,7 +715,7 @@
       padding: 14px;
       background: var(--primary);
       border: none;
-      border-radius: 30px;
+      border-radius: 4px;
       color: white;
       font-size: 0.7rem;
       font-weight: 700;
@@ -680,7 +739,7 @@
       max-width: 600px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
-      border-radius: 16px 16px 0 0;
+      border-radius: 0;
       padding: 16px 20px 24px;
       z-index: 100;
     }
@@ -697,7 +756,7 @@
       width: 100%;
       padding: 14px;
       background: #25D366;
-      border-radius: 30px;
+      border-radius: 4px;
       color: white;
       text-decoration: none;
       font-size: 0.7rem;
@@ -705,7 +764,49 @@
       letter-spacing: 1px;
     }
 
-    /* Footer */
+    /* Info card — tooltip de dica + info de entrega */
+    .info-card {
+      margin: 6px 12px 2px;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary-muted);
+      border-radius: 0 3px 3px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .info-card-icon {
+      color: var(--primary-muted);
+      opacity: 0.7;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .info-card-icon svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .info-card-text {
+      font-size: 0.62rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    .info-card-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Modo leitura: mostra só info de entrega */
+    .info-card-obs { display: none; }
+    .info-card-sep { display: none; }
+    body.order-mode .info-card-obs { display: inline; }
+    body.order-mode .info-card-sep { display: inline; }
     .footer {
       text-align: center;
       padding: 32px 16px 20px;
@@ -727,16 +828,45 @@
     }
 
     body:not(.order-mode) .item-left {
-      padding: 10px 16px;
+      padding: 5px 14px 5px 14px;
+    }
+
+    body:not(.order-mode) .item-main {
+      min-height: 28px;
+    }
+
+    body:not(.order-mode) .item-name {
+      font-size: 0.75rem;
+      font-weight: 400;
+    }
+
+    body:not(.order-mode) .item-price {
+      font-size: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+    }
+
+    body:not(.order-mode) .item-marker {
+      display: none;
+    }
+
+    body:not(.order-mode) .item-group {
+      border-radius: 2px;
     }
   </style>
 </head>
 <body>
   <div class="topbar">
-    <button class="topbar-mode" onclick="toggleMode()" id="mode-btn">
-      <span id="mode-label">Cardápio</span>
-      <svg width="10" height="10" viewBox="0 0 24 24" style="stroke:currentColor; fill:none; stroke-width:2"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <div class="topbar-left">
+      <button class="topbar-mode" onclick="toggleMode()" id="mode-btn">
+        <span class="topbar-mode-dot"></span>
+        <span id="mode-label">Ativar opções de pedido</span>
+      </button>
+      <button class="topbar-back" onclick="toggleMode()">
+        <svg width="9" height="9" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Voltar ao cardápio
+      </button>
+    </div>
     <button class="topbar-theme" onclick="toggleTheme()">
       <svg width="14" height="14" viewBox="0 0 24 24" class="icon-sun" style="stroke:white; fill:none; stroke-width:1.8">
         <circle cx="12" cy="12" r="4"/>
@@ -770,6 +900,15 @@
       <button class="cat-btn" onclick="selectCat('salgados',this)">Especiais</button>
       <button class="cat-btn" onclick="selectCat('bebidas',this)">Bebidas</button>
     </nav>
+
+    <div class="info-card">
+      <span class="info-card-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </span>
+      <span class="info-card-text">
+        Retirada no local · Entrega por R$ 3,00<span class="info-card-sep"> · Toque em <svg style="display:inline;width:10px;height:10px;stroke:currentColor;fill:none;vertical-align:middle" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> para observações</span>
+      </span>
+    </div>
 
     <main id="menu-wrap"></main>
 
@@ -877,16 +1016,15 @@
     const fmt = n => 'R$ ' + n.toFixed(2).replace('.', ',');
     const toId = s => s.replace(/[^a-z0-9]/gi, '_');
 
-    // Tema
     function toggleTheme() {
       document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     }
 
     (function() {
-      if (localStorage.getItem('theme') !== 'light') {
-        document.documentElement.classList.add('dark');
-      }
+      // Sempre inicia no modo escuro
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     })();
 
     function renderMenu(cat) {
@@ -1077,25 +1215,22 @@
       const now = new Date();
       
       let lines = [
-        `*PEDIDO — Mary Pastelaria*`,
-        `${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`,
-        ``,
-        `*Itens*`
+        `*Mary Pastelaria* · ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`,
+        ``
       ];
       
       cart.forEach(e => {
-        lines.push(`  ${e.qty}x ${e.name} = ${fmt(e.price * e.qty)}`);
-        if (e.obs) lines.push(`     Obs: ${e.obs}`);
+        lines.push(`${e.qty}× ${e.name} — ${fmt(e.price * e.qty)}`);
+        if (e.obs) lines.push(`  ↳ ${e.obs}`);
       });
       
       lines.push('');
-      lines.push(`Subtotal: ${fmt(subtotal)}`);
-      if (wantsDelivery) lines.push(`Entrega: ${fmt(DELIVERY_FEE)}`);
+      if (wantsDelivery) lines.push(`Entrega: +${fmt(DELIVERY_FEE)}`);
       lines.push(`*Total: ${fmt(total)}*`);
       lines.push('');
       lines.push(wantsDelivery 
-        ? `*Entrega:* ${document.getElementById('addr-input').value.trim()}`
-        : `*Retirada no local*`);
+        ? `📍 ${document.getElementById('addr-input').value.trim()}`
+        : `🏠 Retirada no local`);
       
       window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
     }
@@ -1110,7 +1245,7 @@
     function toggleMode() {
       orderMode = !orderMode;
       document.body.classList.toggle('order-mode', orderMode);
-      document.getElementById('mode-label').textContent = orderMode ? 'Pedido' : 'Cardápio';
+      document.getElementById('mode-label').textContent = orderMode ? 'Ativar opções de pedido' : 'Ativar opções de pedido';
       
       if (!orderMode) {
         cart.clear();
@@ -1126,7 +1261,7 @@
     }
 
     renderMenu('pasteis');
-    toggleMode(); // Inicia em modo leitura
+    // Inicia em modo leitura (não chama toggleMode)
   </script>
 </body>
 </html>
