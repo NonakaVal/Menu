@@ -877,7 +877,6 @@
   <div class="page">
     <nav class="cat-nav">
       <button class="cat-btn active" onclick="selectCat('pasteis',this)">Pastéis</button>
-      <button class="cat-btn" onclick="selectCat('salgados',this)">Especiais</button>
       <button class="cat-btn" onclick="selectCat('bebidas',this)">Bebidas</button>
     </nav>
 
@@ -973,39 +972,58 @@
 
     const menu = {
       pasteis: {
-        "Simples": [
+        "Tradicionais": [
           { name:"Carne", price:8 }, { name:"Queijo", price:8 },
-          { name:"Frango", price:8 }, { name:"Pizza", price:8 }
+          { name:"Frango", price:8 }, { name:"Pizza", price:8 },
+          { name:"Calabresa c/ Queijo", price:10 }, { name:"Frango c/ Queijo", price:10 },
+          { name:"Frango c/ Queijo e Milho", price:12 },
+          { name:"Frango c/ Cheddar ou Catupiry", price:10 },
+          { name:"Carne c/ Queijo", price:10 }
         ],
-        "Combinados": [
-          { name:"Carne c/ Queijo", price:10 }, { name:"Frango c/ Queijo", price:10 },
-          { name:"Frango c/ Catupiry", price:10 }, { name:"Calabresa c/ Queijo", price:10 },
-          { name:"Portuguesa", price:10 }
+        "Especiais": [
+          { name:"Costela", price:15, premium:true }, { name:"Costela c/ Queijo", price:15, premium:true },
+          { name:"Bacon", price:15, premium:true },
+          { name:"X-Tudo", price:15, premium:true }, { name:"X-Tudo c/ Ovo", price:15, premium:true },
+          { name:"Strogonoff de Frango", price:15, premium:true },
+          { name:"Carne Seca", price:15, premium:true }, { name:"Carne Seca c/ Queijo", price:15, premium:true },
+          { name:"Pernil", price:15, premium:true }
         ],
         "Doces": [
           { name:"Brigadeiro", price:12 }, { name:"Prestígio", price:12 },
           { name:"Doce de Leite", price:12 }, { name:"Brigadeiro c/ Morango", price:12 },
-          { name:"Banana c/ Canela", price:12 }, { name:"Nutella", price:15, premium:true },
-          { name:"Romeu e Julieta", price:12 }
+          { name:"Banana c/ Canela", price:12 }, { name:"Banana c/ Chocolate", price:12 },
+          { name:"Nutella", price:12 }
         ]
       },
       salgados: {
         "Especiais": [
           { name:"Costela", price:15, premium:true }, { name:"Costela c/ Queijo", price:15, premium:true },
-          { name:"Bacon", price:15, premium:true }, { name:"X-Tudo", price:15, premium:true },
-          { name:"Strogonoff de Frango", price:15, premium:true }, { name:"Carne Seca", price:15, premium:true },
-          { name:"Pernil", price:15, premium:true }, { name:"Palmito", price:15, premium:true }
+          { name:"Bacon", price:15, premium:true },
+          { name:"X-Tudo", price:15, premium:true }, { name:"X-Tudo c/ Ovo", price:15, premium:true },
+          { name:"Strogonoff de Frango", price:15, premium:true },
+          { name:"Carne Seca", price:15, premium:true }, { name:"Carne Seca c/ Queijo", price:15, premium:true },
+          { name:"Pernil", price:15, premium:true }
         ]
       },
       bebidas: {
-        "Bebidas": [
-          { name:"Refrigerante Lata", price:6 }, { name:"Refrigerante 600ml", price:9 },
-          { name:"Água sem Gás", price:4 }, { name:"Água com Gás", price:5 },
-          { name:"Suco Natural Laranja", price:9 }, { name:"Suco Natural Maracujá", price:9 },
-          { name:"Suco Natural Limão", price:8 }, { name:"Café Expresso", price:5 },
-          { name:"Café com Leite", price:6 }, { name:"Cappuccino", price:8 },
-          { name:"Chá Gelado", price:7 }, { name:"Caldo de Cana", price:6 },
-          { name:"Água de Coco", price:7 }
+        "Coca-Cola": [
+          { name:"Coca-Cola Lata", price:6 },
+          { name:"Coca-Cola KS 300ml", price:7 },
+          { name:"Coca-Cola LS 600ml", price:10 },
+          { name:"Coca-Cola 2 Litros", price:15 },
+          { name:"Coca-Cola Mini 200ml", price:3.50 }
+        ],
+        "Tubaína & Outros": [
+          { name:"Tubaína Garrafa", price:7 },
+          { name:"Tubaína 350ml", price:4.50 },
+          { name:"Tubaína Lata", price:5 },
+          { name:"Guaraná Mini 200ml", price:3.50 },
+          { name:"Tampico", price:7 },
+          { name:"Nativo", price:3.50 }
+        ],
+        "Água": [
+          { name:"Água Natural", price:3 },
+          { name:"Água com Gás", price:3.50 }
         ]
       }
     };
