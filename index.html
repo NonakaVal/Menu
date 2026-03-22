@@ -1220,21 +1220,22 @@
       const total = subtotal + (wantsDelivery ? DELIVERY_FEE : 0);
       const now = new Date();
       let lines = [
-        `*Pedido* · ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`,
-        `_Status: À confirmar_`,
+        `Olá! Gostaria de fazer um pedido 😊`,
         ``
       ];
       cart.forEach(e => {
-        lines.push(`${e.qty}× ${e.name} — ${fmt(e.price * e.qty)}`);
-        if (e.obs) lines.push(`  ↳ ${e.obs}`);
+        lines.push(`• ${e.qty}× ${e.name} — ${fmt(e.price * e.qty)}`);
+        if (e.obs) lines.push(`  ↳ _${e.obs}_`);
       });
       lines.push('');
-      if (wantsDelivery) lines.push(`Entrega: +${fmt(DELIVERY_FEE)}`);
+      if (wantsDelivery) lines.push(`🛵 Entrega: +${fmt(DELIVERY_FEE)}`);
       lines.push(`*Total: ${fmt(total)}*`);
       lines.push('');
       lines.push(wantsDelivery
-        ? `📍 ${document.getElementById('addr-input').value.trim()}`
-        : `🏠 Retirada no local`);
+        ? `📍 Endereço: ${document.getElementById('addr-input').value.trim()}`
+        : `🏠 Vou retirar no local`);
+      lines.push('');
+      lines.push(`_Pedido em ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}_`);
       window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
     }
 
