@@ -968,7 +968,7 @@
   </div>
 
   <script>
-    const WA = '5515998304344';
+    const WA = '5515996026387';
     const DELIVERY_FEE = 3;
 
     const menu = {
@@ -1228,7 +1228,8 @@
         if (e.obs) lines.push(`  ↳ _${e.obs}_`);
       });
       lines.push('');
-      if (wantsDelivery) lines.push(`🛵 Entrega: +${fmt(DELIVERY_FEE)}`);
+      if (wantsDelivery) lines.push(`Entrega: +${fmt(DELIVERY_FEE)}`);
+      
       lines.push(`*Total: ${fmt(total)}*`);
       lines.push('');
       lines.push(wantsDelivery
