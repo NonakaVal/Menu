@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Mary Pastelaria — Cardápio</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;700&display=swap"
+    rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -46,9 +49,7 @@
       --bg-solid: #12100E;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
@@ -61,7 +62,6 @@
       line-height: 1.3;
     }
 
-    /* Hero simplificado */
     .hero {
       background: linear-gradient(180deg, var(--hero-from) 0%, var(--hero-to) 45%, var(--bg-solid) 95%);
       padding-bottom: 16px;
@@ -113,7 +113,6 @@
       padding-bottom: 100px;
     }
 
-    /* Navegação compacta */
     .cat-nav {
       position: sticky;
       top: 0;
@@ -147,7 +146,7 @@
       border-bottom-color: var(--primary);
     }
 
-    /* Labels de seção compactas */
+    /* ── SECTION LABEL ── */
     .section-label {
       display: flex;
       align-items: center;
@@ -160,8 +159,10 @@
       text-transform: uppercase;
       color: var(--primary);
       font-weight: 700;
+      white-space: nowrap;
     }
 
+    /* linha separadora: ocupa o espaço restante à direita do título */
     .section-label::after {
       content: '';
       flex: 1;
@@ -170,7 +171,59 @@
       margin-left: 12px;
     }
 
-    /* Grupo de itens */
+    /* hints da seção: barra separada abaixo do título, largura do item-group */
+    .section-hints {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 12px 2px;
+    }
+
+    body.order-mode .section-hints {
+      display: flex;
+    }
+
+    .section-hint-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.4;
+      /* alinha com o botão − que tem padding 0 14px dentro de um container sem padding extra */
+      padding-left: 8px;
+    }
+
+    .section-hint-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.4;
+      padding-right: 8px;
+    }
+
+    .section-hint-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-light);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .section-hint-label {
+      font-size: 0.48rem;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ── ITEM GROUP ── */
     .item-group {
       margin: 0 12px 8px;
       background: var(--surface);
@@ -179,7 +232,6 @@
       overflow: hidden;
     }
 
-    /* Item redesenhado - mais compacto e legível */
     .item {
       display: flex;
       flex-direction: column;
@@ -187,9 +239,7 @@
       background: var(--surface);
     }
 
-    .item:last-child {
-      border-bottom: none;
-    }
+    .item:last-child { border-bottom: none; }
 
     .item-main {
       display: flex;
@@ -197,16 +247,19 @@
       min-height: 36px;
     }
 
-    /* Controles mais compactos */
     .item-controls {
       display: flex;
       align-items: center;
       height: 100%;
     }
 
+    /* FIX 3 — hitbox ampliada: padding interno empurra a área de toque para dentro do item */
     .ctrl-btn {
-      width: 32px;
+      /* tamanho visual mínimo */
+      min-width: 32px;
       height: 36px;
+      /* padding extra para dentro → hitbox começa além do símbolo */
+      padding: 0 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -217,11 +270,16 @@
       font-weight: 500;
       cursor: pointer;
       flex-shrink: 0;
+      /* torna a área clicável mais fácil no touch */
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
-    .ctrl-btn:active {
-      background: var(--primary-soft);
-    }
+    .ctrl-btn:active { background: var(--primary-soft); }
+
+    /* o separador de borda agora fica no container, não no botão */
+    .item-controls:first-child { border-right: 1px solid var(--border); }
+    .item-controls:last-child  { border-left:  1px solid var(--border); }
 
     .ctrl-count {
       width: 24px;
@@ -232,14 +290,10 @@
       font-size: 0.7rem;
       font-weight: 700;
       color: var(--primary-muted);
-      border-left: 1px solid var(--border);
     }
 
-    .ctrl-count.zero {
-      color: var(--border);
-    }
+    .ctrl-count.zero { color: var(--border); }
 
-    /* Área do item principal - otimizada para wrap */
     .item-left {
       flex: 1;
       display: flex;
@@ -257,9 +311,7 @@
       flex-shrink: 0;
     }
 
-    .item.in-cart .item-marker {
-      background: var(--primary-muted);
-    }
+    .item.in-cart .item-marker { background: var(--primary-muted); }
 
     .item-name {
       font-size: 0.77rem;
@@ -270,7 +322,6 @@
       flex: 1;
     }
 
-    /* Preço e badge mais integrados */
     .item-price-wrap {
       display: flex;
       align-items: center;
@@ -294,17 +345,14 @@
       white-space: nowrap;
     }
 
-    .item.premium .item-price {
-      color: var(--primary-muted);
-    }
+    .item.premium .item-price { color: var(--primary-muted); }
 
-    /* Ícone de observação simplificado */
     .item-obs-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 4px;
-      margin-right: 2px;
+      padding: 4px 6px;
+      margin-right: 4px;
       cursor: pointer;
       color: var(--text-light);
       opacity: 0.4;
@@ -317,13 +365,12 @@
     }
 
     .item-obs-icon svg {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       stroke: currentColor;
       fill: none;
     }
 
-    /* Campo de observação */
     .item-obs-field {
       max-height: 0;
       opacity: 0;
@@ -349,7 +396,7 @@
       resize: none;
     }
 
-    /* Barra de carrinho simplificada */
+    /* ── CART BAR ── */
     .cart-bar {
       position: fixed;
       bottom: 0;
@@ -359,16 +406,13 @@
       max-width: 600px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
-      border-radius: 0;
       padding: 12px 20px 24px;
       z-index: 100;
       transition: transform 0.25s ease;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
     }
 
-    .cart-bar.hidden {
-      transform: translateX(-50%) translateY(100%);
-    }
+    .cart-bar.hidden { transform: translateX(-50%) translateY(100%); }
 
     .cart-content {
       display: flex;
@@ -376,14 +420,8 @@
       justify-content: space-between;
     }
 
-    .cart-info {
-      font-size: 0.8rem;
-      color: var(--text-light);
-    }
-
-    .cart-info strong {
-      color: var(--text);
-    }
+    .cart-info { font-size: 0.8rem; color: var(--text-light); }
+    .cart-info strong { color: var(--text); }
 
     .review-btn {
       background: var(--primary);
@@ -401,7 +439,7 @@
       cursor: pointer;
     }
 
-    /* Modal de resumo simplificado */
+    /* ── SUMMARY ── */
     .summary-overlay {
       position: fixed;
       inset: 0;
@@ -413,16 +451,13 @@
       transition: opacity 0.2s;
     }
 
-    .summary-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .summary-overlay.open { opacity: 1; pointer-events: all; }
 
     .summary-sheet {
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.95);
+      transform: translate(-50%,-50%) scale(0.95);
       width: calc(100% - 32px);
       max-width: 480px;
       background: var(--surface);
@@ -437,7 +472,7 @@
     }
 
     .summary-sheet.open {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%,-50%) scale(1);
       opacity: 1;
       pointer-events: all;
     }
@@ -467,22 +502,11 @@
       font-size: 1rem;
     }
 
-    .summary-list {
-      overflow-y: auto;
-      padding: 8px 0;
-      flex: 1;
-    }
+    .summary-list { overflow-y: auto; padding: 8px 0; flex: 1; }
 
-    .summary-row {
-      padding: 12px 20px;
-      border-bottom: 1px solid var(--border);
-    }
+    .summary-row { padding: 12px 20px; border-bottom: 1px solid var(--border); }
 
-    .summary-row-main {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .summary-row-main { display: flex; align-items: center; gap: 12px; }
 
     .summary-row-name {
       flex: 1;
@@ -491,11 +515,7 @@
       word-break: break-word;
     }
 
-    .summary-row-qty {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--primary-muted);
-    }
+    .summary-row-qty { font-size: 0.7rem; font-weight: 700; color: var(--primary-muted); }
 
     .summary-row-price {
       font-family: 'Playfair Display', serif;
@@ -522,12 +542,7 @@
       background: var(--primary-soft);
     }
 
-    .summary-total-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+    .summary-total-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
 
     .summary-total-value {
       font-family: 'Playfair Display', serif;
@@ -536,7 +551,6 @@
       color: var(--primary);
     }
 
-    /* Toggle delivery compacto */
     .toggle-row {
       display: flex;
       align-items: center;
@@ -545,25 +559,10 @@
       cursor: pointer;
     }
 
-    .toggle-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.6rem;
-      font-weight: 600;
-    }
+    .toggle-label { display: flex; align-items: center; gap: 8px; font-size: 0.6rem; font-weight: 600; }
 
-    .toggle-switch {
-      position: relative;
-      width: 44px;
-      height: 24px;
-    }
-
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+    .toggle-switch { position: relative; width: 44px; height: 24px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
 
     .toggle-track {
       position: absolute;
@@ -585,14 +584,8 @@
       transition: transform 0.2s;
     }
 
-    input:checked + .toggle-track {
-      background: var(--primary);
-    }
-
-    input:checked + .toggle-track::after {
-      transform: translateX(20px);
-      background: white;
-    }
+    input:checked + .toggle-track { background: var(--primary); }
+    input:checked + .toggle-track::after { transform: translateX(20px); background: white; }
 
     .summary-addr-wrap {
       max-height: 0;
@@ -601,10 +594,7 @@
       transition: max-height 0.25s ease, opacity 0.2s ease;
     }
 
-    .summary-addr-wrap.open {
-      max-height: 80px;
-      opacity: 1;
-    }
+    .summary-addr-wrap.open { max-height: 80px; opacity: 1; }
 
     .addr-input {
       width: calc(100% - 40px);
@@ -636,7 +626,7 @@
       cursor: pointer;
     }
 
-    /* WA bar modo leitura */
+    /* ── WA READ BAR ── */
     .wa-read-bar {
       display: none;
       position: fixed;
@@ -647,14 +637,11 @@
       max-width: 600px;
       background: var(--surface);
       border-top: 2px solid var(--primary);
-      border-radius: 0;
       padding: 16px 20px 24px;
       z-index: 100;
     }
 
-    body:not(.order-mode) .wa-read-bar {
-      display: block;
-    }
+    body:not(.order-mode) .wa-read-bar { display: block; }
 
     .wa-read-btn {
       display: flex;
@@ -672,7 +659,8 @@
       letter-spacing: 1px;
     }
 
-    /* Info card */
+    /* ── FIX 1 + 2: INFO CARD ──
+       Mesmo tamanho de tudo, só um gap entre os dois trecho de texto */
     .info-card {
       margin: 6px 12px 2px;
       padding: 8px 12px;
@@ -682,7 +670,7 @@
       border-radius: 0 3px 3px 0;
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 5px;
     }
 
     .info-card-icon {
@@ -699,10 +687,16 @@
       fill: none;
     }
 
+    /* texto do card: dois spans com gap entre eles, mesma fonte/tamanho */
     .info-card-text {
       font-size: 0.62rem;
       color: var(--text-light);
       line-height: 1.5;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: 10px; /* FIX 1: espaço mínimo entre as duas frases */
+      row-gap: 0;
     }
 
     .info-card-text strong {
@@ -710,13 +704,26 @@
       font-weight: 600;
     }
 
+    /* "a confirmar" — badge pequeno inline, só aparece no modo pedido */
+    .info-card-confirm {
+      display: none;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.62rem; /* igual ao resto */
+      font-weight: 600;
+      color: var(--primary-muted);
+    }
+
+    body.order-mode .info-card-confirm { display: inline-flex; }
+
+    /* separador e obs: só aparecem no modo pedido */
     .info-card-obs { display: none; }
     .info-card-sep { display: none; }
+
     body.order-mode .info-card-obs { display: inline; }
     body.order-mode .info-card-sep { display: inline; }
 
-    /* ===== INLINE CONTROLS BAR ===== */
-    /* Barra de controles inline — abaixo do info-card, acima do menu */
+    /* ── INLINE CONTROLS ── */
     .inline-controls {
       display: flex;
       align-items: center;
@@ -750,10 +757,7 @@
       transition: background 0.2s, opacity 0.2s;
     }
 
-    body.order-mode .inline-ctrl-dot {
-      background: #4ade80;
-      opacity: 1;
-    }
+    body.order-mode .inline-ctrl-dot { background: #4ade80; opacity: 1; }
 
     .inline-ctrl-label {
       font-size: 0.52rem;
@@ -764,16 +768,9 @@
       opacity: 0.75;
     }
 
-    body.order-mode .inline-ctrl-label {
-      color: #4ade80;
-      opacity: 0.9;
-    }
+    body.order-mode .inline-ctrl-label { color: #4ade80; opacity: 0.9; }
 
-    .inline-ctrl-divider {
-      width: 1px;
-      height: 12px;
-      background: var(--border);
-    }
+    .inline-ctrl-divider { width: 1px; height: 12px; background: var(--border); }
 
     .inline-ctrl-theme {
       display: flex;
@@ -803,62 +800,34 @@
       opacity: 0.6;
     }
 
-    /* Esconde sun no dark, moon no light */
     :root .icon-moon-inline { display: none; }
-    :root .icon-sun-inline { display: block; }
+    :root .icon-sun-inline  { display: block; }
     :root.dark .icon-moon-inline { display: block; }
-    :root.dark .icon-sun-inline { display: none; }
+    :root.dark .icon-sun-inline  { display: none; }
 
-    /* ===== FIM INLINE CONTROLS ===== */
-
+    /* ── FOOTER ── */
     .footer {
       text-align: center;
       padding: 32px 16px 20px;
       border-top: 1px solid var(--border);
     }
 
-    .footer p {
-      font-size: 0.55rem;
-      color: var(--text-light);
-      letter-spacing: 1px;
-      opacity: 0.6;
-    }
+    .footer p { font-size: 0.55rem; color: var(--text-light); letter-spacing: 1px; opacity: 0.6; }
 
-    /* Esconde elementos quando não está em modo pedido */
+    /* ── MODO LEITURA (sem pedido) ── */
     body:not(.order-mode) .item-controls,
     body:not(.order-mode) .item-obs-icon,
-    body:not(.order-mode) .item-obs-field {
-      display: none;
-    }
+    body:not(.order-mode) .item-obs-field { display: none; }
 
-    body:not(.order-mode) .item-left {
-      padding: 5px 14px 5px 14px;
-    }
-
-    body:not(.order-mode) .item-main {
-      min-height: 28px;
-    }
-
-    body:not(.order-mode) .item-name {
-      font-size: 0.75rem;
-      font-weight: 400;
-    }
-
-    body:not(.order-mode) .item-price {
-      font-size: 0.75rem;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-    }
-
-    body:not(.order-mode) .item-marker {
-      display: none;
-    }
-
-    body:not(.order-mode) .item-group {
-      border-radius: 2px;
-    }
+    body:not(.order-mode) .item-left { padding: 5px 14px 5px 14px; }
+    body:not(.order-mode) .item-main { min-height: 28px; }
+    body:not(.order-mode) .item-name { font-size: 0.75rem; font-weight: 400; }
+    body:not(.order-mode) .item-price { font-size: 0.75rem; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+    body:not(.order-mode) .item-marker { display: none; }
+    body:not(.order-mode) .item-group { border-radius: 2px; }
   </style>
 </head>
+
 <body>
 
   <div class="hero">
@@ -866,7 +835,9 @@
       <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
       <div class="hero-info">
         <a class="brand-contact" href="https://wa.me/5515996026387" target="_blank">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/>
+          </svg>
           (15) 99602-6387
         </a>
         <div class="brand-addr">Shigueru Yagui 23, Centro — Guapiara-SP</div>
@@ -879,17 +850,7 @@
       <button class="cat-btn active" onclick="selectCat('pasteis',this)">Pastéis</button>
       <button class="cat-btn" onclick="selectCat('bebidas',this)">Bebidas</button>
     </nav>
-
-    <div class="info-card">
-      <span class="info-card-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </span>
-      <span class="info-card-text">
-        Retirada no local · Entrega por R$ 3,00<span class="info-card-sep"> · Toque em <svg style="display:inline;width:10px;height:10px;stroke:currentColor;fill:none;vertical-align:middle" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> para observações</span>
-      </span>
-    </div>
-
-    <!-- Controles inline: modo pedido + tema -->
+    <!-- Controles inline -->
     <div class="inline-controls">
       <button class="inline-ctrl-mode" onclick="toggleMode()">
         <span class="inline-ctrl-dot"></span>
@@ -899,10 +860,14 @@
       <button class="inline-ctrl-theme" onclick="toggleTheme()">
         <svg class="icon-sun-inline" viewBox="0 0 24 24" stroke-width="1.8">
           <circle cx="12" cy="12" r="4"/>
-          <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
-          <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
-          <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-          <line x1="19.78" y1="4.22" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.22" y2="19.78"/>
+          <line x1="12" y1="2" x2="12" y2="5"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="2" y1="12" x2="5" y2="12"/>
+          <line x1="19" y1="12" x2="22" y2="12"/>
+          <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+          <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+          <line x1="19.78" y1="4.22" x2="17.66" y2="6.34"/>
+          <line x1="6.34" y1="17.66" x2="4.22" y2="19.78"/>
         </svg>
         <svg class="icon-moon-inline" viewBox="0 0 24 24" stroke-width="1.8">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -910,6 +875,30 @@
         <span class="inline-ctrl-theme-label" id="theme-label-inline">Tema claro</span>
       </button>
     </div>
+    <!-- FIX 1+2: info card — gap entre frases, "a confirmar" inline -->
+    <div class="info-card">
+      <span class="info-card-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 5v3h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </span>
+      <span class="info-card-text">
+        Valor entrega por R$ 3,00
+        <span class="info-card-sep">·</span>
+       
+        <span class="info-card-obs">Toque em
+          <svg style="display:inline;width:14px;height:14px;stroke:currentColor;fill:none;vertical-align:middle"
+               viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          para adicionar observações ou adicionais  (Valores à consultar)</span>
+      </span>
+    </div>
+
+
 
     <main id="menu-wrap"></main>
 
@@ -922,7 +911,10 @@
     <div class="cart-content">
       <div class="cart-info" id="cart-info"></div>
       <button class="review-btn" onclick="openSummary()">
-        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+        </svg>
         Ver pedido
       </button>
     </div>
@@ -930,7 +922,9 @@
 
   <div class="wa-read-bar">
     <a class="wa-read-btn" href="https://wa.me/5515996026387" target="_blank">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/>
+      </svg>
       Falar no WhatsApp
     </a>
   </div>
@@ -949,7 +943,12 @@
     </div>
     <label class="toggle-row">
       <span class="toggle-label">
-        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 5v3h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
         Delivery (+R$ 3,00)
       </span>
       <span class="toggle-switch">
@@ -961,7 +960,9 @@
       <input class="addr-input" id="addr-input" placeholder="Endereço completo para entrega">
     </div>
     <button class="send-btn" onclick="handleSend()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z"/>
+      </svg>
       Enviar pedido
     </button>
   </div>
@@ -973,57 +974,47 @@
     const menu = {
       pasteis: {
         "Tradicionais": [
-          { name:"Carne", price:8 }, { name:"Queijo", price:8 },
-          { name:"Frango", price:8 }, { name:"Pizza", price:8 },
-          { name:"Calabresa c/ Queijo", price:10 }, { name:"Frango c/ Queijo", price:10 },
-          { name:"Frango c/ Queijo e Milho", price:12 },
-          { name:"Frango c/ Cheddar ou Catupiry", price:10 },
-          { name:"Carne c/ Queijo", price:10 }
+          { name: "Carne", price: 8 }, { name: "Queijo", price: 8 },
+          { name: "Frango", price: 8 }, { name: "Pizza", price: 8 },
+          { name: "Calabresa c/ Queijo", price: 10 }, { name: "Frango c/ Queijo", price: 10 },
+          { name: "Frango c/ Queijo e Milho", price: 12 },
+          { name: "Frango c/ Cheddar ou Catupiry", price: 10 },
+          { name: "Carne c/ Queijo", price: 10 }
         ],
         "Especiais": [
-          { name:"Costela", price:15, premium:true }, { name:"Costela c/ Queijo", price:15, premium:true },
-          { name:"Bacon", price:15, premium:true },
-          { name:"X-Tudo", price:15, premium:true }, { name:"X-Tudo c/ Ovo", price:15, premium:true },
-          { name:"Strogonoff de Frango", price:15, premium:true },
-          { name:"Carne Seca", price:15, premium:true }, { name:"Carne Seca c/ Queijo", price:15, premium:true },
-          { name:"Pernil", price:15, premium:true }
+          { name: "Costela", price: 15, premium: true }, { name: "Costela c/ Queijo", price: 15, premium: true },
+          { name: "Bacon", price: 15, premium: true },
+          { name: "X-Tudo", price: 15, premium: true }, { name: "X-Tudo c/ Ovo", price: 15, premium: true },
+          { name: "Strogonoff de Frango", price: 15, premium: true },
+          { name: "Carne Seca", price: 15, premium: true }, { name: "Carne Seca c/ Queijo", price: 15, premium: true },
+          { name: "Pernil", price: 15, premium: true }
         ],
         "Doces": [
-          { name:"Brigadeiro", price:12 }, { name:"Prestígio", price:12 },
-          { name:"Doce de Leite", price:12 }, { name:"Brigadeiro c/ Morango", price:12 },
-          { name:"Banana c/ Canela", price:12 }, { name:"Banana c/ Chocolate", price:12 },
-          { name:"Nutella", price:12 }
-        ]
-      },
-      salgados: {
-        "Especiais": [
-          { name:"Costela", price:15, premium:true }, { name:"Costela c/ Queijo", price:15, premium:true },
-          { name:"Bacon", price:15, premium:true },
-          { name:"X-Tudo", price:15, premium:true }, { name:"X-Tudo c/ Ovo", price:15, premium:true },
-          { name:"Strogonoff de Frango", price:15, premium:true },
-          { name:"Carne Seca", price:15, premium:true }, { name:"Carne Seca c/ Queijo", price:15, premium:true },
-          { name:"Pernil", price:15, premium:true }
+          { name: "Brigadeiro", price: 12 }, { name: "Prestígio", price: 12 },
+          { name: "Doce de Leite", price: 12 }, { name: "Brigadeiro c/ Morango", price: 12 },
+          { name: "Banana c/ Canela", price: 12 }, { name: "Banana c/ Chocolate", price: 12 },
+          { name: "Nutella", price: 12 }
         ]
       },
       bebidas: {
         "Coca-Cola": [
-          { name:"Coca-Cola Lata", price:6 },
-          { name:"Coca-Cola KS 300ml", price:7 },
-          { name:"Coca-Cola LS 600ml", price:10 },
-          { name:"Coca-Cola 2 Litros", price:15 },
-          { name:"Coca-Cola Mini 200ml", price:3.50 }
+          { name: "Coca-Cola Lata", price: 6 },
+          { name: "Coca-Cola KS 300ml", price: 7 },
+          { name: "Coca-Cola LS 600ml", price: 10 },
+          { name: "Coca-Cola 2 Litros", price: 15 },
+          { name: "Coca-Cola Mini 200ml", price: 3.50 }
         ],
         "Tubaína & Outros": [
-          { name:"Tubaína Garrafa", price:7 },
-          { name:"Tubaína 350ml", price:4.50 },
-          { name:"Tubaína Lata", price:5 },
-          { name:"Guaraná Mini 200ml", price:3.50 },
-          { name:"Tampico", price:7 },
-          { name:"Nativo", price:3.50 }
+          { name: "Tubaína Garrafa", price: 7 },
+          { name: "Tubaína 350ml", price: 4.50 },
+          { name: "Tubaína Lata", price: 5 },
+          { name: "Guaraná Mini 200ml", price: 3.50 },
+          { name: "Tampico", price: 7 },
+          { name: "Nativo", price: 3.50 }
         ],
         "Água": [
-          { name:"Água Natural", price:3 },
-          { name:"Água com Gás", price:3.50 }
+          { name: "Água Natural", price: 3 },
+          { name: "Água com Gás", price: 3.50 }
         ]
       }
     };
@@ -1049,7 +1040,7 @@
       updateThemeLabel();
     }
 
-    (function() {
+    (function () {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
       updateThemeLabel();
@@ -1058,22 +1049,37 @@
     function renderMenu(cat) {
       const wrap = document.getElementById('menu-wrap');
       let html = '';
-      
+
       Object.entries(menu[cat]).forEach(([section, items]) => {
-        html += `<div class="section-label"><h2>${section}</h2></div>`;
+        // hints: barra separada abaixo do título, − Remover à esq, Adicionar + à dir
+        html += `
+          <div class="section-label">
+            <h2>${section}</h2>
+          </div>
+          <div class="section-hints">
+            <span class="section-hint-left">
+              <span class="section-hint-key">-</span>
+              <span class="section-hint-label">Para remover</span>
+            </span>
+            <span class="section-hint-right">
+              <span class="section-hint-label">E adicionar</span>
+              <span class="section-hint-key">+</span>
+            </span>
+          </div>`;
+
         html += `<div class="item-group">`;
-        
+
         items.forEach(item => {
           const id = toId(item.name);
           const cartItem = cart.get(id);
           const qty = cartItem ? cartItem.qty : 0;
           const obs = cartItem ? cartItem.obs || '' : '';
-          
+
           html += `
             <div class="item${qty > 0 ? ' in-cart' : ''}${item.premium ? ' premium' : ''}" id="row-${id}">
               <div class="item-main">
                 <div class="item-controls">
-                  <button class="ctrl-btn" onclick="dec('${id}')" style="border-right:1px solid var(--border)">−</button>
+                  <button class="ctrl-btn" onclick="dec('${id}')">−</button>
                   <span class="ctrl-count${qty === 0 ? ' zero' : ''}" id="qty-${id}">${qty}</span>
                 </div>
                 <div class="item-left">
@@ -1088,11 +1094,11 @@
                   </div>
                 </div>
                 <div class="item-controls">
-                  <button class="ctrl-btn" onclick="inc('${id}','${item.name}',${item.price})">+</button>
+                  <button class="ctrl-btn" onclick="inc('${id}','${item.name.replace(/'/g,"\\'")}',${item.price})">+</button>
                 </div>
               </div>
               <div class="item-obs-field ${cartItem?.obs ? 'open' : ''}" id="obs-field-${id}">
-                <textarea class="item-obs-input" id="obs-${id}" 
+                <textarea class="item-obs-input" id="obs-${id}"
                   placeholder="Observação (opcional)"
                   onchange="updateItemObs('${id}', this.value)"
                   rows="1">${obs}</textarea>
@@ -1100,29 +1106,24 @@
             </div>
           `;
         });
-        
+
         html += `</div>`;
       });
-      
+
       wrap.innerHTML = html;
     }
 
     function inc(id, name, price) {
       if (!orderMode) return;
-      if (cart.has(id)) {
-        cart.get(id).qty++;
-      } else {
-        cart.set(id, { name, price, qty: 1 });
-      }
+      if (cart.has(id)) { cart.get(id).qty++; }
+      else { cart.set(id, { name, price, qty: 1 }); }
       sync(id);
     }
 
     function dec(id) {
       if (!orderMode || !cart.has(id)) return;
       const item = cart.get(id);
-      if (--item.qty <= 0) {
-        cart.delete(id);
-      }
+      if (--item.qty <= 0) cart.delete(id);
       sync(id);
     }
 
@@ -1135,53 +1136,34 @@
       if (!orderMode || !cart.has(id)) return;
       const item = cart.get(id);
       item.obs = value.trim() || undefined;
-      
       const icon = document.querySelector(`#row-${id} .item-obs-icon`);
-      if (item.obs) {
-        icon?.classList.add('active');
-      } else {
-        icon?.classList.remove('active');
-      }
+      item.obs ? icon?.classList.add('active') : icon?.classList.remove('active');
     }
 
     function sync(id) {
       const qty = cart.has(id) ? cart.get(id).qty : 0;
-      const row = document.getElementById('row-' + id);
-      const ctr = document.getElementById('qty-' + id);
+      const row   = document.getElementById('row-' + id);
+      const ctr   = document.getElementById('qty-' + id);
       const badge = document.getElementById('badge-' + id);
-      
-      if (ctr) {
-        ctr.textContent = qty;
-        ctr.classList.toggle('zero', qty === 0);
-      }
-      
+
+      if (ctr) { ctr.textContent = qty; ctr.classList.toggle('zero', qty === 0); }
+
       if (badge) {
-        if (qty > 0) {
-          badge.textContent = qty + '×';
-          badge.style.display = 'inline';
-        } else {
-          badge.style.display = 'none';
-        }
+        if (qty > 0) { badge.textContent = qty + '×'; badge.style.display = 'inline'; }
+        else { badge.style.display = 'none'; }
       }
-      
-      if (row) {
-        row.classList.toggle('in-cart', qty > 0);
-      }
-      
+
+      if (row) row.classList.toggle('in-cart', qty > 0);
       refreshBar();
     }
 
     function refreshBar() {
       const bar = document.getElementById('cart-bar');
-      if (!cart.size || !orderMode) {
-        bar.classList.add('hidden');
-        return;
-      }
-      
+      if (!cart.size || !orderMode) { bar.classList.add('hidden'); return; }
       bar.classList.remove('hidden');
       let total = 0, count = 0;
       cart.forEach(e => { total += e.price * e.qty; count += e.qty; });
-      document.getElementById('cart-info').innerHTML = 
+      document.getElementById('cart-info').innerHTML =
         `<strong>${count} ${count === 1 ? 'item' : 'itens'}</strong> · ${fmt(total)}`;
     }
 
@@ -1206,7 +1188,6 @@
     function openSummary() {
       const list = document.getElementById('summary-list');
       let rows = '';
-      
       cart.forEach(e => {
         rows += `
           <div class="summary-row">
@@ -1216,10 +1197,8 @@
               <span class="summary-row-price">${fmt(e.price * e.qty)}</span>
             </div>
             ${e.obs ? `<div class="summary-row-obs">${e.obs}</div>` : ''}
-          </div>
-        `;
+          </div>`;
       });
-      
       list.innerHTML = rows;
       updateSummaryTotal();
       document.getElementById('summary-sheet').classList.add('open');
@@ -1237,29 +1216,25 @@
         document.getElementById('addr-input').focus();
         return;
       }
-      
       const subtotal = calculateSubtotal();
       const total = subtotal + (wantsDelivery ? DELIVERY_FEE : 0);
       const now = new Date();
-      
       let lines = [
-        `*Mary Pastelaria* · ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`,
+        `*Mary Pastelaria* · ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`,
+        `_⚠️ solicitação a confirmar_`,
         ``
       ];
-      
       cart.forEach(e => {
         lines.push(`${e.qty}× ${e.name} — ${fmt(e.price * e.qty)}`);
         if (e.obs) lines.push(`  ↳ ${e.obs}`);
       });
-      
       lines.push('');
       if (wantsDelivery) lines.push(`Entrega: +${fmt(DELIVERY_FEE)}`);
       lines.push(`*Total: ${fmt(total)}*`);
       lines.push('');
-      lines.push(wantsDelivery 
+      lines.push(wantsDelivery
         ? `📍 ${document.getElementById('addr-input').value.trim()}`
         : `🏠 Retirada no local`);
-      
       window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
     }
 
@@ -1273,10 +1248,8 @@
     function toggleMode() {
       orderMode = !orderMode;
       document.body.classList.toggle('order-mode', orderMode);
-
       const lbl = document.getElementById('mode-label-inline');
       if (lbl) lbl.textContent = orderMode ? 'Desativar modo pedido' : 'Ativar modo pedido';
-      
       if (!orderMode) {
         cart.clear();
         wantsDelivery = false;
@@ -1286,7 +1259,6 @@
         document.getElementById('addr-input').value = '';
         closeSummary();
       }
-      
       renderMenu(currentCat);
     }
 
