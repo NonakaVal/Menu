@@ -973,6 +973,69 @@
       line-height: 1.55;
       color: var(--text-light);
     }
+    .product-extra {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .product-delivery {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: var(--primary-soft);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--primary-muted);
+      border-radius: 6px;
+      font-size: 0.68rem;
+      color: var(--text-light);
+      line-height: 1.4;
+    }
+    .product-delivery-icon {
+      color: var(--primary-muted);
+      display: flex;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+    .product-delivery-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; }
+    .product-delivery-text strong { color: var(--text); font-weight: 700; }
+    .product-obs-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .product-obs-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+    .product-obs-title svg { width: 12px; height: 12px; stroke: currentColor; fill: none; }
+    .product-obs-input {
+      width: 100%;
+      min-height: 56px;
+      padding: 8px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--text);
+      resize: vertical;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .product-obs-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+    .product-obs-input::placeholder { color: var(--text-light); opacity: 0.6; }
+    .product-obs-hint {
+      font-size: 0.60rem;
+      color: var(--text-light);
+      opacity: 0.7;
+    }
     .product-actions {
       display: flex;
       align-items: center;
@@ -1450,27 +1513,6 @@
         <span class="cat-btn-label">Bebidas</span>
       </button>
     </nav>
-    <div class="info-card info-card--compact">
-      <span class="info-card-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
-          <rect x="1" y="3" width="15" height="13" rx="1"/>
-          <path d="M16 8h4l3 5v3h-7V8z"/>
-          <circle cx="5.5" cy="18.5" r="2.5"/>
-          <circle cx="18.5" cy="18.5" r="2.5"/>
-        </svg>
-      </span>
-      <span class="info-card-text">
-        Valor entrega por R$ 3,00
-        <span class="info-card-sep">·</span>
-        <span class="info-card-obs">Toque em
-          <svg style="display:inline;width:14px;height:14px;stroke:currentColor;fill:none;vertical-align:middle"
-               viewBox="0 0 24 24">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
-          para adicionar observação (ex: sem cebola)</span>
-      </span>
-    </div>
-
     <main id="menu-wrap"></main>
     <div class="empty-hint" id="empty-hint">
       <p><strong>Seu carrinho está vazio</strong><br>Toque em <strong>+</strong> para começar seu pedido.</p>
@@ -1585,6 +1627,22 @@
         <span class="product-price" id="product-modal-price"></span>
       </div>
       <p class="product-desc" id="product-modal-desc"></p>
+      <div class="product-extra">
+        <div class="product-delivery">
+          <span class="product-delivery-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </span>
+          <span class="product-delivery-text">Valor entrega por <strong>R$ 3,00</strong> <span style="opacity:0.6">· Retirada grátis</span></span>
+        </div>
+        <label class="product-obs-label">
+          <span class="product-obs-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Observação
+          </span>
+          <textarea class="product-obs-input" id="product-modal-obs" placeholder="Ex: sem cebola, sem pimenta, ponto da massa..." rows="2" oninput="onModalObsInput(this.value)"></textarea>
+          <span class="product-obs-hint">Toque para adicionar (ex: sem cebola)</span>
+        </label>
+      </div>
     </div>
     <div class="product-actions">
       <div class="product-qty">
@@ -1977,6 +2035,7 @@
     }
 
     let currentModalId = null;
+    let pendingModalObs = '';
     function findProductById(id) {
       for (const cat of Object.values(menu)) {
         for (const items of Object.values(cat)) {
@@ -1993,6 +2052,35 @@
       const btnLabel = document.getElementById('product-modal-add-label');
       if (btnLabel) btnLabel.textContent = q > 0 ? 'Atualizar' : 'Adicionar';
     }
+    function syncModalObs() {
+      const inp = document.getElementById('product-modal-obs');
+      if (!inp || !currentModalId) return;
+      const existing = cart.has(currentModalId) ? (cart.get(currentModalId).obs || '') : pendingModalObs;
+      inp.value = existing;
+      pendingModalObs = existing;
+    }
+    function onModalObsInput(value) {
+      pendingModalObs = value;
+      if (!currentModalId) return;
+      const id = currentModalId;
+      const trimmed = value.trim();
+      // atualiza também o input da lista (se renderizado) para manter sincronia
+      const listInput = document.getElementById('obs-' + id);
+      if (listInput && listInput.value !== value) listInput.value = value;
+      const field = document.getElementById('obs-field-' + id);
+      if (trimmed) field?.classList.add('open');
+      if (cart.has(id)) {
+        const item = cart.get(id);
+        if (trimmed) item.obs = trimmed;
+        else delete item.obs;
+        // atualiza botão de obs no card
+        const row = document.getElementById('row-' + id);
+        const btn = row?.querySelector('.card-obs-btn');
+        if (btn) trimmed ? btn.classList.add('active') : btn.classList.remove('active');
+        // atualiza resumo se aberto
+        if (document.getElementById('summary-sheet')?.classList.contains('open')) renderSummaryList();
+      }
+    }
     function openProductModal(id) {
       const prod = findProductById(id);
       if (!prod) return;
@@ -2008,6 +2096,17 @@
       if (desc) desc.textContent = prod.desc || getDesc(prod.name);
       if (addPrice) addPrice.textContent = fmt(prod.price);
       syncModalQty();
+      // carrega observação existente (do carrinho ou rascunho pendente)
+      const obsInput = document.getElementById('product-modal-obs');
+      if (obsInput) {
+        const existing = cart.has(id) ? (cart.get(id).obs || '') : pendingModalObs;
+        // se trocou de produto, reseta rascunho para o do novo item
+        if (cart.has(id)) pendingModalObs = existing;
+        else if (pendingModalObs && currentModalId !== id) pendingModalObs = '';
+        obsInput.value = cart.has(id) ? existing : pendingModalObs;
+        if (!cart.has(id) && pendingModalObs === '') obsInput.value = '';
+      }
+      syncModalObs();
       document.getElementById('product-overlay')?.classList.add('open');
       document.getElementById('product-modal')?.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -2025,14 +2124,24 @@
       if (!orderMode && delta > 0) { enableOrderMode(true); }
       else if (!orderMode && delta < 0) return;
       const id = currentModalId;
+      const obsTrimmed = (document.getElementById('product-modal-obs')?.value || pendingModalObs || '').trim();
       if (delta > 0) {
         if (cart.has(id)) cart.get(id).qty++;
-        else cart.set(id, { name: prod.name, price: prod.price, qty: 1 });
+        else {
+          const entry = { name: prod.name, price: prod.price, qty: 1 };
+          if (obsTrimmed) entry.obs = obsTrimmed;
+          cart.set(id, entry);
+        }
+        if (obsTrimmed && cart.has(id)) cart.get(id).obs = obsTrimmed;
         sync(id, true);
       } else {
         if (!cart.has(id)) return;
         const it = cart.get(id);
-        if (--it.qty <= 0) cart.delete(id);
+        if (--it.qty <= 0) {
+          // mantém obs no rascunho caso usuário aumente novamente
+          if (it.obs) pendingModalObs = it.obs;
+          cart.delete(id);
+        }
         sync(id, false);
       }
       syncModalQty();
@@ -2040,13 +2149,24 @@
     function confirmModalAdd() {
       if (!currentModalId) return;
       const prod = findProductById(currentModalId);
+      const obsVal = (document.getElementById('product-modal-obs')?.value || pendingModalObs || '').trim();
       if (!cart.has(currentModalId)) {
         if (!orderMode) enableOrderMode(true);
-        cart.set(currentModalId, { name: prod.name, price: prod.price, qty: 1 });
+        const entry = { name: prod.name, price: prod.price, qty: 1 };
+        if (obsVal) entry.obs = obsVal;
+        cart.set(currentModalId, entry);
         sync(currentModalId, true);
         syncModalQty();
         showToast(prod.name + ' adicionado ✓', 'success');
       } else {
+        if (obsVal) cart.get(currentModalId).obs = obsVal;
+        else delete cart.get(currentModalId).obs;
+        // sincroniza campo da lista
+        const listInput = document.getElementById('obs-' + currentModalId);
+        if (listInput) listInput.value = obsVal;
+        const field = document.getElementById('obs-field-' + currentModalId);
+        if (field) obsVal ? field.classList.add('open') : field.classList.remove('open');
+        if (document.getElementById('summary-sheet')?.classList.contains('open')) renderSummaryList();
         showToast('Quantidade atualizada ✓', 'success');
       }
       // keep modal open for quick adjusts; optionally close: closeProductModal();
