@@ -137,12 +137,12 @@
       top: 0;
       z-index: 40;
       background: var(--surface);
-      margin: 6px 6px 0;
+      margin: 10px 6px 0;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       display: flex;
-      gap: 4px;
-      padding: 6px 6px;
+      gap: 6px;
+      padding: 7px 6px;
       overflow-x: auto;
       scrollbar-width: none;
       box-shadow: var(--shadow-md);
@@ -155,18 +155,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       background: none;
       border: none;
       cursor: pointer;
-      min-width: 52px;
-      padding: 2px 3px;
+      min-width: 58px;
+      padding: 3px 5px;
     }
     .cat-icon {
-      width: 36px; height: 36px;
+      width: 40px; height: 40px;
       border-radius: var(--radius-full);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.05rem;
+      font-size: 1.12rem;
       background: var(--accent-soft);
       border: 1px solid transparent;
       transition: all 180ms ease-out;
@@ -174,9 +174,9 @@
     .cat-btn.active .cat-icon { background: var(--accent); border-color: var(--accent); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.28); transform: scale(1.03); }
     .cat-btn-label {
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.60rem;
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.3px;
       color: var(--text-light);
       white-space: nowrap;
     }
@@ -352,10 +352,10 @@
       object-fit: cover;
     }
     .card-body {
-      padding: 6px 7px 7px;
+      padding: 7px 8px 8px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
       flex: 1;
     }
     .item-desc {
@@ -365,7 +365,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 4px;
+      margin-top: 6px;
       gap: 6px;
     }
     .card-actions { display: flex; align-items: center; gap: 5px; }
@@ -493,11 +493,11 @@
     .item.in-cart .item-marker { background: var(--primary-muted); }
 
     .item-name {
-      font-size: 0.70rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--text);
       word-break: break-word;
-      line-height: 1.25;
+      line-height: 1.3;
       flex: 1;
     }
 
@@ -518,10 +518,11 @@
 
     .item-price {
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--text);
       white-space: nowrap;
+      letter-spacing: -0.1px;
     }
 
     .item.premium .item-price { color: var(--primary); }
@@ -1878,7 +1879,6 @@
           </div>
           <div class="section-banner">
             <img src="Assets/bannercategoriaexemplo.jpg" alt="${section}" loading="lazy" onerror="this.style.display='none'">
-            <span class="section-banner-label">${section}</span>
           </div>`;
 
         html += `<div class="item-group">`;
@@ -1895,11 +1895,8 @@
                 <img class="thumb" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" onerror="this.src='${PLACEHOLDER_IMG}'">
               </div>
               <div class="card-body">
-                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:6px">
+                <div style="display:flex; align-items:flex-start; gap:6px">
                   <span class="item-name" style="cursor:pointer; flex:1" onclick="openProductModal('${id}')">${item.name}${item.premium ? ' <span class="premium-badge">★ Casa</span>' : ''}</span>
-                  <button class="card-obs-btn ${cartItem?.obs ? 'active' : ''}" onclick="toggleItemObs('${id}')" aria-label="Observação">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                  </button>
                 </div>
                 <div class="card-footer">
                   <span class="item-price">${fmt(item.price)}</span>
