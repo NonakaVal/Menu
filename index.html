@@ -137,50 +137,61 @@
       top: 0;
       z-index: 40;
       background: var(--surface);
-      margin: 10px 6px 0;
+      margin: 8px 6px 0;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       display: flex;
-      gap: 6px;
-      padding: 7px 6px;
+      gap: 8px;
+      padding: 9px 9px;
       overflow-x: auto;
       scrollbar-width: none;
       box-shadow: var(--shadow-md);
       backdrop-filter: blur(12px);
-      justify-content: center;
     }
     .cat-nav::-webkit-scrollbar { display: none; }
     .cat-btn {
-      flex: 0 0 auto;
+      flex: 1 1 0%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 5px;
-      background: none;
-      border: none;
+      background: var(--bg-solid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      min-width: 58px;
-      padding: 3px 5px;
+      min-width: 62px;
+      padding: 8px 6px 7px;
+      transition: background 180ms ease-out, border-color 180ms ease-out, transform 120ms ease-out, box-shadow 180ms ease-out;
+    }
+    .cat-btn:active { transform: scale(0.96); }
+    .cat-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.18);
     }
     .cat-icon {
-      width: 40px; height: 40px;
+      width: 34px; height: 34px;
       border-radius: var(--radius-full);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.12rem;
+      font-size: 1.05rem;
       background: var(--accent-soft);
       border: 1px solid transparent;
       transition: all 180ms ease-out;
     }
-    .cat-btn.active .cat-icon { background: var(--accent); border-color: var(--accent); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.28); transform: scale(1.03); }
+    .cat-btn.active .cat-icon { background: var(--accent); border-color: var(--accent); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.28); transform: scale(1.05); }
     .cat-btn-label {
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.62rem;
+      font-size: 0.64rem;
       font-weight: 600;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
       color: var(--text-light);
       white-space: nowrap;
+      line-height: 1.1;
     }
     .cat-btn.active .cat-btn-label { color: var(--text); font-weight: 700; }
+    :root.dark .cat-btn { background: rgba(255,255,255,0.02); }
+    :root.dark .cat-btn.active { background: rgba(251, 191, 36, 0.10); }
     :root.dark .cat-icon { background: rgba(251, 191, 36, 0.10); }
     :root.dark .cat-btn.active .cat-icon { background: var(--accent); }
 
@@ -191,6 +202,9 @@
       padding: 10px 6px 6px;
     }
     .section-label:first-of-type { padding-top: 8px; }
+    /* rótulo/divisor acima do menu de categorias — mesmo padrão das demais sessões,
+       com espaço vazio extra separando dos botões de WhatsApp/horário */
+    .section-label--categories { margin-top: 26px; }
 
     .section-label h2 {
       font-family: 'DM Sans', sans-serif;
@@ -974,17 +988,30 @@
       opacity: 1;
       pointer-events: all;
     }
+    /* Centralizado em todas as viewports — antes era bottom-sheet no mobile */
     @media (max-width: 600px) {
       .product-modal {
-        top: auto; bottom: 0; left: 0; right: 0;
-        transform: translateY(100%) scale(1);
-        width: 100%;
-        max-width: 100%;
-        max-height: 88vh;
-        border-radius: 16px 16px 0 0;
+        top: 50%;
+        bottom: auto;
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, -50%) translateY(20px) scale(0.97);
+        width: calc(100% - 20px);
+        max-width: 520px;
+        max-height: 85vh;
+        max-height: 85dvh;
+        border-radius: 16px;
         margin: 0;
+        overflow: hidden;
       }
-      .product-modal.open { transform: translateY(0) scale(1); }
+      .product-modal.open { transform: translate(-50%, -50%) translateY(0) scale(1); }
+      .product-body { padding: 16px 14px 12px; }
+      /* Ações elevadas — não presas ao bottom, com respiro inferior */
+      .product-actions {
+        padding: 14px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+        margin-top: 4px;
+        border-radius: 0 0 16px 16px;
+      }
     }
     .product-hero { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--bg); overflow: hidden; flex-shrink: 0; }
     .product-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1340,9 +1367,10 @@
       border: none;
       opacity: 1;
     }
-    /* Status aberto/fechado — mesmo formato do botão WhatsApp */
+    /* Status aberto/fechado — 40% (WhatsApp 60% à esquerda) — mesmo formato do botão WhatsApp */
     .inline-controls .info-card-hours {
-      flex: 1;
+      flex: 2 1 0%;
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1411,14 +1439,16 @@
 
     .inline-ctrl-divider { width: 1px; height: 12px; background: var(--border); }
 
-    /* Botão WhatsApp primário — mesma proporção do status */
+    /* Botão WhatsApp primário — 60% à esquerda, maior que status (40%) */
     .inline-ctrl-whatsapp {
-      flex: 1;
+      flex: 3 1 0%;
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       padding: 6px 10px;
+      white-space: nowrap;
       background: #25D366;
       border: 1px solid #1DA851;
       border-radius: var(--radius-sm);
@@ -1577,12 +1607,11 @@
         Falar no WhatsApp
       </a>
     </div>
+    <div class="section-label section-label--categories">
+      <h2>Categorias</h2>
+    </div>
     <nav class="cat-nav" aria-label="Categorias">
-      <button class="cat-btn active" data-pill="all" onclick="selectPill('all',this)">
-        <span class="cat-icon">🍽️</span>
-        <span class="cat-btn-label">Todos</span>
-      </button>
-      <button class="cat-btn" data-pill="tradicionais" onclick="selectPill('tradicionais',this)">
+      <button class="cat-btn active" data-pill="tradicionais" onclick="selectPill('tradicionais',this)">
         <span class="cat-icon">🥟</span>
         <span class="cat-btn-label">Tradicionais</span>
       </button>
@@ -1666,7 +1695,7 @@
         Delivery (+R$ 3,00)
       </span>
       <span class="toggle-switch">
-        <input type="checkbox" id="delivery-toggle" onchange="onToggleDelivery(this.checked)">
+        <input type="checkbox" id="delivery-toggle" autocomplete="off" onchange="onToggleDelivery(this.checked)">
         <span class="toggle-track"></span>
       </span>
     </label>
@@ -1816,12 +1845,21 @@
     })();
 
     const cart = new Map();
-    let wantsDelivery = false;
+    let wantsDelivery = false; // sempre inicia desativado (não oculta formulário)
     let orderMode = true;
     let currentCat = 'pasteis';
     let selectedPay = null;
     let currentPill = 'all';
     document.body.classList.add('order-mode');
+    // Força delivery desativado a cada inicialização (evita bfcache/autofill manter ligado)
+    (function forceDeliveryOff() {
+      wantsDelivery = false;
+      const _dt = document.getElementById('delivery-toggle');
+      if (_dt) { _dt.checked = false; _dt.removeAttribute('checked'); }
+      document.getElementById('summary-addr-wrap')?.classList.remove('open');
+      const _ai = document.getElementById('addr-input');
+      if (_ai) _ai.value = '';
+    })();
 
     const fmt = n => 'R$ ' + n.toFixed(2).replace('.', ',');
     const toId = s => s.replace(/[^a-z0-9]/gi, '_');
@@ -2389,6 +2427,23 @@
     });
     document.getElementById('change-input')?.addEventListener('input', () => {
       // auto format not needed
+    });
+    // Garante que a cada sessão/páginas recarregadas via bfcache o delivery volte desativado
+    window.addEventListener('pageshow', () => {
+      wantsDelivery = false;
+      const _dt2 = document.getElementById('delivery-toggle');
+      if (_dt2) { _dt2.checked = false; _dt2.removeAttribute('checked'); }
+      document.getElementById('summary-addr-wrap')?.classList.remove('open');
+      const _ai2 = document.getElementById('addr-input');
+      if (_ai2 && document.activeElement !== _ai2) { /* mantém vazio se recarregado */ }
+      updateSummaryTotal();
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+      wantsDelivery = false;
+      const _dt3 = document.getElementById('delivery-toggle');
+      if (_dt3) { _dt3.checked = false; _dt3.removeAttribute('checked'); }
+      document.getElementById('summary-addr-wrap')?.classList.remove('open');
+      updateSummaryTotal();
     });
   </script>
 </body>
