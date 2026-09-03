@@ -107,8 +107,8 @@
 
     .brand-logo {
       display: block;
-      width: 100%;
-      max-width: 600px;
+      width: 105%;
+      max-width: 700px;
       height: auto;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
     }
@@ -151,6 +151,7 @@
       z-index: 40;
       background: var(--surface);
       margin: 8px 6px 0;
+      margin-bottom: 40px;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       display: flex;
@@ -169,16 +170,15 @@
     .cat-btn {
       flex: 0 0 auto;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      gap: 5px;
+      justify-content: center;
       background: var(--bg-solid);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       cursor: pointer;
-      width: 74px;
-      padding: 8px 4px 7px;
+      width: 72px;
+      height: 72px;
+      padding: 8px;
       transition: background 180ms ease-out, border-color 180ms ease-out, transform 120ms ease-out, box-shadow 180ms ease-out;
     }
 
@@ -193,62 +193,41 @@
     }
 
     .cat-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius-full);
+      width: 100%;
+      height: 100%;
+      max-width: 52px;
+      max-height: 52px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.05rem;
-      background: var(--accent-soft);
-      border: 1px solid transparent;
+      background: transparent;
+      border: 0;
       transition: all 180ms ease-out;
       overflow: hidden;
+      aspect-ratio: 1 / 1;
     }
 
     .cat-icon img {
-      width: 19px;
-      height: 19px;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
       display: block;
       pointer-events: none;
       transition: transform 180ms ease-out;
+      image-rendering: auto;
     }
 
     .cat-btn.active .cat-icon {
-      background: var(--accent);
-      border-color: var(--accent);
-      box-shadow: 0 2px 8px rgba(169, 144, 106, 0.28);
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .cat-btn.active .cat-icon img {
-      transform: scale(1.1);
+      transform: scale(1.03);
     }
 
     .cat-btn-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.1px;
-      color: var(--text-light);
-      line-height: 1.15;
-      text-align: center;
-      white-space: normal;
-      word-break: break-word;
-      hyphens: auto;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      -webkit-box-pack: center;
-      overflow: hidden;
-      min-height: 2.3em;
-      max-width: 66px;
-    }
-
-    .cat-btn.active .cat-btn-label {
-      color: var(--text);
-      font-weight: 700;
+      display: none !important;
     }
 
     :root.dark .cat-btn {
@@ -281,7 +260,7 @@
     /* rótulo/divisor acima do menu de categorias — mesmo padrão das demais sessões,
        com espaço vazio extra separando dos botões de WhatsApp/horário */
     .section-label--categories {
-      margin-top: 26px;
+      margin-top: 36px;
     }
 
     .section-label h2 {
@@ -293,6 +272,12 @@
       white-space: nowrap;
       line-height: 1;
       text-transform: uppercase;
+    }
+
+    /* header "Categorias" com fonte maior — isolado do restante dos section-label
+       (demais sessões e o menu de categorias em si permanecem inalterados) */
+    .section-label--categories h2 {
+      font-size: 0.95rem;
     }
 
     .section-label h2::before {
@@ -458,6 +443,7 @@
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms;
+      cursor: pointer;
     }
 
     .item:hover {
@@ -552,27 +538,6 @@
       width: 20px;
       height: 26px;
       font-size: 0.68rem;
-    }
-
-    .add-plus {
-      width: 26px;
-      height: 26px;
-      border-radius: var(--radius-full);
-      border: none;
-      background: var(--accent);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(169, 144, 106, 0.30);
-      flex-shrink: 0;
-    }
-
-    .add-plus:active {
-      transform: scale(0.95);
     }
 
     .card-obs-btn {
@@ -844,55 +809,48 @@
       resize: none;
     }
 
-    /* ── CART BAR ── */
+    /* ── CART BAR (botão fixo centralizado, substitui a barra inferior) ── */
     .cart-bar {
       position: fixed;
-      bottom: 0;
+      bottom: calc(30px + env(safe-area-inset-bottom, 0px));
       left: 50%;
       transform: translateX(-50%);
-      width: 100%;
-      max-width: 600px;
-      background: var(--surface);
-      border-top: 2px solid var(--primary);
-      padding: 12px 20px 24px;
       z-index: 100;
-      transition: transform 0.25s ease;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 13px 23px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+      transition: transform 0.25s ease, opacity 0.25s ease;
     }
 
     .cart-bar.hidden {
-      transform: translateX(-50%) translateY(100%);
+      transform: translateX(-50%) translateY(140%);
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .cart-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .cart-info {
-      font-size: 0.8rem;
-      color: var(--text-light);
-    }
-
-    .cart-info strong {
-      color: var(--text);
-    }
-
-    .review-btn {
-      background: var(--primary);
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 10px 16px;
-      color: white;
-      font-size: 0.6rem;
+    .cart-bar-label {
+      font-size: 0.76rem;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .cart-bar-total {
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding-left: 8px;
+      margin-left: 2px;
+      border-left: 1px solid rgba(255, 255, 255, 0.35);
+      white-space: nowrap;
     }
 
     /* ── SUMMARY ── */
@@ -1373,20 +1331,30 @@
       pointer-events: all;
     }
 
-    .product-modal {
+    /* Wrapper centraliza o modal e o botão "Voltar" (fora do popup) como um único grupo */
+    .product-modal-wrap {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) translateY(20px) scale(0.97);
+      inset: 0;
+      z-index: 165;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px;
+      pointer-events: none;
+    }
+
+    .product-modal {
       width: calc(100% - 24px);
       max-width: 520px;
-      max-height: 88vh;
+      max-height: 80vh;
       background: var(--surface);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      z-index: 165;
       opacity: 0;
       pointer-events: none;
+      transform: translateY(20px) scale(0.97);
       transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease-out;
       display: flex;
       flex-direction: column;
@@ -1394,30 +1362,70 @@
     }
 
     .product-modal.open {
-      transform: translate(-50%, -50%) translateY(0) scale(1);
+      transform: translateY(0) scale(1);
       opacity: 1;
       pointer-events: all;
+    }
+
+    /* Linha que agrupa "Voltar" + "Ver pedido" abaixo do popup */
+    .product-modal-actions-row {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .product-back {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      padding: 11px 24px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease-out;
+    }
+
+    .product-back.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .product-back:active {
+      transform: scale(0.96);
+    }
+
+    /* "Ver pedido" ao lado de "Voltar" — herda a mesma animação de .product-back,
+       com destaque na cor primária para diferenciar da ação de voltar */
+    .product-back.product-view-order {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
     }
 
     /* Centralizado em todas as viewports — antes era bottom-sheet no mobile */
     @media (max-width: 600px) {
       .product-modal {
-        top: 50%;
-        bottom: auto;
-        left: 50%;
-        right: auto;
-        transform: translate(-50%, -50%) translateY(20px) scale(0.97);
         width: calc(100% - 20px);
         max-width: 520px;
-        max-height: 85vh;
-        max-height: 85dvh;
+        max-height: 76vh;
+        max-height: 76dvh;
         border-radius: 16px;
         margin: 0;
         overflow: hidden;
-      }
-
-      .product-modal.open {
-        transform: translate(-50%, -50%) translateY(0) scale(1);
       }
 
       .product-body {
@@ -1446,24 +1454,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-    }
-
-    .product-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-full);
-      border: none;
-      background: rgba(0, 0, 0, 0.38);
-      backdrop-filter: blur(8px);
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .product-body {
@@ -1509,39 +1499,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-    }
-
-    .product-delivery {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      background: var(--primary-soft);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--primary-muted);
-      border-radius: var(--radius-sm);
-      font-size: 0.68rem;
-      color: var(--text-light);
-      line-height: 1.4;
-    }
-
-    .product-delivery-icon {
-      color: var(--primary-muted);
-      display: flex;
-      flex-shrink: 0;
-      opacity: 0.8;
-    }
-
-    .product-delivery-icon svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-      fill: none;
-    }
-
-    .product-delivery-text strong {
-      color: var(--text);
-      font-weight: 700;
     }
 
     .product-obs-label {
@@ -1668,6 +1625,7 @@
 
       .product-overlay,
       .product-modal,
+      .product-back,
       .thumb {
         transition: none !important;
         animation: none !important;
@@ -2176,34 +2134,37 @@
     /* ── TOAST ── */
     .toast-container {
       position: fixed;
-      top: 16px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       z-index: 300;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 10px;
       pointer-events: none;
     }
 
     .toast {
       background: var(--text);
       color: var(--surface);
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 12px 18px;
       border-radius: var(--radius-full);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
       display: flex;
       align-items: center;
       gap: 8px;
       opacity: 0;
-      transform: translateY(-8px) scale(0.97);
+      transform: translateY(-10px) scale(0.96);
       transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 92vw;
+      max-width: min(92vw, 420px);
       text-align: center;
       line-height: 1.3;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
 
     .toast.show {
@@ -2386,18 +2347,14 @@
 
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
-  <div class="cart-bar hidden" id="cart-bar">
-    <div class="cart-content">
-      <div class="cart-info" id="cart-info"></div>
-      <button class="review-btn" onclick="openSummary()">
-        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none">
-          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
-          <rect x="9" y="3" width="6" height="4" rx="1" />
-        </svg>
-        Ver pedido
-      </button>
-    </div>
-  </div>
+  <button class="cart-bar hidden" id="cart-bar" onclick="openSummary()">
+    <svg width="13" height="13" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+      <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+      <rect x="9" y="3" width="6" height="4" rx="1" />
+    </svg>
+    <span class="cart-bar-label">Ver pedido</span>
+    <span class="cart-bar-total" id="cart-total"></span>
+  </button>
 
   <div class="wa-read-bar">
     <a class="wa-read-btn" href="https://wa.me/5515996026387" target="_blank">
@@ -2469,52 +2426,57 @@
 
   <!-- PRODUCT MODAL -->
   <div class="product-overlay" id="product-overlay" onclick="closeProductModal()"></div>
-  <div class="product-modal" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
-    <div class="product-hero">
-      <img id="product-modal-img" src="" alt="">
-      <button class="product-close" onclick="closeProductModal()" aria-label="Fechar">✕</button>
-    </div>
-    <div class="product-body">
-      <div class="product-title-row">
-        <h3 class="product-title" id="product-modal-title"></h3>
-        <span class="product-price" id="product-modal-price"></span>
+  <div class="product-modal-wrap" id="product-modal-wrap">
+    <div class="product-modal" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
+      <div class="product-hero">
+        <img id="product-modal-img" src="" alt="">
       </div>
-      <p class="product-desc" id="product-modal-desc"></p>
-      <div class="product-extra">
-        <div class="product-delivery">
-          <span class="product-delivery-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none">
-              <rect x="1" y="3" width="15" height="13" rx="1" />
-              <path d="M16 8h4l3 5v3h-7V8z" />
-              <circle cx="5.5" cy="18.5" r="2.5" />
-              <circle cx="18.5" cy="18.5" r="2.5" />
-            </svg>
-          </span>
-          <span class="product-delivery-text">Valor entrega por <strong>R$ 3,00</strong> <span style="opacity:0.6">·
-              Retirada grátis</span></span>
+      <div class="product-body">
+        <div class="product-title-row">
+          <h3 class="product-title" id="product-modal-title"></h3>
+          <span class="product-price" id="product-modal-price"></span>
         </div>
-        <label class="product-obs-label">
-          <span class="product-obs-title">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            Observação
-          </span>
-          <textarea class="product-obs-input" id="product-modal-obs"
-            placeholder="Ex: sem cebola, sem pimenta, ponto da massa..." rows="2"
-            oninput="onModalObsInput(this.value)"></textarea>
-          <span class="product-obs-hint">Toque para adicionar (ex: sem cebola)</span>
-        </label>
+        <p class="product-desc" id="product-modal-desc"></p>
+        <div class="product-extra">
+          <label class="product-obs-label">
+            <span class="product-obs-title">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              Observação
+            </span>
+            <textarea class="product-obs-input" id="product-modal-obs"
+              placeholder="Ex: sem cebola, sem pimenta, ponto da massa..." rows="2"
+              oninput="onModalObsInput(this.value)"></textarea>
+            <span class="product-obs-hint">Toque para adicionar (ex: sem cebola)</span>
+          </label>
+        </div>
+      </div>
+      <div class="product-actions">
+        <div class="product-qty">
+          <button onclick="changeModalQty(-1)" aria-label="Diminuir">−</button>
+          <span id="product-modal-qty">0</span>
+          <button onclick="changeModalQty(1)" aria-label="Aumentar">+</button>
+        </div>
+        <button class="product-add" onclick="confirmModalAdd()">
+          <span id="product-modal-add-label">Adicionar</span> · <span id="product-modal-add-price"></span>
+        </button>
       </div>
     </div>
-    <div class="product-actions">
-      <div class="product-qty">
-        <button onclick="changeModalQty(-1)" aria-label="Diminuir">−</button>
-        <span id="product-modal-qty">0</span>
-        <button onclick="changeModalQty(1)" aria-label="Aumentar">+</button>
-      </div>
-      <button class="product-add" onclick="confirmModalAdd()">
-        <span id="product-modal-add-label">Adicionar</span> · <span id="product-modal-add-price"></span>
+    <div class="product-modal-actions-row">
+      <button class="product-back" id="product-back-btn" onclick="closeProductModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Voltar
+      </button>
+      <button class="product-back product-view-order" id="product-view-order-btn" onclick="openSummaryFromProduct()">
+        <svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+          <rect x="9" y="3" width="6" height="4" rx="1" />
+        </svg>
+        Ver pedido
       </button>
     </div>
   </div>
@@ -2527,14 +2489,14 @@
     // Ícones flat representativos (Assets/menu-itens) substituem os antigos emojis.
     // Ordem definida pelo usuário.
     const CATEGORIES = [
-      { key: 'combos', label: 'Combos de Lanches', icon: 'Assets/menu-itens/combo.png', banner: 'Assets/banners/banner-combos-de-lanche.png' },
-      { key: 'oriental', label: 'Culinária Oriental', icon: 'Assets/menu-itens/sashimi.png', banner: 'Assets/banners/banner-comida-oriental.png' },
-      { key: 'dogao', label: 'Dogão', icon: 'Assets/menu-itens/hotdog.png', banner: 'Assets/banners/banner-dogao.png' },
-      { key: 'lanches', label: 'Lanches', icon: 'Assets/menu-itens/burguer.png', banner: 'Assets/banners/banner-lanches.png' },
-      { key: 'pasteis', label: 'Pastéis', icon: 'Assets/menu-itens/pastel.png', banner: 'Assets/banners/banner-pasteis.png' },
-      { key: 'bebidas', label: 'Bebidas', icon: 'Assets/menu-itens/refri.png', banner: 'Assets/banners/banner-bebidas.png' },
-      { key: 'doces', label: 'Doces e Sobremesas', icon: 'Assets/menu-itens/doce.png', banner: 'Assets/banners/banner-doces.png' },
-      { key: 'pizzas', label: 'Pizzas', icon: 'Assets/menu-itens/pizza.png', banner: 'Assets/banners/banner-pizzas.png' }
+      { key: 'combos', label: 'Combos de Lanches', icon: 'Assets/categories-icons/icon-combo.png', banner: 'Assets/banners/banner-combos-de-lanche.png' },
+      { key: 'oriental', label: 'Culinária Oriental', icon: 'Assets/categories-icons/icon-oriental.png', banner: 'Assets/banners/banner-comida-oriental.png' },
+      { key: 'dogao', label: 'Dogão', icon: 'Assets/categories-icons/icon-dog.png', banner: 'Assets/banners/banner-dogao.png' },
+      { key: 'lanches', label: 'Lanches', icon: 'Assets/categories-icons/icon-burguer.png', banner: 'Assets/banners/banner-lanches.png' },
+      { key: 'pasteis', label: 'Pastéis', icon: 'Assets/categories-icons/icon-pastel.png', banner: 'Assets/banners/banner-pasteis.png' },
+      { key: 'bebidas', label: 'Bebidas', icon: 'Assets/categories-icons/icon-bebidas.png', banner: 'Assets/banners/banner-bebidas.png' },
+      { key: 'doces', label: 'Doces e Sobremesas', icon: 'Assets/categories-icons/icon-doces.png', banner: 'Assets/banners/banner-doces.png' },
+      { key: 'pizzas', label: 'Pizzas', icon: 'Assets/categories-icons/icon-pizzas.png', banner: 'Assets/banners/banner-pizzas.png' }
     ];
 
     const menu = {
@@ -2670,9 +2632,8 @@
       const nav = document.getElementById('cat-nav');
       if (!nav) return;
       nav.innerHTML = CATEGORIES.map((c, i) => `
-        <button class="cat-btn${i === 0 ? ' active' : ''}" data-pill="${c.key}" onclick="selectPill('${c.key}',this)">
-          <span class="cat-icon"><img src="${c.icon}" alt="" loading="lazy"></span>
-          <span class="cat-btn-label">${c.label}</span>
+        <button class="cat-btn${i === 0 ? ' active' : ''}" data-pill="${c.key}" onclick="selectPill('${c.key}',this)" aria-label="${c.label}">
+          <span class="cat-icon"><img src="${c.icon}" alt="${c.label}" loading="lazy"></span>
         </button>
       `).join('');
     }
@@ -2793,28 +2754,27 @@
             const obs = cartItem ? cartItem.obs || '' : '';
 
             html += `
-            <div class="item${qty > 0 ? ' in-cart' : ''}${item.premium ? ' premium' : ''}" id="row-${id}">
-              <div class="card-img-wrap" onclick="openProductModal('${id}')">
+            <div class="item${qty > 0 ? ' in-cart' : ''}${item.premium ? ' premium' : ''}" id="row-${id}" onclick="openProductModal('${id}')">
+              <div class="card-img-wrap">
                 <img class="thumb" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" onerror="this.src='${PLACEHOLDER_IMG}'">
               </div>
               <div class="card-body">
                 <div style="display:flex; align-items:flex-start; gap:6px">
-                  <span class="item-name" style="cursor:pointer; flex:1" onclick="openProductModal('${id}')">${item.name}${item.premium ? ' <span class="premium-badge">★ Casa</span>' : ''}</span>
+                  <span class="item-name" style="flex:1">${item.name}${item.premium ? ' <span class="premium-badge">★ Casa</span>' : ''}</span>
                 </div>
                 <div class="card-footer">
                   <span class="item-price">${fmt(item.price)}</span>
                   <div class="card-actions">
-                    <div class="card-qty-pill" id="pill-${id}" style="display:${qty > 0 ? 'flex' : 'none'}">
+                    <div class="card-qty-pill" id="pill-${id}" style="display:${qty > 0 ? 'flex' : 'none'}" onclick="event.stopPropagation()">
                       <button class="ctrl-btn" onclick="dec('${id}')">−</button>
                       <span class="ctrl-count${qty === 0 ? ' zero' : ''}" id="qty-${id}">${qty}</span>
                     </div>
                     <span id="badge-${id}" style="display:none">${qty > 0 ? qty + '×' : ''}</span>
                     <span class="item-marker" style="display:none"></span>
-                    <button class="add-plus" onclick="inc('${id}','${item.name.replace(/'/g, "\\'")}',${item.price})" aria-label="Adicionar">+</button>
                   </div>
                 </div>
               </div>
-              <div class="item-obs-field ${cartItem?.obs ? 'open' : ''}" id="obs-field-${id}">
+              <div class="item-obs-field ${cartItem?.obs ? 'open' : ''}" id="obs-field-${id}" onclick="event.stopPropagation()">
                 <textarea class="item-obs-input" id="obs-${id}"
                   placeholder="Observação (ex: sem cebola)"
                   onchange="updateItemObs('${id}', this.value)"
@@ -2925,10 +2885,10 @@
         return;
       }
       bar.classList.remove('hidden');
-      let total = 0, count = 0;
-      cart.forEach(e => { total += e.price * e.qty; count += e.qty; });
-      document.getElementById('cart-info').innerHTML =
-        `<strong>${count} ${count === 1 ? 'item' : 'itens'}</strong> · ${fmt(total)}`;
+      let total = 0;
+      cart.forEach(e => { total += e.price * e.qty; });
+      const totalEl = document.getElementById('cart-total');
+      if (totalEl) totalEl.textContent = fmt(total);
       if (bump) {
         bar.classList.remove('bump');
         void bar.offsetWidth;
@@ -3102,13 +3062,22 @@
       syncModalObs();
       document.getElementById('product-overlay')?.classList.add('open');
       document.getElementById('product-modal')?.classList.add('open');
+      document.getElementById('product-back-btn')?.classList.add('open');
+      document.getElementById('product-view-order-btn')?.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeProductModal() {
       currentModalId = null;
       document.getElementById('product-overlay')?.classList.remove('open');
       document.getElementById('product-modal')?.classList.remove('open');
+      document.getElementById('product-back-btn')?.classList.remove('open');
+      document.getElementById('product-view-order-btn')?.classList.remove('open');
       document.body.style.overflow = '';
+    }
+    // Fecha o popup do item e abre o resumo do pedido em seguida
+    function openSummaryFromProduct() {
+      closeProductModal();
+      openSummary();
     }
     function changeModalQty(delta) {
       if (!currentModalId) return;
@@ -3160,7 +3129,7 @@
         const field = document.getElementById('obs-field-' + currentModalId);
         if (field) obsVal ? field.classList.add('open') : field.classList.remove('open');
         if (document.getElementById('summary-sheet')?.classList.contains('open')) renderSummaryList();
-        showToast('Quantidade atualizada ✓', 'success');
+        showToast('Pedido atualizado ✓', 'success');
       }
       // keep modal open for quick adjusts; optionally close: closeProductModal();
     }
