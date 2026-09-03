@@ -114,11 +114,11 @@
     }
 
     .hero-info {
-      margin-top: 8px;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
     }
 
     .brand-contact {
@@ -139,6 +139,39 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
+    /* Indicador de aberto/fechado — discreto, centralizado abaixo do endereço no hero.
+       Cores sutis (translúcidas) sobre o fundo do hero; alterna entre tom verde (aberto)
+       e âmbar (fechado), sem competir visualmente com a marca. */
+    .hero-hours-badge {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-hours-badge.open {
+      color: #bbf7d0;
+      background: rgba(74, 222, 128, 0.16);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    .hero-hours-badge.closed {
+      color: #fed7aa;
+      background: rgba(251, 146, 60, 0.14);
+      border-color: rgba(251, 146, 60, 0.28);
+    }
+
     .page {
       max-width: 600px;
       margin: 0 auto;
@@ -156,11 +189,26 @@
       border: 1px solid var(--border);
       display: flex;
       gap: 8px;
-      padding: 9px 9px;
+      padding: 9px 0 9px 9px;
       overflow-x: auto;
       scrollbar-width: none;
       box-shadow: var(--shadow-md);
       backdrop-filter: blur(12px);
+      /* Fade de scroll na borda direita via mask-image — não usa wrapper/pseudo-elemento
+         extra, então não interfere no alcance do position:sticky (que precisa do .cat-nav
+         como filho direto do .page, alto o suficiente para permanecer fixo durante a
+         rolagem por todo o menu). O padding-right zerado acima deixa o último botão
+         encostado na borda, para que a máscara o corte parcialmente (efeito "peek"). */
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent 100%);
+      mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent 100%);
+      transition: -webkit-mask-image 0.2s ease-out, mask-image 0.2s ease-out;
+    }
+
+    /* Ao chegar no fim da lista de categorias, remove a máscara — revela o último
+       botão por inteiro e sinaliza que não há mais itens a rolar. */
+    .cat-nav.at-end {
+      -webkit-mask-image: none;
+      mask-image: none;
     }
 
     .cat-nav::-webkit-scrollbar {
@@ -260,7 +308,7 @@
     /* rótulo/divisor acima do menu de categorias — mesmo padrão das demais sessões,
        com espaço vazio extra separando dos botões de WhatsApp/horário */
     .section-label--categories {
-      margin-top: 36px;
+      margin-top: 26px;
     }
 
     .section-label h2 {
@@ -298,6 +346,19 @@
       height: 1px;
       background: linear-gradient(to right, var(--border), transparent);
       margin-left: 12px;
+    }
+
+    /* headers de categoria do menu (Combos de Lanches, Pastéis, etc.) centralizados —
+       o header "Categorias" (.section-label--categories) permanece à esquerda, inalterado */
+    .section-label:not(.section-label--categories) {
+      justify-content: center;
+    }
+
+    .section-label:not(.section-label--categories)::after {
+      flex: none;
+      width: 12px;
+      margin-left: 8px;
+      background: linear-gradient(to left, var(--border), transparent);
     }
 
     /* ── SECTION BANNER — retangular horizontal ocupando espaço total ── */
@@ -812,9 +873,10 @@
     /* ── CART BAR (botão fixo centralizado, substitui a barra inferior) ── */
     .cart-bar {
       position: fixed;
-      bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+      right: 16px;
+      left: auto;
+      transform: none;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -826,14 +888,31 @@
       color: #fff;
       font-family: 'DM Sans', sans-serif;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-      transition: transform 0.25s ease, opacity 0.25s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 0 0 2px rgba(169, 144, 106, 0.22);
+      transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
     }
 
     .cart-bar.hidden {
-      transform: translateX(-50%) translateY(140%);
+      transform: translateY(140%);
       opacity: 0;
       pointer-events: none;
+    }
+
+    /* Variante do cart-bar: antes de qualquer seleção de item, ocupa o mesmo lugar
+       do "Ver pedido" com um CTA verde para falar direto no WhatsApp. Assim que o
+       carrinho recebe o primeiro item, é substituída pelo .cart-bar padrão. */
+    .cart-bar-wa {
+      background: #25D366;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 0 0 2px rgba(29, 168, 81, 0.28);
+      text-decoration: none;
+    }
+
+    .cart-bar-wa:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(29, 168, 81, 0.36);
+    }
+
+    .cart-bar-wa svg {
+      flex-shrink: 0;
     }
 
     .cart-bar-label {
@@ -910,14 +989,34 @@
       text-transform: uppercase;
     }
 
-    .summary-close {
-      width: 28px;
-      height: 28px;
+    /* Rodapé do resumo: "Voltar" (secundário, pill — mesmo padrão visual do
+       .product-back do popup de item) + "Enviar pedido" (CTA primário) lado a lado */
+    .summary-actions-row {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      margin: 12px 20px 20px;
+    }
+
+    .summary-back {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      color: var(--text);
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: none;
+      border-radius: var(--radius-full);
+      padding: 0 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
       cursor: pointer;
-      font-size: 1rem;
+      transition: transform 0.12s, background 0.15s;
+    }
+
+    .summary-back:active {
+      transform: scale(0.96);
     }
 
     .summary-list {
@@ -1287,7 +1386,8 @@
     }
 
     .send-btn {
-      margin: 12px 20px 20px;
+      flex: 1;
+      margin: 0;
       padding: 14px;
       background: var(--primary);
       border: none;
@@ -1367,7 +1467,7 @@
       pointer-events: all;
     }
 
-    /* Linha que agrupa "Voltar" + "Ver pedido" abaixo do popup */
+    /* Linha que agrupa a(s) ação(ões) abaixo do popup (ex.: "Voltar") */
     .product-modal-actions-row {
       flex-shrink: 0;
       display: flex;
@@ -1406,14 +1506,6 @@
 
     .product-back:active {
       transform: scale(0.96);
-    }
-
-    /* "Ver pedido" ao lado de "Voltar" — herda a mesma animação de .product-back,
-       com destaque na cor primária para diferenciar da ação de voltar */
-    .product-back.product-view-order {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
     }
 
     /* Centralizado em todas as viewports — antes era bottom-sheet no mobile */
@@ -1898,68 +1990,21 @@
       display: block;
     }
 
-    /* ── INLINE CONTROLS — dois botões lado a lado (status + WhatsApp) — mesmo nível/tamanho/formato ── */
+    /* ── INLINE CONTROLS — botão único do WhatsApp, centralizado, logo abaixo do hero.
+       O indicador de horário fica agrupado no hero (.hero-hours-badge), acima. ── */
     .inline-controls {
       display: flex;
-      align-items: stretch;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin: 6px 6px 0;
+      gap: 0;
+      margin: 18px 6px 0;
       padding: 0;
       background: none;
       border: none;
       opacity: 1;
     }
 
-    /* Status aberto/fechado — 40% (WhatsApp 60% à esquerda) — mesmo formato do botão WhatsApp */
-    .inline-controls .info-card-hours {
-      flex: 2 1 0%;
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6px 8px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      font-size: 0.60rem;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-      line-height: 1.2;
-      min-height: 34px;
-      opacity: 0.85;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .inline-controls .info-card-hours.open {
-      color: #166534;
-      background: #dcfce7;
-      border-color: #86efac;
-      opacity: 1;
-    }
-
-    .inline-controls .info-card-hours.closed {
-      color: #7c2d12;
-      background: #ffedd5;
-      border-color: #fed7aa;
-      opacity: 1;
-    }
-
-    :root.dark .inline-controls .info-card-hours.open {
-      color: #4ade80;
-      background: rgba(74, 222, 128, 0.14);
-      border-color: rgba(74, 222, 128, 0.3);
-    }
-
-    :root.dark .inline-controls .info-card-hours.closed {
-      color: #fdba74;
-      background: rgba(251, 146, 60, 0.14);
-      border-color: rgba(251, 146, 60, 0.3);
-    }
 
     .inline-ctrl-mode {
       display: flex;
@@ -2007,46 +2052,48 @@
       background: var(--border);
     }
 
-    /* Botão WhatsApp primário — 60% à esquerda, maior que status (40%) */
-    .inline-ctrl-whatsapp {
-      flex: 3 1 0%;
-      min-width: 0;
+    /* Espaçador que substitui o antigo botão "Falar no WhatsApp" do topo do header.
+       Mantém a mesma altura/espaço reservado (sem conteúdo visível), para que o
+       layout abaixo (contato/endereço e seção de promoção) não "pule" para cima.
+       O CTA de WhatsApp direto agora vive no lugar do botão "Ver pedido" (.cart-bar-wa),
+       visível antes de qualquer seleção de item. */
+    .inline-ctrl-spacer {
+      width: 100%;
+      min-height: 42px;
+      margin: 0;
+    }
+
+    /* Contato e endereço abaixo do botão WhatsApp */
+    .inline-contact-info {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 6px 10px;
-      white-space: nowrap;
-      background: #25D366;
-      border: 1px solid #1DA851;
-      border-radius: var(--radius-sm);
-      min-height: 34px;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
+      gap: 2px;
+      margin-top: 6px;
+    }
+
+    .inline-contact-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
       text-decoration: none;
-      color: #fff;
-      font-size: 0.60rem;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      box-shadow: 0 2px 8px rgba(37, 211, 102, 0.28);
-      transition: transform 0.12s, box-shadow 0.15s, opacity 0.15s;
     }
 
-    .inline-ctrl-whatsapp:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.32);
-    }
-
-    .inline-ctrl-whatsapp:active {
-      transform: scale(0.98);
-    }
-
-    .inline-ctrl-whatsapp svg {
-      width: 13px;
-      height: 13px;
+    .inline-contact-phone svg {
+      width: 11px;
+      height: 11px;
       fill: currentColor;
       flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    .inline-contact-addr {
+      font-size: 0.62rem;
+      font-weight: 500;
+      color: var(--text-light);
     }
 
     /* compatibilidade: tema antigo (não usado no inline agora, mantido para widget) */
@@ -2201,48 +2248,94 @@
       }
     }
 
-    .flash-offer {
-      margin: 6px 6px 0;
+    /* ── PROMO SLIDER ── substitui o antigo "flash offer" único por um carrossel de
+       ofertas em destaque, um pouco maior, com autoplay, dots e suporte a swipe.
+       Ocupa o espaço logo abaixo do botão de WhatsApp, ainda dentro da primeira
+       dobra da página, antes do menu de categorias. */
+    .promo-slider {
+      position: relative;
+      margin: 24px 6px 0;
       background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 100%);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 8px 10px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    :root.dark .promo-slider {
+      background: linear-gradient(135deg, #2a1712 0%, #241b12 100%);
+      border-color: var(--border);
+    }
+
+    .promo-track {
+      display: flex;
+      transition: transform 0.35s ease;
+    }
+
+    .promo-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      min-width: 0;
+      padding: 18px 12px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      box-shadow: var(--shadow-sm);
+      gap: 12px;
+      min-height: 110px;
     }
 
-    .flash-offer-copy {
+    .promo-slide-copy {
       flex: 1;
+      min-width: 0;
     }
 
-    .flash-offer-pill {
+    .promo-pill {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.3px;
       color: var(--accent-strong);
       background: var(--surface);
-      padding: 3px 7px;
+      padding: 3px 8px;
       border-radius: var(--radius-full);
       border: 1px solid var(--border);
+      white-space: nowrap;
     }
 
-    .flash-offer-title {
-      font-size: 0.82rem;
+    :root.dark .promo-pill {
+      background: var(--surface);
+      border-color: var(--border);
+      color: #fbbf24;
+    }
+
+    .promo-title {
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--text);
-      line-height: 1.25;
-      margin-top: 3px;
+      line-height: 1.28;
+      margin-top: 5px;
     }
 
-    .flash-offer-arrow {
-      width: 32px;
-      height: 32px;
+    .promo-img {
+      width: auto;
+      height: 150px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    :root.dark .promo-img {
+      border-color: var(--border);
+    }
+
+    .promo-arrow {
+      width: 34px;
+      height: 34px;
       border-radius: var(--radius-full);
       border: none;
       background: var(--accent);
@@ -2252,16 +2345,34 @@
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
+      font-size: 1.05rem;
+      line-height: 1;
       box-shadow: 0 2px 6px rgba(169, 144, 106, 0.25);
     }
 
-    .flash-offer-img {
-      width: 72px;
-      height: 48px;
-      border-radius: var(--radius-sm);
-      object-fit: cover;
-      background: var(--surface);
-      border: 1px solid var(--border);
+    .promo-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 0 10px;
+    }
+
+    .promo-dot {
+      width: 6px;
+      height: 6px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, width 0.2s;
+    }
+
+    .promo-dot.active {
+      width: 16px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
     }
 
     .item.bump {
@@ -2296,29 +2407,28 @@
     <div class="hero-content">
       <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
       <div class="hero-info">
-        <a class="brand-contact" href="https://wa.me/5515996026387" target="_blank">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
-          </svg>
-          (15) 99600-0099
-        </a>
-        <div class="brand-addr">Shigueru Yagui, Centro — Guapiara-SP</div>
+        <span class="hero-hours-badge" id="hours-badge"></span>
       </div>
     </div>
   </div>
 
   <div class="page">
     <div class="inline-controls">
-      <span class="info-card-hours" id="hours-badge"></span>
-      <a class="inline-ctrl-whatsapp" href="https://wa.me/5515996026387" target="_blank" rel="noopener"
-        aria-label="Falar no WhatsApp">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path
-            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
-        </svg>
-        Falar no WhatsApp
-      </a>
+      <div class="inline-ctrl-spacer" aria-hidden="true"></div>
+      <div class="inline-contact-info">
+        <a class="inline-contact-phone" href="https://wa.me/5515996026387" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
+          </svg>
+          (15) 99600-0099
+        </a>
+        <div class="inline-contact-addr">Shigueru Yagui, Centro — Guapiara-SP</div>
+      </div>
+    </div>
+    <div class="promo-slider" id="promo-slider">
+      <div class="promo-track" id="promo-track"></div>
+      <div class="promo-dots" id="promo-dots"></div>
     </div>
     <div class="section-label section-label--categories">
       <h2>Categorias</h2>
@@ -2328,16 +2438,6 @@
     <div class="empty-hint" id="empty-hint">
       <p><strong>Seu carrinho está vazio</strong><br>Toque em <strong>+</strong> para começar seu pedido.</p>
       <small>Você pode adicionar observações em cada item.</small>
-    </div>
-
-    <div class="flash-offer">
-      <div class="flash-offer-copy">
-        <span class="flash-offer-pill">⚡ Flash Offer</span>
-        <div class="flash-offer-title">Ganhe 20% OFF<br>no seu primeiro pedido</div>
-      </div>
-      <img class="flash-offer-img" src="Assets/pratos/exemplo.jpg" alt="Oferta">
-      <button class="flash-offer-arrow"
-        onclick="document.querySelector('.cat-nav').scrollIntoView({behavior:'smooth'})">›</button>
     </div>
 
     <footer class="footer">
@@ -2356,6 +2456,15 @@
     <span class="cart-bar-total" id="cart-total"></span>
   </button>
 
+  <a class="cart-bar cart-bar-wa" id="cart-bar-wa" href="https://wa.me/5515996026387" target="_blank"
+    rel="noopener" aria-label="Falar no WhatsApp">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
+    </svg>
+    <span class="cart-bar-label">Falar no WhatsApp</span>
+  </a>
+
   <div class="wa-read-bar">
     <a class="wa-read-btn" href="https://wa.me/5515996026387" target="_blank">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -2371,7 +2480,6 @@
   <div class="summary-sheet" id="summary-sheet">
     <div class="summary-header">
       <span class="summary-title">Resumo do pedido</span>
-      <button class="summary-close" onclick="closeSummary()">✕</button>
     </div>
     <div class="summary-list" id="summary-list"></div>
     <div class="summary-total">
@@ -2415,13 +2523,22 @@
         </div>
       </div>
     </div>
-    <button class="send-btn" onclick="handleSend()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
-      </svg>
-      Enviar pedido
-    </button>
+    <div class="summary-actions-row">
+      <button class="summary-back" onclick="closeSummary()" aria-label="Voltar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Voltar
+      </button>
+      <button class="send-btn" onclick="handleSend()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
+        </svg>
+        Enviar pedido
+      </button>
+    </div>
   </div>
 
   <!-- PRODUCT MODAL -->
@@ -2470,13 +2587,6 @@
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
         Voltar
-      </button>
-      <button class="product-back product-view-order" id="product-view-order-btn" onclick="openSummaryFromProduct()">
-        <svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none">
-          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
-          <rect x="9" y="3" width="6" height="4" rx="1" />
-        </svg>
-        Ver pedido
       </button>
     </div>
   </div>
@@ -2589,6 +2699,15 @@
       }
     };
 
+    // ── PROMOÇÕES EM DESTAQUE ── ofertas exibidas no slideshow do topo (hero).
+    // Cada entrada referencia um item já existente em `menu` pelo nome exato,
+    // para reaproveitar preço/produto real ao adicionar ao pedido.
+    const PROMOS = [
+      { pill: '⚡ Oferta Relâmpago', title: 'Combo X-Salada + Refri<br>20% OFF no seu primeiro pedido', img: 'Assets/pratos/exemplo.jpg', name: 'Combo X-Salada + Refri' },
+      { pill: '🔥 Mais Pedido', title: 'Combo Família<br>4 Pastéis + Refri 2L', img: 'Assets/menu-itens/combo.png', name: 'Combo Família (4 Pastéis + Refri 2L)' },
+      { pill: '🍕 Destaque', title: 'Pizza Quatro Queijos<br>Sabor irresistível na hora certa', img: 'Assets/menu-itens/pizza.png', name: 'Pizza Quatro Queijos' }
+    ];
+
     const PLACEHOLDER_IMG = 'Assets/pratos/exemplo.jpg';
     // Todas as categorias ainda sem foto individual por item usam o banner da própria
     // categoria como placeholder único, repetido em todos os itens dela.
@@ -2636,8 +2755,21 @@
           <span class="cat-icon"><img src="${c.icon}" alt="${c.label}" loading="lazy"></span>
         </button>
       `).join('');
+      updateCatNavFade();
     }
     renderCatNav();
+
+    // Fade indicador de scroll horizontal no .cat-nav: fica visível enquanto houver
+    // mais categorias a rolar à direita, e desaparece ao chegar no fim da lista.
+    function updateCatNavFade() {
+      const nav = document.getElementById('cat-nav');
+      if (!nav) return;
+      const canScroll = nav.scrollWidth > nav.clientWidth + 1;
+      const atEnd = nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 1;
+      nav.classList.toggle('at-end', !canScroll || atEnd);
+    }
+    document.getElementById('cat-nav')?.addEventListener('scroll', updateCatNavFade, { passive: true });
+    window.addEventListener('resize', updateCatNavFade);
 
     const cart = new Map();
     let wantsDelivery = false; // sempre inicia desativado (não oculta formulário)
@@ -2713,11 +2845,11 @@
       const isOpen = h >= OPEN && h < CLOSE;
       if (isOpen) {
         badge.textContent = '● Aberto · Fecha 23h';
-        badge.className = 'info-card-hours open';
+        badge.className = 'hero-hours-badge open';
       } else {
         const msg = h < OPEN ? '○ Fechado · Abre 18h' : '○ Fechado · Amanhã 18h';
         badge.textContent = msg;
-        badge.className = 'info-card-hours closed';
+        badge.className = 'hero-hours-badge closed';
       }
     }
 
@@ -2825,6 +2957,97 @@
       sync(id, true);
     }
 
+    // Adiciona ao pedido a oferta em destaque do slide atual (ou de um nome específico).
+    function addPromoOffer(name) {
+      const id = toId(name);
+      const product = findProductById(id);
+      if (!product) return;
+      inc(id, product.name, product.price);
+      showToast(product.name + ' adicionado ao pedido ✓', 'success');
+    }
+
+    // ── PROMO SLIDER ── carrossel de ofertas em destaque no topo da página.
+    // Autoplay + dots + swipe (pointer events), sem depender de nenhuma lib externa.
+    let promoIndex = 0;
+    let promoTimer = null;
+
+    function renderPromoSlider() {
+      const track = document.getElementById('promo-track');
+      const dots = document.getElementById('promo-dots');
+      if (!track || !dots || !PROMOS.length) return;
+      track.innerHTML = PROMOS.map(p => `
+        <div class="promo-slide">
+          <div class="promo-slide-copy">
+            <span class="promo-pill">${p.pill}</span>
+            <div class="promo-title">${p.title}</div>
+          </div>
+          <img class="promo-img" src="${p.img}" alt="${p.name}" loading="lazy">
+          <button class="promo-arrow" onclick="addPromoOffer('${p.name.replace(/'/g, "\\'")}')" aria-label="Adicionar ${p.name} ao pedido">+</button>
+        </div>
+      `).join('');
+      dots.innerHTML = PROMOS.length > 1
+        ? PROMOS.map((_, i) => `<button class="promo-dot${i === 0 ? ' active' : ''}" onclick="goToPromo(${i})" aria-label="Ir para oferta ${i + 1}"></button>`).join('')
+        : '';
+      updatePromoTransform();
+    }
+
+    function updatePromoTransform() {
+      const track = document.getElementById('promo-track');
+      if (track) track.style.transform = `translateX(-${promoIndex * 100}%)`;
+      document.querySelectorAll('.promo-dot').forEach((d, i) => d.classList.toggle('active', i === promoIndex));
+    }
+
+    function goToPromo(i) {
+      if (!PROMOS.length) return;
+      promoIndex = (i + PROMOS.length) % PROMOS.length;
+      updatePromoTransform();
+      restartPromoAutoplay();
+    }
+
+    function nextPromo() { goToPromo(promoIndex + 1); }
+
+    function startPromoAutoplay() {
+      stopPromoAutoplay();
+      if (PROMOS.length > 1) promoTimer = setInterval(nextPromo, 4500);
+    }
+
+    function stopPromoAutoplay() {
+      if (promoTimer) { clearInterval(promoTimer); promoTimer = null; }
+    }
+
+    function restartPromoAutoplay() {
+      stopPromoAutoplay();
+      startPromoAutoplay();
+    }
+
+    // Suporte a swipe (arraste) via Pointer Events, funciona em touch e mouse.
+    (function initPromoSwipe() {
+      const slider = document.getElementById('promo-slider');
+      if (!slider) return;
+      let startX = 0, deltaX = 0, dragging = false;
+      slider.addEventListener('pointerdown', e => {
+        dragging = true;
+        startX = e.clientX;
+        deltaX = 0;
+        stopPromoAutoplay();
+      });
+      slider.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        deltaX = e.clientX - startX;
+      });
+      const endDrag = () => {
+        if (!dragging) return;
+        dragging = false;
+        if (deltaX > 40) goToPromo(promoIndex - 1);
+        else if (deltaX < -40) goToPromo(promoIndex + 1);
+        else restartPromoAutoplay();
+        deltaX = 0;
+      };
+      slider.addEventListener('pointerup', endDrag);
+      slider.addEventListener('pointerleave', endDrag);
+      slider.addEventListener('pointercancel', endDrag);
+    })();
+
     function dec(id) {
       if (!orderMode) { enableOrderMode(true); return; }
       if (!cart.has(id)) return;
@@ -2876,14 +3099,20 @@
 
     function refreshBar(bump) {
       const bar = document.getElementById('cart-bar');
+      const waBar = document.getElementById('cart-bar-wa');
       const hint = document.getElementById('empty-hint');
       if (hint) hint.classList.toggle('show', orderMode && cart.size === 0);
       if (!cart.size || !orderMode) {
         bar.classList.add('hidden');
+        // Antes de qualquer seleção (ou fora do modo pedido), mostra o CTA de
+        // WhatsApp direto no mesmo lugar do "Ver pedido".
+        if (waBar) waBar.classList.remove('hidden');
         // keep summary in sync if open
         if (document.getElementById('summary-sheet')?.classList.contains('open')) renderSummaryList();
         return;
       }
+      // Assim que há item no carrinho, o CTA de WhatsApp dá lugar ao "Ver pedido" padrão.
+      if (waBar) waBar.classList.add('hidden');
       bar.classList.remove('hidden');
       let total = 0;
       cart.forEach(e => { total += e.price * e.qty; });
@@ -3063,7 +3292,6 @@
       document.getElementById('product-overlay')?.classList.add('open');
       document.getElementById('product-modal')?.classList.add('open');
       document.getElementById('product-back-btn')?.classList.add('open');
-      document.getElementById('product-view-order-btn')?.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeProductModal() {
@@ -3071,7 +3299,6 @@
       document.getElementById('product-overlay')?.classList.remove('open');
       document.getElementById('product-modal')?.classList.remove('open');
       document.getElementById('product-back-btn')?.classList.remove('open');
-      document.getElementById('product-view-order-btn')?.classList.remove('open');
       document.body.style.overflow = '';
     }
     // Fecha o popup do item e abre o resumo do pedido em seguida
@@ -3215,6 +3442,7 @@
         wantsDelivery = false;
         selectedPay = null;
         document.getElementById('cart-bar').classList.add('hidden');
+        document.getElementById('cart-bar-wa')?.classList.remove('hidden');
         const dt = document.getElementById('delivery-toggle');
         if (dt) dt.checked = false;
         document.getElementById('summary-addr-wrap')?.classList.remove('open');
@@ -3242,6 +3470,8 @@
     });
 
     renderMenu('pasteis');
+    renderPromoSlider();
+    startPromoAutoplay();
     updateHoursBadge();
     setInterval(updateHoursBadge, 60000);
     // clear validation on typing
