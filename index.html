@@ -80,7 +80,7 @@
     .hero {
       position: relative;
       background: linear-gradient(180deg, var(--hero-from) 0%, var(--hero-to) 45%, var(--bg-solid) 95%);
-      padding-bottom: 16px;
+      padding-bottom: 8px;
       overflow: hidden;
     }
 
@@ -102,23 +102,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 56px 8px 8px;
+      padding: 40px 8px 4px;
     }
 
     .brand-logo {
       display: block;
+      margin-top: 15%;
       width: 105%;
       max-width: 700px;
       height: auto;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-    }
-
-    .hero-info {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
     }
 
     .brand-contact {
@@ -139,11 +132,10 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
-    /* Indicador de aberto/fechado — discreto, centralizado abaixo do endereço no hero.
-       Cores sutis (translúcidas) sobre o fundo do hero; alterna entre tom verde (aberto)
-       e âmbar (fechado), sem competir visualmente com a marca. */
+    /* Indicador de aberto/fechado — agora dentro do card de contato (.inline-contact-info).
+       Cores sutis (translúcidas); alterna entre tom verde (aberto) e âmbar (fechado). */
     .hero-hours-badge {
-      margin-top: 6px;
+      margin-top: 4px;
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -154,22 +146,33 @@
       letter-spacing: 0.4px;
       text-transform: uppercase;
       white-space: nowrap;
-      color: rgba(255, 255, 255, 0.85);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(6px);
+      color: var(--text-light);
+      background: var(--primary-soft);
+      border: 1px solid var(--border);
     }
 
     .hero-hours-badge.open {
-      color: #bbf7d0;
-      background: rgba(74, 222, 128, 0.16);
-      border-color: rgba(74, 222, 128, 0.3);
+      color: #166534;
+      background: #dcfce7;
+      border-color: #86efac;
     }
 
     .hero-hours-badge.closed {
-      color: #fed7aa;
+      color: #7c2d12;
+      background: #ffedd5;
+      border-color: #fed7aa;
+    }
+
+    :root.dark .hero-hours-badge.open {
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.14);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+
+    :root.dark .hero-hours-badge.closed {
+      color: #fdba74;
       background: rgba(251, 146, 60, 0.14);
-      border-color: rgba(251, 146, 60, 0.28);
+      border-color: rgba(251, 146, 60, 0.3);
     }
 
     .page {
@@ -309,6 +312,17 @@
        com espaço vazio extra separando dos botões de WhatsApp/horário */
     .section-label--categories {
       margin-top: 26px;
+    }
+
+    /* header "Promoções em destaque" — mesmo padrão do header "Categorias"
+       (alinhado à esquerda via --categories), logo acima do slideshow,
+       com respiro extra separando do bloco de contato/endereço acima */
+    .section-label--promos {
+      margin-top: 28px;
+    }
+
+    .section-label--promos + .promo-slider {
+      margin-top: 2px;
     }
 
     .section-label h2 {
@@ -995,7 +1009,7 @@
       display: flex;
       align-items: stretch;
       gap: 10px;
-      margin: 12px 20px 20px;
+      margin: 16px 20px 20px;
     }
 
     .summary-back {
@@ -1034,6 +1048,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      min-height: 44px;
     }
 
     .summary-thumb {
@@ -1060,13 +1075,6 @@
       color: var(--primary-muted);
       min-width: 22px;
       text-align: center;
-    }
-
-    .summary-row-price {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.8rem;
-      min-width: 60px;
-      text-align: right;
     }
 
     .summary-row-obs {
@@ -1191,29 +1199,6 @@
       opacity: 0.8;
     }
 
-    .summary-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 20px;
-      border-top: 1px solid var(--border);
-      background: var(--primary-soft);
-    }
-
-    .summary-total-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .summary-total-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
     .toggle-row {
       display: flex;
       align-items: center;
@@ -1296,10 +1281,10 @@
     }
 
     .summary-fields {
-      padding: 8px 20px 0;
+      padding: 10px 20px 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .field-label {
@@ -1412,6 +1397,16 @@
     .send-btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+
+    .send-btn-total {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding-left: 8px;
+      margin-left: 2px;
+      border-left: 1px solid rgba(255, 255, 255, 0.35);
+      white-space: nowrap;
     }
 
     /* ── PRODUCT MODAL ── */
@@ -1998,7 +1993,7 @@
       align-items: center;
       justify-content: center;
       gap: 0;
-      margin: 18px 6px 0;
+      margin: 6px 6px 0;
       padding: 0;
       background: none;
       border: none;
@@ -2059,7 +2054,7 @@
        visível antes de qualquer seleção de item. */
     .inline-ctrl-spacer {
       width: 100%;
-      min-height: 42px;
+      min-height: 8px;
       margin: 0;
     }
 
@@ -2069,7 +2064,7 @@
       flex-direction: column;
       align-items: center;
       gap: 2px;
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .inline-contact-phone {
@@ -2254,7 +2249,7 @@
        dobra da página, antes do menu de categorias. */
     .promo-slider {
       position: relative;
-      margin: 24px 6px 0;
+      margin: 10px 6px 0;
       background: linear-gradient(135deg, #FFF7ED 0%, #FFFBEB 100%);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
@@ -2277,17 +2272,19 @@
       flex: 0 0 100%;
       width: 100%;
       min-width: 0;
-      padding: 18px 12px 10px;
+      padding: 16px 14px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      min-height: 110px;
+      gap: 16px;
+      min-height: 172px;
+      cursor: pointer;
     }
 
     .promo-slide-copy {
       flex: 1;
       min-width: 0;
+      text-align: right;
     }
 
     .promo-pill {
@@ -2303,6 +2300,7 @@
       border-radius: var(--radius-full);
       border: 1px solid var(--border);
       white-space: nowrap;
+      margin-left: auto;
     }
 
     :root.dark .promo-pill {
@@ -2317,11 +2315,12 @@
       color: var(--text);
       line-height: 1.28;
       margin-top: 5px;
+      text-align: right;
     }
 
     .promo-img {
-      width: auto;
-      height: 150px;
+      width: 142px;
+      height: 142px;
       border-radius: var(--radius-sm);
       object-fit: cover;
       background: var(--surface);
@@ -2331,23 +2330,6 @@
 
     :root.dark .promo-img {
       border-color: var(--border);
-    }
-
-    .promo-arrow {
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius-full);
-      border: none;
-      background: var(--accent);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      font-size: 1.05rem;
-      line-height: 1;
-      box-shadow: 0 2px 6px rgba(169, 144, 106, 0.25);
     }
 
     .promo-dots {
@@ -2406,9 +2388,6 @@
   <div class="hero">
     <div class="hero-content">
       <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
-      <div class="hero-info">
-        <span class="hero-hours-badge" id="hours-badge"></span>
-      </div>
     </div>
   </div>
 
@@ -2424,7 +2403,11 @@
           (15) 99600-0099
         </a>
         <div class="inline-contact-addr">Shigueru Yagui, Centro — Guapiara-SP</div>
+        <span class="hero-hours-badge" id="hours-badge"></span>
       </div>
+    </div>
+    <div class="section-label section-label--categories section-label--promos">
+      <h2>Promoções em destaque</h2>
     </div>
     <div class="promo-slider" id="promo-slider">
       <div class="promo-track" id="promo-track"></div>
@@ -2482,10 +2465,6 @@
       <span class="summary-title">Resumo do pedido</span>
     </div>
     <div class="summary-list" id="summary-list"></div>
-    <div class="summary-total">
-      <span class="summary-total-label">Total</span>
-      <span class="summary-total-value" id="summary-total-value">R$ 0,00</span>
-    </div>
     <label class="toggle-row">
       <span class="toggle-label">
         <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
@@ -2537,6 +2516,7 @@
             d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
         </svg>
         Enviar pedido
+        <span class="send-btn-total" id="summary-total-value">R$ 0,00</span>
       </button>
     </div>
   </div>
@@ -2844,10 +2824,10 @@
       const OPEN = 18, CLOSE = 23;
       const isOpen = h >= OPEN && h < CLOSE;
       if (isOpen) {
-        badge.textContent = '● Aberto · Fecha 23h';
+        badge.textContent = 'Aberto · Fecha 23h';
         badge.className = 'hero-hours-badge open';
       } else {
-        const msg = h < OPEN ? '○ Fechado · Abre 18h' : '○ Fechado · Amanhã 18h';
+        const msg = h < OPEN ? 'Fechado · Abre 18h' : 'Fechado · Amanhã 18h';
         badge.textContent = msg;
         badge.className = 'hero-hours-badge closed';
       }
@@ -2958,14 +2938,6 @@
     }
 
     // Adiciona ao pedido a oferta em destaque do slide atual (ou de um nome específico).
-    function addPromoOffer(name) {
-      const id = toId(name);
-      const product = findProductById(id);
-      if (!product) return;
-      inc(id, product.name, product.price);
-      showToast(product.name + ' adicionado ao pedido ✓', 'success');
-    }
-
     // ── PROMO SLIDER ── carrossel de ofertas em destaque no topo da página.
     // Autoplay + dots + swipe (pointer events), sem depender de nenhuma lib externa.
     let promoIndex = 0;
@@ -2975,16 +2947,17 @@
       const track = document.getElementById('promo-track');
       const dots = document.getElementById('promo-dots');
       if (!track || !dots || !PROMOS.length) return;
-      track.innerHTML = PROMOS.map(p => `
-        <div class="promo-slide">
+      track.innerHTML = PROMOS.map(p => {
+        const id = toId(p.name);
+        return `
+        <div class="promo-slide" onclick="if(!promoSwiped)openProductModal('${id}')">
+          <img class="promo-img" src="${p.img}" alt="${p.name}" loading="lazy">
           <div class="promo-slide-copy">
             <span class="promo-pill">${p.pill}</span>
             <div class="promo-title">${p.title}</div>
           </div>
-          <img class="promo-img" src="${p.img}" alt="${p.name}" loading="lazy">
-          <button class="promo-arrow" onclick="addPromoOffer('${p.name.replace(/'/g, "\\'")}')" aria-label="Adicionar ${p.name} ao pedido">+</button>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
       dots.innerHTML = PROMOS.length > 1
         ? PROMOS.map((_, i) => `<button class="promo-dot${i === 0 ? ' active' : ''}" onclick="goToPromo(${i})" aria-label="Ir para oferta ${i + 1}"></button>`).join('')
         : '';
@@ -3021,6 +2994,8 @@
     }
 
     // Suporte a swipe (arraste) via Pointer Events, funciona em touch e mouse.
+    // Também rastreia se houve arraste significativo para evitar abrir o modal ao soltar após swipe.
+    let promoSwiped = false;
     (function initPromoSwipe() {
       const slider = document.getElementById('promo-slider');
       if (!slider) return;
@@ -3029,11 +3004,13 @@
         dragging = true;
         startX = e.clientX;
         deltaX = 0;
+        promoSwiped = false;
         stopPromoAutoplay();
       });
       slider.addEventListener('pointermove', e => {
         if (!dragging) return;
         deltaX = e.clientX - startX;
+        if (Math.abs(deltaX) > 10) promoSwiped = true;
       });
       const endDrag = () => {
         if (!dragging) return;
@@ -3189,7 +3166,6 @@
                 <button class="summary-ctrl" onclick="adjustSummaryQty('${id}', 1)" aria-label="Aumentar">+</button>
                 <button class="summary-remove" onclick="removeFromSummary('${id}')" aria-label="Remover" title="Remover">✕</button>
               </div>
-              <span class="summary-row-price">${fmt(e.price * e.qty)}</span>
             </div>
             ${e.obs ? `<div class="summary-row-obs">${e.obs}</div>` : ''}
           </div>`;
