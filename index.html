@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Cardápio - Exemplo</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
     rel="stylesheet">
   <style>
     * {
@@ -19,20 +19,16 @@
       --bg: #F7F5F4;
       --surface: #ffffff;
       --primary: #C41E3A;
-      --primary-dark: #7A0E1F;
       --primary-soft: rgba(196, 30, 58, 0.05);
       --primary-muted: #A81729;
-      --primary-muted-soft: rgba(168, 23, 41, 0.07);
       --accent: #D6555E;
       --accent-soft: rgba(196, 30, 58, 0.08);
       --accent-strong: #A81729;
       --text: #1C1917;
       --text-light: #8A8482;
       --border: #ECEAE9;
-      --nav-bg: rgba(255, 255, 255, 0.96);
       --hero-from: #7A0E1F;
       --hero-to: #C41E3A;
-      --bg-solid: #F7F5F4;
       --radius-sm: 8px;
       --radius-md: 10px;
       --radius-lg: 14px;
@@ -46,20 +42,16 @@
       --bg: #120C0D;
       --surface: #1F1516;
       --primary: #E2495A;
-      --primary-dark: #C41E3A;
       --primary-soft: rgba(226, 73, 90, 0.13);
       --primary-muted: #EA6B78;
-      --primary-muted-soft: rgba(234, 107, 120, 0.11);
       --accent: #D6767A;
       --accent-soft: rgba(214, 118, 122, 0.14);
       --accent-strong: #C4535A;
       --text: #F5EFEE;
       --text-light: #B7A9A7;
       --border: #362324;
-      --nav-bg: rgba(18, 12, 13, 0.94);
       --hero-from: #2A0D10;
       --hero-to: #7A0E1F;
-      --bg-solid: #120C0D;
     }
 
     html {
@@ -68,7 +60,7 @@
 
     body {
       min-height: 100vh;
-      background: var(--bg-solid);
+      background: var(--bg);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-weight: 500;
@@ -79,7 +71,7 @@
 
     .hero {
       position: relative;
-      background: linear-gradient(180deg, var(--hero-from) 0%, var(--hero-to) 45%, var(--bg-solid) 95%);
+      background: linear-gradient(180deg, var(--hero-from) 0%, var(--hero-to) 45%, var(--bg) 95%);
       padding-bottom: 16px;
       overflow: hidden;
     }
@@ -96,9 +88,6 @@
     .hero-content {
       position: relative;
       z-index: 1;
-    }
-
-    .hero-content {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -112,24 +101,6 @@
       max-width: 700px;
       height: auto;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-    }
-
-    .brand-contact {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #fff;
-      text-decoration: none;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-    }
-
-    .brand-addr {
-      font-size: 0.62rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
     /* Indicador de aberto/fechado — agora dentro do card de contato (.inline-contact-info).
@@ -223,7 +194,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-solid);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       cursor: pointer;
@@ -275,10 +246,6 @@
 
     .cat-btn.active .cat-icon img {
       transform: scale(1.03);
-    }
-
-    .cat-btn-label {
-      display: none !important;
     }
 
     :root.dark .cat-btn {
@@ -391,79 +358,11 @@
       pointer-events: none;
     }
 
-    .section-banner-label {
-      position: absolute;
-      left: 12px;
-      bottom: 8px;
-      z-index: 1;
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--text);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-    }
-
-    :root.dark .section-banner-label {
-      background: rgba(28, 25, 23, 0.88);
-      color: var(--text);
-      border-color: rgba(245, 245, 244, 0.10);
-    }
-
     @media (min-width: 640px) {
       .section-banner {
         height: 110px;
         margin: 6px 6px 10px;
       }
-    }
-
-    /* hints da seção: Figma esconde hints — mantida DOM mas oculta visualmente */
-    .section-hints {
-      display: none !important;
-    }
-
-    .section-hint-left {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      opacity: 0.4;
-      /* alinha com o botão − que tem padding 0 14px dentro de um container sem padding extra */
-      padding-left: 8px;
-    }
-
-    .section-hint-right {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      opacity: 0.4;
-      padding-right: 8px;
-    }
-
-    .section-hint-key {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 14px;
-      height: 14px;
-      border-radius: 2px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--text-light);
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    .section-hint-label {
-      font-size: 0.55rem;
-      font-weight: 600;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      white-space: nowrap;
     }
 
     /* ── ITEM GROUP — 3 colunas no mobile, cards compactos profissionais ── */
@@ -520,10 +419,6 @@
       box-shadow: 0 4px 16px rgba(169, 144, 106, 0.15);
     }
 
-    .item.premium {
-      background: var(--surface);
-    }
-
     .item.premium .card-img-wrap {
       background: linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 70%);
     }
@@ -560,22 +455,12 @@
       flex: 1;
     }
 
-    .item-desc {
-      display: none !important;
-    }
-
     .card-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-top: 6px;
       gap: 6px;
-    }
-
-    .card-actions {
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
 
     .card-qty-pill {
@@ -586,6 +471,10 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-full);
       padding: 1px;
+    }
+
+    .card-qty-pill.is-hidden {
+      display: none;
     }
 
     .card-qty-pill .ctrl-btn {
@@ -604,65 +493,10 @@
       font-size: 0.68rem;
     }
 
-    .card-obs-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-light);
-      opacity: 0.50;
-      padding: 2px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card-obs-btn.active {
-      opacity: 1;
-      color: var(--accent);
-    }
-
-    /* legacy row styles kept but hidden for card layout */
-    .item-main {
-      display: contents;
-    }
-
-    .item-left {
-      display: contents;
-    }
-
-    .item-marker {
-      display: none !important;
-    }
-
-    .item-price-wrap {
-      display: contents;
-    }
-
-    .item-obs-icon {
-      display: none !important;
-    }
-
-    .item-controls {
-      display: contents;
-    }
-
+    /* Controles com área de toque confortável em telas pequenas. */
     .ctrl-btn {
-      min-width: 28px;
-      height: 28px;
-    }
-
-    .item-controls {
-      display: flex;
-      align-items: center;
-      height: 100%;
-    }
-
-    /* FIX 3 — hitbox ampliada: padding interno empurra a área de toque para dentro do item */
-    .ctrl-btn {
-      /* tamanho visual mínimo */
       min-width: 34px;
       height: 44px;
-      /* padding extra para dentro → hitbox começa além do símbolo */
       padding: 0 14px;
       display: flex;
       align-items: center;
@@ -674,22 +508,12 @@
       font-weight: 500;
       cursor: pointer;
       flex-shrink: 0;
-      /* torna a área clicável mais fácil no touch */
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
 
     .ctrl-btn:active {
       background: var(--primary-soft);
-    }
-
-    /* o separador de borda agora fica no container, não no botão */
-    .item-controls:first-child {
-      border-right: 1px solid var(--border);
-    }
-
-    .item-controls:last-child {
-      border-left: 1px solid var(--border);
     }
 
     .ctrl-count {
@@ -705,15 +529,6 @@
 
     .ctrl-count.zero {
       color: var(--border);
-    }
-
-    .item-left {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 4px 5px 10px;
-      min-width: 0;
     }
 
     .thumb {
@@ -738,34 +553,6 @@
       transform: scale(0.97);
     }
 
-    .thumb.shimmer {
-      background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1600ms infinite linear;
-    }
-
-    @keyframes shimmer {
-      0% {
-        background-position: 200% 0;
-      }
-
-      100% {
-        background-position: -200% 0;
-      }
-    }
-
-    .item-marker {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-
-    .item.in-cart .item-marker {
-      background: var(--primary-muted);
-    }
-
     .item-name {
       font-size: 0.72rem;
       font-weight: 600;
@@ -773,21 +560,6 @@
       word-break: break-word;
       line-height: 1.3;
       flex: 1;
-    }
-
-    .item-price-wrap {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-
-    .item-qty-badge {
-      font-size: 0.62rem;
-      font-weight: 700;
-      color: var(--primary);
-      white-space: nowrap;
     }
 
     .item-price {
@@ -824,30 +596,6 @@
       vertical-align: middle;
     }
 
-    .item-obs-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px 6px;
-      margin-right: 4px;
-      cursor: pointer;
-      color: var(--text-light);
-      opacity: 0.4;
-      flex-shrink: 0;
-    }
-
-    .item-obs-icon.active {
-      opacity: 1;
-      color: var(--primary-muted);
-    }
-
-    .item-obs-icon svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-    }
-
     .item-obs-field {
       max-height: 0;
       opacity: 0;
@@ -873,7 +621,7 @@
       resize: none;
     }
 
-    /* ── CART BAR (botão fixo centralizado, substitui a barra inferior) ── */
+    /* ── CART BAR (CTA fixo no canto inferior direito) ── */
     .cart-bar {
       position: fixed;
       bottom: calc(40px + env(safe-area-inset-bottom, 0px));
@@ -1055,6 +803,7 @@
       font-size: 0.8rem;
       font-weight: 500;
       word-break: break-word;
+      cursor: pointer;
     }
 
     .summary-row-qty {
@@ -1162,7 +911,7 @@
       cursor: pointer;
     }
 
-    /* empty cart hint in page (when order-mode and no items) */
+    /* Aviso exibido quando o carrinho volta a ficar vazio. */
     .empty-hint {
       display: none;
       margin: 12px 6px 0;
@@ -1174,7 +923,7 @@
       color: var(--text-light);
     }
 
-    body.order-mode .empty-hint.show {
+    .empty-hint.show {
       display: block;
     }
 
@@ -1727,199 +1476,6 @@
       }
     }
 
-    /* ── WA READ BAR ── */
-    .wa-read-bar {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 600px;
-      background: var(--surface);
-      border-top: 2px solid var(--primary);
-      padding: 16px 20px 24px;
-      z-index: 100;
-    }
-
-    body:not(.order-mode) .wa-read-bar {
-      display: block;
-    }
-
-    .wa-read-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 14px;
-      background: #25D366;
-      border-radius: var(--radius-sm);
-      color: white;
-      text-decoration: none;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    /* ── TOP BAR: horário + tema lado a lado ── */
-    .top-bar {
-      display: flex;
-      gap: 8px;
-      margin: 6px 8px 0;
-      align-items: stretch;
-    }
-
-    .top-bar .info-card-hours {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    .top-bar .inline-controls {
-      flex: 0 0 148px;
-      margin: 0;
-      justify-content: center;
-    }
-
-    /* ── INFO CARD ── compact like initial concept */
-    .info-card {
-      margin: 6px 8px 2px;
-      padding: 8px 10px;
-      background: var(--primary-soft);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--primary-muted);
-      border-radius: 0 6px 6px 0;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    /* Variante compacta — logo abaixo da .cat-nav, tamanho equivalente ao botão de tema */
-    .info-card--compact {
-      margin: 4px 8px 0;
-      padding: 6px 10px;
-      border-left-width: 2px;
-      border-radius: 6px;
-      gap: 5px;
-    }
-
-    .info-card--compact .info-card-text {
-      font-size: 0.62rem;
-      column-gap: 8px;
-    }
-
-    .info-card--compact .info-card-icon svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    .info-card-icon {
-      color: var(--primary-muted);
-      opacity: 0.7;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .info-card-icon svg {
-      width: 13px;
-      height: 13px;
-      stroke: currentColor;
-      fill: none;
-    }
-
-    /* texto do card: dois spans com gap entre eles, mesma fonte/tamanho */
-    .info-card-text {
-      font-size: 0.68rem;
-      color: var(--text-light);
-      line-height: 1.5;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      column-gap: 10px;
-      row-gap: 4px;
-      flex: 1;
-    }
-
-    .info-card-hours {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-      white-space: nowrap;
-      border: 1px solid transparent;
-    }
-
-    .info-card-hours.open {
-      color: #166534;
-      background: #dcfce7;
-      border-color: #86efac;
-    }
-
-    .info-card-hours.closed {
-      color: #7c2d12;
-      background: #ffedd5;
-      border-color: #fed7aa;
-    }
-
-    :root.dark .info-card-hours.open {
-      color: #4ade80;
-      background: rgba(74, 222, 128, 0.14);
-      border-color: rgba(74, 222, 128, 0.3);
-    }
-
-    :root.dark .info-card-hours.closed {
-      color: #fdba74;
-      background: rgba(251, 146, 60, 0.14);
-      border-color: rgba(251, 146, 60, 0.3);
-    }
-
-    .info-card-text strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    /* "a confirmar" — badge pequeno inline, só aparece no modo pedido */
-    .info-card-confirm {
-      display: none;
-      align-items: center;
-      gap: 3px;
-      font-size: 0.62rem;
-      /* igual ao resto */
-      font-weight: 600;
-      color: var(--primary-muted);
-    }
-
-    body.order-mode .info-card-confirm {
-      display: inline-flex;
-    }
-
-    /* separador e obs: só aparecem no modo pedido */
-    .info-card-obs {
-      display: none;
-    }
-
-    .info-card-sep {
-      display: none;
-    }
-
-    body.order-mode .info-card-obs {
-      display: inline;
-    }
-
-    body.order-mode .info-card-sep {
-      display: inline;
-    }
-
     /* ── THEME WIDGET — discreto, ícone apenas, canto superior direito acima do banner ── */
     .theme-widget {
       position: fixed;
@@ -1993,8 +1549,7 @@
       display: block;
     }
 
-    /* ── INLINE CONTROLS — botão único do WhatsApp, centralizado, logo abaixo do hero.
-       O indicador de horário fica agrupado no hero (.hero-hours-badge), acima. ── */
+    /* ── CONTATO — telefone, endereço e horário logo abaixo do hero. ── */
     .inline-controls {
       display: flex;
       flex-direction: column;
@@ -2008,52 +1563,6 @@
       opacity: 1;
     }
 
-
-    .inline-ctrl-mode {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .inline-ctrl-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--primary-muted);
-      opacity: 0.5;
-      flex-shrink: 0;
-      transition: background 0.2s, opacity 0.2s;
-    }
-
-    body.order-mode .inline-ctrl-dot {
-      background: #4ade80;
-      opacity: 1;
-    }
-
-    .inline-ctrl-label {
-      font-size: 0.60rem;
-      font-weight: 600;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      opacity: 0.75;
-    }
-
-    body.order-mode .inline-ctrl-label {
-      color: #4ade80;
-      opacity: 0.9;
-    }
-
-    .inline-ctrl-divider {
-      width: 1px;
-      height: 12px;
-      background: var(--border);
-    }
 
     /* Espaçador que substitui o antigo botão "Falar no WhatsApp" do topo do header.
        Mantém a mesma altura/espaço reservado (sem conteúdo visível), para que o
@@ -2099,40 +1608,6 @@
       color: var(--text-light);
     }
 
-    /* compatibilidade: tema antigo (não usado no inline agora, mantido para widget) */
-    .inline-ctrl-theme-label {
-      font-size: 0.60rem;
-      font-weight: 600;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      opacity: 0.75;
-    }
-
-    .inline-ctrl-theme svg {
-      width: 11px;
-      height: 11px;
-      stroke: var(--text-light);
-      fill: none;
-      opacity: 0.6;
-    }
-
-    :root .icon-moon-inline {
-      display: none;
-    }
-
-    :root .icon-sun-inline {
-      display: block;
-    }
-
-    :root.dark .icon-moon-inline {
-      display: block;
-    }
-
-    :root.dark .icon-sun-inline {
-      display: none;
-    }
-
     /* ── FOOTER ── */
     .footer {
       text-align: center;
@@ -2145,40 +1620,6 @@
       color: var(--text-light);
       letter-spacing: 1px;
       opacity: 0.6;
-    }
-
-    /* ── MODO LEITURA (sem pedido) ── */
-    body:not(.order-mode) .item-controls,
-    body:not(.order-mode) .item-obs-icon,
-    body:not(.order-mode) .item-obs-field {
-      display: none;
-    }
-
-    body:not(.order-mode) .item-left {
-      padding: 5px 14px 5px 14px;
-    }
-
-    body:not(.order-mode) .item-main {
-      min-height: 28px;
-    }
-
-    body:not(.order-mode) .item-name {
-      font-size: 0.75rem;
-      font-weight: 400;
-    }
-
-    body:not(.order-mode) .item-price {
-      font-size: 0.75rem;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-    }
-
-    body:not(.order-mode) .item-marker {
-      display: none;
-    }
-
-    body:not(.order-mode) .item-group {
-      border-radius: 2px;
     }
 
     /* ── TOAST ── */
@@ -2395,7 +1836,7 @@
 
   <div class="hero">
     <div class="hero-content">
-      <img class="brand-logo" src="Assets/logo-banner-nbg.png" alt="Mary Pastelaria">
+      <img class="brand-logo" src="Assets/marca/logo-banner-nbg.png" alt="Mary Pastelaria">
 
     </div>
   </div>
@@ -2404,7 +1845,7 @@
     <div class="inline-controls">
       <div class="inline-ctrl-spacer" aria-hidden="true"></div>
       <div class="inline-contact-info">
-        <a class="inline-contact-phone" href="https://wa.me/5515996892792" target="_blank">
+        <a class="inline-contact-phone" href="https://wa.me/5515996892792" target="_blank" rel="noopener">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
@@ -2456,16 +1897,6 @@
     </svg>
     <span class="cart-bar-label">Falar no WhatsApp</span>
   </a>
-
-  <div class="wa-read-bar">
-    <a class="wa-read-btn" href="https://wa.me/5515996892792" target="_blank">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 0C5.373 0 0 5.373 0 12.004c0 2.114.554 4.1 1.522 5.827L0 24l6.351-1.498A11.957 11.957 0 0012.004 24C18.63 24 24 18.627 24 12.004 24 5.373 18.63 0 12.004 0zm0 21.818a9.812 9.812 0 01-5.001-1.368l-.36-.214-3.72.876.916-3.617-.235-.372a9.82 9.82 0 01-1.507-5.119c0-5.425 4.412-9.837 9.837-9.837 5.426 0 9.837 4.412 9.837 9.837S17.43 21.818 12.004 21.818z" />
-      </svg>
-      Falar no WhatsApp
-    </a>
-  </div>
 
   <div class="summary-overlay" id="summary-overlay" onclick="closeSummary()"></div>
 
@@ -2583,157 +2014,20 @@
     </div>
   </div>
 
+  <script src="data/cardapio.js"></script>
   <script>
-    const WA = '5515996892792';
-    const DELIVERY_FEE = 3;
-
-    // ── CATEGORIAS ── fonte única de verdade para nav, ícones, banners e ordem de exibição.
-    // Ícones flat representativos (Assets/menu-itens) substituem os antigos emojis.
-    // Ordem definida pelo usuário.
-    const CATEGORIES = [
-      { key: 'combos', label: 'Combos de Lanches', icon: 'Assets/categories-icons/icon-combo.png', banner: 'Assets/banners/banner-combos-de-lanche.png' },
-      { key: 'oriental', label: 'Culinária Oriental', icon: 'Assets/categories-icons/icon-oriental.png', banner: 'Assets/banners/banner-comida-oriental.png' },
-      { key: 'dogao', label: 'Dogão', icon: 'Assets/categories-icons/icon-dog.png', banner: 'Assets/banners/banner-dogao.png' },
-      { key: 'lanches', label: 'Lanches', icon: 'Assets/categories-icons/icon-burguer.png', banner: 'Assets/banners/banner-lanches.png' },
-      { key: 'pasteis', label: 'Pastéis', icon: 'Assets/categories-icons/icon-pastel.png', banner: 'Assets/banners/banner-pasteis.png' },
-      { key: 'bebidas', label: 'Bebidas', icon: 'Assets/categories-icons/icon-bebidas.png', banner: 'Assets/banners/banner-bebidas.png' },
-      { key: 'doces', label: 'Doces e Sobremesas', icon: 'Assets/categories-icons/icon-doces.png', banner: 'Assets/banners/banner-doces.png' },
-      { key: 'pizzas', label: 'Pizzas', icon: 'Assets/categories-icons/icon-pizzas.png', banner: 'Assets/banners/banner-pizzas.png' }
-    ];
-
-    const menu = {
-      combos: {
-        "Combos de Lanches": [
-          { name: "Combo X-Salada + Refri", price: 20 },
-          { name: "Combo Dogão Duplo", price: 22 },
-          { name: "Combo X-Bacon + Batata + Refri", price: 28 },
-          { name: "Combo Família (4 Pastéis + Refri 2L)", price: 45, premium: true }
-        ]
-      },
-      oriental: {
-        "Culinária Oriental": [
-          { name: "Temaki de Salmão", price: 18 },
-          { name: "Temaki Philadelphia", price: 20 },
-          { name: "Hot Roll (8un)", price: 24 },
-          { name: "Yakisoba de Frango", price: 22 },
-          { name: "Sashimi de Salmão (10un)", price: 25, premium: true }
-        ]
-      },
-      dogao: {
-        "Dogão": [
-          { name: "Dogão Simples", price: 10 },
-          { name: "Dogão c/ Bacon", price: 13 },
-          { name: "Dogão c/ Catupiry", price: 13 },
-          { name: "Dogão Vina Especial", price: 14 },
-          { name: "Dogão Completo", price: 16, premium: true }
-        ]
-      },
-      lanches: {
-        "Lanches": [
-          { name: "Cheeseburguer", price: 12 },
-          { name: "X-Salada", price: 14 },
-          { name: "X-Egg", price: 15 },
-          { name: "X-Bacon", price: 16 },
-          { name: "X-Calabresa", price: 16 },
-          { name: "X-Tudo Artesanal", price: 20, premium: true }
-        ]
-      },
-      // ── Pastéis simplificado: sabores representativos, mesmo padrão das demais categorias
-      // (imagem única — banner da categoria — usada como placeholder em todos os itens).
-      pasteis: {
-        "Pastéis": [
-          { name: "Pastel de Carne", price: 8 },
-          { name: "Pastel de Queijo", price: 8 },
-          { name: "Pastel de Frango c/ Catupiry", price: 10 },
-          { name: "Pastel de Calabresa c/ Queijo", price: 10 },
-          { name: "Pastel de Costela", price: 15, premium: true }
-        ]
-      },
-      bebidas: {
-        "Coca-Cola": [
-          { name: "Coca-Cola Lata", price: 6 },
-          { name: "Coca-Cola KS 300ml", price: 7 },
-          { name: "Coca-Cola LS 600ml", price: 10 },
-          { name: "Coca-Cola 2 Litros", price: 15 },
-          { name: "Coca-Cola Mini 200ml", price: 3.50 }
-        ],
-        "Tubaína & Outros": [
-          { name: "Tubaína Garrafa", price: 7 },
-          { name: "Tubaína 350ml", price: 4.50 },
-          { name: "Tubaína Lata", price: 5 },
-          { name: "Guaraná Mini 200ml", price: 3.50 },
-          { name: "Tampico", price: 7 },
-          { name: "Nativo", price: 3.50 }
-        ],
-        "Água": [
-          { name: "Água Natural", price: 3 },
-          { name: "Água com Gás", price: 3.50 }
-        ]
-      },
-      doces: {
-        "Doces e Sobremesas": [
-          { name: "Casadinho", price: 6 },
-          { name: "Pudim de Leite", price: 8 },
-          { name: "Mousse de Maracujá", price: 8 },
-          { name: "Bolo no Pote", price: 10 },
-          { name: "Brownie c/ Sorvete", price: 14, premium: true }
-        ]
-      },
-      pizzas: {
-        "Pizzas": [
-          { name: "Pizza de Mussarela", price: 22 },
-          { name: "Pizza de Calabresa", price: 25 },
-          { name: "Pizza Portuguesa", price: 28 },
-          { name: "Pizza Frango c/ Catupiry", price: 28 },
-          { name: "Pizza de Bacon", price: 26 },
-          { name: "Pizza Quatro Queijos", price: 30, premium: true }
-        ]
-      }
-    };
-
-    // ── PROMOÇÕES EM DESTAQUE ── ofertas exibidas no slideshow do topo (hero).
-    // Cada entrada referencia um item já existente em `menu` pelo nome exato,
-    // para reaproveitar preço/produto real ao adicionar ao pedido.
-    const PROMOS = [
-      { pill: '⚡ Oferta Relâmpago', title: 'Combo X-Salada + Refri<br>20% OFF no seu primeiro pedido', img: 'Assets/pratos/exemplo.jpg', name: 'Combo X-Salada + Refri' },
-      { pill: '🔥 Mais Pedido', title: 'Combo Família<br>4 Pastéis + Refri 2L', img: 'Assets/menu-itens/combo.png', name: 'Combo Família (4 Pastéis + Refri 2L)' },
-      { pill: '🍕 Destaque', title: 'Pizza Quatro Queijos<br>Sabor irresistível na hora certa', img: 'Assets/menu-itens/pizza.png', name: 'Pizza Quatro Queijos' }
-    ];
-
-    const PLACEHOLDER_IMG = 'Assets/pratos/exemplo.jpg';
-    // Todas as categorias ainda sem foto individual por item usam o banner da própria
-    // categoria como placeholder único, repetido em todos os itens dela.
-    const CATEGORY_ITEM_PLACEHOLDER = {
-      combos: 'Assets/menu-itens/combo.png',
-      oriental: 'Assets/menu-itens/sashimi.png',
-      dogao: 'Assets/menu-itens/hotdog.png',
-      lanches: 'Assets/menu-itens/burguer.png',
-      pasteis: 'Assets/menu-itens/pastel.png',
-      bebidas: 'Assets/menu-itens/refri.png',
-      doces: 'Assets/menu-itens/doce.png',
-      pizzas: 'Assets/menu-itens/pizza.png'
-    };
-    const FALLBACK_DESC = {
-      'default': 'Pastel artesanal, massa fininha e recheio generoso preparado na hora.'
-    };
-    // Descrição padrão por categoria — usada quando o item não tem uma descrição específica.
-    const DEFAULT_DESC_BY_CAT = {
-      pasteis: 'Pastel artesanal, massa fininha e recheio generoso preparado na hora.',
-      pizzas: 'Massa levedada lentamente, coberta com ingredientes selecionados e assada no ponto certo.',
-      lanches: 'Pão macio, ingredientes frescos e um toque especial da casa.',
-      dogao: 'Pão quentinho, salsicha suculenta e acompanhamentos generosos.',
-      oriental: 'Preparo fresco do dia, com ingredientes selecionados e apresentação caprichada.',
-      combos: 'Combinação perfeita para matar a fome com economia.',
-      doces: 'Doce cremoso e generoso, feito para adoçar o seu dia.',
-      bebidas: 'Bem gelada, do jeitinho que você gosta.'
-    };
-    const getDesc = (name, catKey) => FALLBACK_DESC[name] || DEFAULT_DESC_BY_CAT[catKey] || FALLBACK_DESC['default'];
+    // Dados (WA, DELIVERY_FEE, CATEGORIES, menu, PROMOS, PLACEHOLDER_IMG,
+    // CATEGORY_ITEM_PLACEHOLDER, FALLBACK_DESC, DEFAULT_DESC_BY_CAT) via data/cardapio.js.
+    const getDesc = catKey => DEFAULT_DESC_BY_CAT[catKey] || FALLBACK_DESC;
     // enrich menu with image/desc — categorias novas herdam o banner da categoria como foto
     (function enrichMenu() {
       Object.entries(menu).forEach(([catKey, cat]) => {
         const catPlaceholder = CATEGORY_ITEM_PLACEHOLDER[catKey] || PLACEHOLDER_IMG;
         Object.values(cat).forEach(items => {
-          items.forEach(it => { it.image = it.image || catPlaceholder; it.desc = it.desc || getDesc(it.name, catKey); });
+          items.forEach(item => {
+            item.image ||= catPlaceholder;
+            item.desc ||= getDesc(catKey);
+          });
         });
       });
     })();
@@ -2764,29 +2058,43 @@
     window.addEventListener('resize', updateCatNavFade);
 
     const cart = new Map();
-    let wantsDelivery = false; // sempre inicia desativado (não oculta formulário)
-    let orderMode = true;
-    let currentCat = 'pasteis';
+    let wantsDelivery = false;
     let selectedPay = null;
-    let currentPill = 'all';
-    document.body.classList.add('order-mode');
-    // Força delivery desativado a cada inicialização (evita bfcache/autofill manter ligado)
-    (function forceDeliveryOff() {
+
+    function resetDelivery(clearAddress = false) {
       wantsDelivery = false;
-      const _dt = document.getElementById('delivery-toggle');
-      if (_dt) { _dt.checked = false; _dt.removeAttribute('checked'); }
+      const toggle = document.getElementById('delivery-toggle');
+      if (toggle) {
+        toggle.checked = false;
+        toggle.removeAttribute('checked');
+      }
       document.getElementById('summary-addr-wrap')?.classList.remove('open');
-      const _ai = document.getElementById('addr-input');
-      if (_ai) _ai.value = '';
-    })();
+      if (clearAddress) {
+        const address = document.getElementById('addr-input');
+        if (address) address.value = '';
+      }
+    }
+
+    resetDelivery(true);
 
     const fmt = n => 'R$ ' + n.toFixed(2).replace('.', ',');
     const toId = s => s.replace(/[^a-z0-9]/gi, '_');
+    const escapeHtml = value => String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+
+    const productsById = new Map();
+    Object.values(menu).forEach(category => {
+      Object.values(category).forEach(items => {
+        items.forEach(item => productsById.set(toId(item.name), item));
+      });
+    });
 
     function updateThemeLabel() {
       const isDark = document.documentElement.classList.contains('dark');
-      const lbl = document.getElementById('theme-label-inline');
-      if (lbl) lbl.textContent = isDark ? 'Tema claro' : 'Tema escuro';
       const w = document.querySelector('.theme-widget');
       if (w) w.setAttribute('aria-label', isDark ? 'Ativar tema claro' : 'Ativar tema escuro');
     }
@@ -2845,11 +2153,8 @@
       }
     }
 
-    function renderMenu(cat) {
+    function renderMenu() {
       const wrap = document.getElementById('menu-wrap');
-      // Scroll mode: renderiza todas as categorias em sequência (na ordem de CATEGORIES),
-      // permitindo navegar até qualquer uma via scroll a partir do nav de pílulas.
-      // Mantém o parâmetro `cat` por compatibilidade, mas o filtro real é feito pelo scroll.
       let html = '';
       CATEGORIES.forEach(category => {
         const sections = menu[category.key];
@@ -2866,7 +2171,7 @@
               <h2>${section}</h2>
             </div>
             <div class="section-banner">
-              <img src="${category.banner}" alt="${category.label}" loading="lazy" onerror="this.onerror=null;this.src='Assets/bannercategoriaexemplo.jpg'">
+              <img src="${category.banner}" alt="${category.label}" loading="lazy" onerror="this.onerror=null;this.src='Assets/produtos/foto-categoria-exemplo.jpg'">
             </div>`;
 
           html += `<div class="item-group">`;
@@ -2875,26 +2180,20 @@
             const id = toId(item.name);
             const cartItem = cart.get(id);
             const qty = cartItem ? cartItem.qty : 0;
-            const obs = cartItem ? cartItem.obs || '' : '';
+            const obs = escapeHtml(cartItem?.obs || '');
 
             html += `
             <div class="item${qty > 0 ? ' in-cart' : ''}${item.premium ? ' premium' : ''}" id="row-${id}" onclick="openProductModal('${id}')">
               <div class="card-img-wrap">
-                <img class="thumb" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" onerror="this.src='${PLACEHOLDER_IMG}'">
+                <img class="thumb" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
               </div>
               <div class="card-body">
-                <div style="display:flex; align-items:flex-start; gap:6px">
-                  <span class="item-name" style="flex:1">${item.name}${item.premium ? ' <span class="premium-badge">★ Casa</span>' : ''}</span>
-                </div>
+                <span class="item-name">${item.name}${item.premium ? ' <span class="premium-badge">★ Casa</span>' : ''}</span>
                 <div class="card-footer">
                   <span class="item-price">${fmt(item.price)}</span>
-                  <div class="card-actions">
-                    <div class="card-qty-pill" id="pill-${id}" style="display:${qty > 0 ? 'flex' : 'none'}" onclick="event.stopPropagation()">
-                      <button class="ctrl-btn" onclick="dec('${id}')">−</button>
-                      <span class="ctrl-count${qty === 0 ? ' zero' : ''}" id="qty-${id}">${qty}</span>
-                    </div>
-                    <span id="badge-${id}" style="display:none">${qty > 0 ? qty + '×' : ''}</span>
-                    <span class="item-marker" style="display:none"></span>
+                  <div class="card-qty-pill${qty > 0 ? '' : ' is-hidden'}" id="pill-${id}" onclick="event.stopPropagation()">
+                    <button type="button" class="ctrl-btn" onclick="dec('${id}')" aria-label="Diminuir ${item.name}">−</button>
+                    <span class="ctrl-count${qty === 0 ? ' zero' : ''}" id="qty-${id}">${qty}</span>
                   </div>
                 </div>
               </div>
@@ -2929,35 +2228,6 @@
       }, 2200);
     }
 
-    function enableOrderMode(silent) {
-      if (orderMode) return;
-      orderMode = true;
-      document.body.classList.add('order-mode');
-      const lbl = document.getElementById('mode-label-inline');
-      if (lbl) lbl.textContent = 'Desativar modo pedido';
-      renderMenu(currentCat);
-      if (!silent) showToast('Modo pedido ativado ✓', 'success');
-    }
-
-    function inc(id, name, price) {
-      if (!orderMode) {
-        enableOrderMode(true);
-        showToast('Modo pedido ativado — item adicionado ✓', 'success');
-      }
-      if (cart.has(id)) { cart.get(id).qty++; }
-      else { cart.set(id, { name, price, qty: 1 }); }
-      sync(id, true);
-    }
-
-    // Adiciona ao pedido a oferta em destaque do slide atual (ou de um nome específico).
-    function addPromoOffer(name) {
-      const id = toId(name);
-      const product = findProductById(id);
-      if (!product) return;
-      inc(id, product.name, product.price);
-      showToast(product.name + ' adicionado ao pedido ✓', 'success');
-    }
-
     // ── PROMO SLIDER ── carrossel de ofertas em destaque no topo da página.
     // Autoplay + dots + swipe (pointer events), sem depender de nenhuma lib externa.
     let promoIndex = 0;
@@ -2970,7 +2240,7 @@
       track.innerHTML = PROMOS.map(p => {
         const id = toId(p.name);
         return `
-        <div class="promo-slide" onclick="openProductModal('${id}')">
+        <div class="promo-slide" onclick="openPromoProduct('${id}')">
           <img class="promo-img" src="${p.img}" alt="${p.name}" loading="lazy">
           <div class="promo-slide-copy">
             <span class="promo-pill">${p.pill}</span>
@@ -3009,13 +2279,20 @@
     }
 
     function restartPromoAutoplay() {
-      stopPromoAutoplay();
       startPromoAutoplay();
     }
 
-    // Suporte a swipe (arraste) via Pointer Events, funciona em touch e mouse.
-    // Também rastreia se houve arraste significativo para evitar abrir o modal ao soltar após swipe.
     let promoSwiped = false;
+
+    function openPromoProduct(id) {
+      if (promoSwiped) {
+        promoSwiped = false;
+        return;
+      }
+      openProductModal(id);
+    }
+
+    // Swipe via Pointer Events, com bloqueio do clique disparado ao fim do arraste.
     (function initPromoSwipe() {
       const slider = document.getElementById('promo-slider');
       if (!slider) return;
@@ -3046,40 +2323,28 @@
     })();
 
     function dec(id) {
-      if (!orderMode) { enableOrderMode(true); return; }
       if (!cart.has(id)) return;
       const item = cart.get(id);
       if (--item.qty <= 0) cart.delete(id);
       sync(id, false);
     }
 
-    function toggleItemObs(id) {
-      if (!orderMode) return;
-      document.getElementById('obs-field-' + id)?.classList.toggle('open');
-    }
-
     function updateItemObs(id, value) {
-      if (!orderMode || !cart.has(id)) return;
+      if (!cart.has(id)) return;
       const item = cart.get(id);
-      item.obs = value.trim() || undefined;
-      const icon = document.querySelector(`#row-${id} .item-obs-icon`);
-      item.obs ? icon?.classList.add('active') : icon?.classList.remove('active');
+      const observation = value.trim();
+      if (observation) item.obs = observation;
+      else delete item.obs;
     }
 
     function sync(id, isInc) {
       const qty = cart.has(id) ? cart.get(id).qty : 0;
       const row = document.getElementById('row-' + id);
       const ctr = document.getElementById('qty-' + id);
-      const badge = document.getElementById('badge-' + id);
       const pill = document.getElementById('pill-' + id);
 
       if (ctr) { ctr.textContent = qty; ctr.classList.toggle('zero', qty === 0); }
-      if (pill) pill.style.display = qty > 0 ? 'flex' : 'none';
-
-      if (badge) {
-        if (qty > 0) { badge.textContent = qty + '×'; badge.style.display = 'inline'; }
-        else { badge.style.display = 'none'; }
-      }
+      if (pill) pill.classList.toggle('is-hidden', qty === 0);
 
       if (row) {
         row.classList.toggle('in-cart', qty > 0);
@@ -3098,8 +2363,8 @@
       const bar = document.getElementById('cart-bar');
       const waBar = document.getElementById('cart-bar-wa');
       const hint = document.getElementById('empty-hint');
-      if (hint) hint.classList.toggle('show', orderMode && cart.size === 0);
-      if (!cart.size || !orderMode) {
+      if (hint) hint.classList.toggle('show', cart.size === 0);
+      if (!cart.size) {
         bar.classList.add('hidden');
         // Antes de qualquer seleção (ou fora do modo pedido), mostra o CTA de
         // WhatsApp direto no mesmo lugar do "Ver pedido".
@@ -3148,14 +2413,12 @@
       e.qty += delta;
       if (e.qty <= 0) cart.delete(id);
       sync(id, delta > 0);
-      renderSummaryList();
       if (!cart.size) closeSummary();
     }
     function removeFromSummary(id) {
       if (!cart.has(id)) return;
       cart.delete(id);
       sync(id, false);
-      renderSummaryList();
       if (!cart.size) closeSummary();
     }
     function renderSummaryList() {
@@ -3179,7 +2442,7 @@
           <div class="summary-row">
             <div class="summary-row-main">
               <img class="summary-thumb" src="${img}" alt="${e.name}" loading="lazy" onclick="openProductModal('${id}')">
-              <span class="summary-row-name" style="cursor:pointer" onclick="openProductModal('${id}')">${e.name}</span>
+              <span class="summary-row-name" onclick="openProductModal('${id}')">${e.name}</span>
               <div class="summary-row-actions">
                 <button class="summary-ctrl" onclick="adjustSummaryQty('${id}', -1)" aria-label="Diminuir">−</button>
                 <span class="summary-row-qty">${e.qty}×</span>
@@ -3188,7 +2451,7 @@
               </div>
               <span class="summary-row-price">${fmt(e.price * e.qty)}</span>
             </div>
-            ${e.obs ? `<div class="summary-row-obs">${e.obs}</div>` : ''}
+            ${e.obs ? `<div class="summary-row-obs">${escapeHtml(e.obs)}</div>` : ''}
           </div>`;
       });
       list.innerHTML = rows;
@@ -3214,14 +2477,10 @@
     }
 
     let currentModalId = null;
-    let pendingModalObs = '';
+    const modalObservationDrafts = new Map();
+
     function findProductById(id) {
-      for (const cat of Object.values(menu)) {
-        for (const items of Object.values(cat)) {
-          for (const it of items) if (toId(it.name) === id) return it;
-        }
-      }
-      return null;
+      return productsById.get(id) || null;
     }
     function syncModalQty() {
       if (!currentModalId) return;
@@ -3234,28 +2493,25 @@
     function syncModalObs() {
       const inp = document.getElementById('product-modal-obs');
       if (!inp || !currentModalId) return;
-      const existing = cart.has(currentModalId) ? (cart.get(currentModalId).obs || '') : pendingModalObs;
+      const existing = cart.get(currentModalId)?.obs || modalObservationDrafts.get(currentModalId) || '';
       inp.value = existing;
-      pendingModalObs = existing;
+      modalObservationDrafts.set(currentModalId, existing);
     }
+
     function onModalObsInput(value) {
-      pendingModalObs = value;
       if (!currentModalId) return;
       const id = currentModalId;
       const trimmed = value.trim();
+      modalObservationDrafts.set(id, value);
       // atualiza também o input da lista (se renderizado) para manter sincronia
       const listInput = document.getElementById('obs-' + id);
       if (listInput && listInput.value !== value) listInput.value = value;
       const field = document.getElementById('obs-field-' + id);
-      if (trimmed) field?.classList.add('open');
+      field?.classList.toggle('open', Boolean(trimmed));
       if (cart.has(id)) {
         const item = cart.get(id);
         if (trimmed) item.obs = trimmed;
         else delete item.obs;
-        // atualiza botão de obs no card
-        const row = document.getElementById('row-' + id);
-        const btn = row?.querySelector('.card-obs-btn');
-        if (btn) trimmed ? btn.classList.add('active') : btn.classList.remove('active');
         // atualiza resumo se aberto
         if (document.getElementById('summary-sheet')?.classList.contains('open')) renderSummaryList();
       }
@@ -3272,19 +2528,9 @@
       if (img) { img.src = prod.image || PLACEHOLDER_IMG; img.alt = prod.name; }
       if (title) title.innerHTML = prod.name + (prod.premium ? ' <span class="premium-badge">★ Casa</span>' : '');
       if (price) price.textContent = fmt(prod.price);
-      if (desc) desc.textContent = prod.desc || getDesc(prod.name);
+      if (desc) desc.textContent = prod.desc || FALLBACK_DESC;
       if (addPrice) addPrice.textContent = fmt(prod.price);
       syncModalQty();
-      // carrega observação existente (do carrinho ou rascunho pendente)
-      const obsInput = document.getElementById('product-modal-obs');
-      if (obsInput) {
-        const existing = cart.has(id) ? (cart.get(id).obs || '') : pendingModalObs;
-        // se trocou de produto, reseta rascunho para o do novo item
-        if (cart.has(id)) pendingModalObs = existing;
-        else if (pendingModalObs && currentModalId !== id) pendingModalObs = '';
-        obsInput.value = cart.has(id) ? existing : pendingModalObs;
-        if (!cart.has(id) && pendingModalObs === '') obsInput.value = '';
-      }
       syncModalObs();
       document.getElementById('product-overlay')?.classList.add('open');
       document.getElementById('product-modal')?.classList.add('open');
@@ -3298,19 +2544,12 @@
       document.getElementById('product-back-btn')?.classList.remove('open');
       document.body.style.overflow = '';
     }
-    // Fecha o popup do item e abre o resumo do pedido em seguida
-    function openSummaryFromProduct() {
-      closeProductModal();
-      openSummary();
-    }
     function changeModalQty(delta) {
       if (!currentModalId) return;
       const prod = findProductById(currentModalId);
       if (!prod) return;
-      if (!orderMode && delta > 0) { enableOrderMode(true); }
-      else if (!orderMode && delta < 0) return;
       const id = currentModalId;
-      const obsTrimmed = (document.getElementById('product-modal-obs')?.value || pendingModalObs || '').trim();
+      const obsTrimmed = (document.getElementById('product-modal-obs')?.value || modalObservationDrafts.get(id) || '').trim();
       if (delta > 0) {
         if (cart.has(id)) cart.get(id).qty++;
         else {
@@ -3324,25 +2563,22 @@
         if (!cart.has(id)) return;
         const it = cart.get(id);
         if (--it.qty <= 0) {
-          // mantém obs no rascunho caso usuário aumente novamente
-          if (it.obs) pendingModalObs = it.obs;
+          if (it.obs) modalObservationDrafts.set(id, it.obs);
           cart.delete(id);
         }
         sync(id, false);
       }
-      syncModalQty();
     }
     function confirmModalAdd() {
       if (!currentModalId) return;
       const prod = findProductById(currentModalId);
-      const obsVal = (document.getElementById('product-modal-obs')?.value || pendingModalObs || '').trim();
+      if (!prod) return;
+      const obsVal = (document.getElementById('product-modal-obs')?.value || modalObservationDrafts.get(currentModalId) || '').trim();
       if (!cart.has(currentModalId)) {
-        if (!orderMode) enableOrderMode(true);
         const entry = { name: prod.name, price: prod.price, qty: 1 };
         if (obsVal) entry.obs = obsVal;
         cart.set(currentModalId, entry);
         sync(currentModalId, true);
-        syncModalQty();
         showToast(prod.name + ' adicionado ✓', 'success');
       } else {
         if (obsVal) cart.get(currentModalId).obs = obsVal;
@@ -3355,7 +2591,7 @@
         if (document.getElementById('summary-sheet')?.classList.contains('open')) renderSummaryList();
         showToast('Pedido atualizado ✓', 'success');
       }
-      // keep modal open for quick adjusts; optionally close: closeProductModal();
+      modalObservationDrafts.set(currentModalId, obsVal);
     }
 
     function handleSend() {
@@ -3417,8 +2653,6 @@
     function selectPill(pill, btn) {
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      currentPill = pill;
-      currentCat = pill;
       // Scroll dinâmico — não re-renderiza, apenas rola até a 1ª seção da categoria escolhida.
       // Genérico para qualquer categoria em CATEGORIES (marcada em renderMenu via data-cat-anchor).
       const el = document.querySelector(`[data-cat-anchor="${pill}"]`) || document.getElementById('menu-wrap');
@@ -3429,44 +2663,11 @@
       }
     }
 
-    function toggleMode() {
-      orderMode = !orderMode;
-      document.body.classList.toggle('order-mode', orderMode);
-      const lbl = document.getElementById('mode-label-inline');
-      if (lbl) lbl.textContent = orderMode ? 'Desativar modo pedido' : 'Ativar modo pedido';
-      if (!orderMode) {
-        cart.clear();
-        wantsDelivery = false;
-        selectedPay = null;
-        document.getElementById('cart-bar').classList.add('hidden');
-        document.getElementById('cart-bar-wa')?.classList.remove('hidden');
-        const dt = document.getElementById('delivery-toggle');
-        if (dt) dt.checked = false;
-        document.getElementById('summary-addr-wrap')?.classList.remove('open');
-        const ai = document.getElementById('addr-input');
-        if (ai) ai.value = '';
-        const cn = document.getElementById('customer-name');
-        if (cn) { cn.value = ''; cn.classList.remove('input-error'); }
-        document.getElementById('err-name')?.classList.remove('show');
-        document.getElementById('err-pay')?.classList.remove('show');
-        document.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('active'));
-        document.getElementById('change-wrap')?.classList.remove('open');
-        const ci = document.getElementById('change-input');
-        if (ci) ci.value = '';
-        document.getElementById('empty-hint')?.classList.remove('show');
-        closeSummary();
-        closeProductModal();
-      } else {
-        refreshBar(false);
-      }
-      renderMenu(currentCat);
-    }
-
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') { closeProductModal(); closeSummary(); }
     });
 
-    renderMenu('pasteis');
+    renderMenu();
     renderPromoSlider();
     startPromoAutoplay();
     updateHoursBadge();
@@ -3478,24 +2679,9 @@
         document.getElementById('err-name')?.classList.remove('show');
       }
     });
-    document.getElementById('change-input')?.addEventListener('input', () => {
-      // auto format not needed
-    });
-    // Garante que a cada sessão/páginas recarregadas via bfcache o delivery volte desativado
+    // Garante que páginas restauradas pelo bfcache voltem com delivery desativado.
     window.addEventListener('pageshow', () => {
-      wantsDelivery = false;
-      const _dt2 = document.getElementById('delivery-toggle');
-      if (_dt2) { _dt2.checked = false; _dt2.removeAttribute('checked'); }
-      document.getElementById('summary-addr-wrap')?.classList.remove('open');
-      const _ai2 = document.getElementById('addr-input');
-      if (_ai2 && document.activeElement !== _ai2) { /* mantém vazio se recarregado */ }
-      updateSummaryTotal();
-    });
-    window.addEventListener('DOMContentLoaded', () => {
-      wantsDelivery = false;
-      const _dt3 = document.getElementById('delivery-toggle');
-      if (_dt3) { _dt3.checked = false; _dt3.removeAttribute('checked'); }
-      document.getElementById('summary-addr-wrap')?.classList.remove('open');
+      resetDelivery();
       updateSummaryTotal();
     });
   </script>
