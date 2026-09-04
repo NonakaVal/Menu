@@ -66,11 +66,15 @@ const DELIVERY_FEE = 3;
  *   key: 'identificador-interno',
  *   label: 'Nome exibido ao usuário',
  *   icon: 'caminho/do/icone.png',
- *   banner: 'caminho/do/banner.png'
+ *   banner: 'caminho/do/banner.png',
+ *   mobileColumns: 2  // opcional — nº de colunas por linha na visualização mobile (padrão: 3)
  * }
  *
  * IMPORTANTE:
  * O valor de `key` deve ser igual à chave correspondente dentro de `menu`.
+ *
+ * `mobileColumns` controla quantas colunas os itens da categoria ocupam por linha
+ * em telas pequenas (< 640px). Sem o campo, prevalece o padrão de 3 colunas.
  */
 const CATEGORIES = [
   {
@@ -95,13 +99,15 @@ const CATEGORIES = [
     key: 'pizzas',
     label: 'Pizzas',
     icon: 'Assets/categories-icons/icon-pizzas.png',
-    banner: 'Assets/banners/banner-pizzas.png'
+    banner: 'Assets/banners/banner-pizzas.png',
+    mobileColumns: 2
   },
   {
     key: 'bebidas',
     label: 'Bebidas',
     icon: 'Assets/categories-icons/icon-bebidas.png',
-    banner: 'Assets/banners/banner-bebidas.png'
+    banner: 'Assets/banners/banner-bebidas.png',
+    mobileColumns: 4
   },
   {
     key: 'doces',
@@ -231,12 +237,12 @@ const menu = {
         desc: 'Dogão tradicional com fatias crocantes de bacon.',
         image: 'Assets/menu-itens/hotdog-2.png'
       },
-      {
+       /* {
         name: 'Dogão c/ Catupiry',
         price: 13,
         desc: 'Dogão cremoso com generosa camada de catupiry original.',
         image: 'Assets/menu-itens/hotdog-3.png'
-      },
+      }, */
       {
         name: 'Dogão Completo',
         price: 16,
@@ -290,13 +296,11 @@ const menu = {
      BEBIDAS
      ------------------------------------------------------------------------
      
-     Esta categoria contém várias subseções:
-     - Coca-Cola;
-     - Água.
+     Seção única, sem divisão por tipo: refrigerantes e águas ficam juntos.
      ------------------------------------------------------------------------ */
 
   bebidas: {
-    'Coca-Cola': [
+    'Bebidas': [
       {
         name: 'Coca-Cola Lata',
         price: 6,
@@ -326,10 +330,7 @@ const menu = {
         price: 3.50,
         desc: 'Mini garrafa 200ml, na medida certa.',
         image: 'Assets/menu-itens/refri-5.png'
-      }
-    ],
-
-    'Água': [
+      },
       {
         name: 'Água Natural',
         price: 3,
