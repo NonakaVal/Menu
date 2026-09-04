@@ -2065,20 +2065,9 @@
   <script src="data/cardapio.js?v=2026-09-04-1"></script>
   <script>
     // Dados (WA, DELIVERY_FEE, CATEGORIES, menu, PROMOS, PLACEHOLDER_IMG,
-    // CATEGORY_ITEM_PLACEHOLDER, FALLBACK_DESC, DEFAULT_DESC_BY_CAT) via data/cardapio.js.
-    const getDesc = catKey => DEFAULT_DESC_BY_CAT[catKey] || FALLBACK_DESC;
-    // enrich menu with image/desc — categorias novas herdam o banner da categoria como foto
-    (function enrichMenu() {
-      Object.entries(menu).forEach(([catKey, cat]) => {
-        const catPlaceholder = CATEGORY_ITEM_PLACEHOLDER[catKey] || PLACEHOLDER_IMG;
-        Object.values(cat).forEach(items => {
-          items.forEach(item => {
-            item.image ||= catPlaceholder;
-            item.desc ||= getDesc(catKey);
-          });
-        });
-      });
-    })();
+    // CATEGORY_ITEM_PLACEHOLDER, FALLBACK_DESC) via data/cardapio.js.
+    // A imagem é individual por produto (item.image); sem fallback por categoria.
+    // As leituras usam `|| PLACEHOLDER_IMG` como segurança (card, resumo e modal).
 
     // Renderiza a navegação de categorias a partir de CATEGORIES (ícones flat via imagem).
     function renderCatNav() {
