@@ -5,6 +5,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Cardápio - Exemplo</title>
+  <script>
+    // Mantenha este valor igual ao de version.json e ao ?v= dos arquivos externos.
+    (function checkSiteVersion() {
+      const PAGE_VERSION = '2026-09-04-1';
+      const VERSION_KEY = 'site_version';
+      const RELOAD_KEY = 'site_version_reload';
+      const versionUrl = new URL('version.json', document.baseURI);
+
+      // O parâmetro temporal e cache: 'no-store' impedem o cache do version.json.
+      versionUrl.searchParams.set('_', Date.now().toString());
+
+      fetch(versionUrl, { cache: 'no-store' })
+        .then(response => {
+          if (!response.ok) throw new Error('Não foi possível consultar a versão do site');
+          return response.json();
+        })
+        .then(data => {
+          const currentVersion = String(data.version || '').trim();
+          if (!currentVersion) return;
+
+          try {
+            localStorage.setItem(VERSION_KEY, currentVersion);
+          } catch (_) {
+            // O site continua funcionando caso o armazenamento esteja indisponível.
+          }
+
+          if (currentVersion === PAGE_VERSION) {
+            try { sessionStorage.removeItem(RELOAD_KEY); } catch (_) { }
+            return;
+          }
+
+          // Evita um ciclo de recarga se os arquivos do deploy ainda estiverem propagando.
+          try {
+            if (sessionStorage.getItem(RELOAD_KEY) === currentVersion) return;
+            sessionStorage.setItem(RELOAD_KEY, currentVersion);
+          } catch (_) { }
+
+          // Uma URL nova obriga o navegador/CDN a buscar o HTML atualizado.
+          const reloadUrl = new URL(window.location.href);
+          reloadUrl.searchParams.set('v', currentVersion);
+          window.location.replace(reloadUrl.href);
+        })
+        .catch(() => {
+          // Sem conexão ou version.json indisponível: mantém a página atual utilizável.
+        });
+    })();
+  </script>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
     rel="stylesheet">
@@ -1925,7 +1972,8 @@
       </span>
     </label>
     <div class="summary-addr-wrap" id="summary-addr-wrap">
-      <input class="addr-input" id="addr-input" placeholder="Endereço completo para entrega">
+      <input class="addr-input" id="addr-input" placeholder="Endereço completo para entrega"
+        autocomplete="street-address">
     </div>
     <div class="summary-fields">
       <div>
@@ -2014,7 +2062,7 @@
     </div>
   </div>
 
-  <script src="data/cardapio.js"></script>
+  <script src="data/cardapio.js?v=2026-09-04-1"></script>
   <script>
     // Dados (WA, DELIVERY_FEE, CATEGORIES, menu, PROMOS, PLACEHOLDER_IMG,
     // CATEGORY_ITEM_PLACEHOLDER, FALLBACK_DESC, DEFAULT_DESC_BY_CAT) via data/cardapio.js.
