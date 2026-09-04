@@ -1,3 +1,6 @@
+# Temp / sessions locais (nunca versionar)
+.tmp/
+
 # VS Code
 .vscode/
 
